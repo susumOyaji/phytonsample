@@ -1,10 +1,9 @@
 
-import calcuiater
-import urllib.request
-from bs4 import beautifulsoup
-import pandas as pd
-import requests
-from datetime import datetime
+#import calcuiater
+import Beautifulsoup
+#import pandas as pd
+#import requests
+#from datetime import datetime
 
 def get_dfs(stock_number):
     dfs = []
