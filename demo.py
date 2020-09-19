@@ -1,8 +1,8 @@
 #必要なモジュールのインストール
-from selenium import webdriveimport
+from selenium import webdrive
 import pandas as pd
 import numpy as np
-from matplotlib import pyplot as plt
+from plotlib import pyplot as plt
 import matplotlib as inline #Google Chromeブラウザの表示
 browser=webdriver.Chrome()#スクレイピングの準備
 columnNames=[]
