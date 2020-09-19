@@ -15,10 +15,8 @@ from selenium import webdriver #Selenium Webdriverをインポートして
 import pandas as pd
 import numpy as np
 
-
-%matplotlib inline #Google Chromeブラウザの表示
+%matplotlib inline#Google Chromeブラウザの表示
 import matplotlib.pyplot as plt
-
 
 price = [100, 250, 380, 500, 700]
 number = [1, 2, 3, 4, 5]
@@ -40,6 +38,11 @@ plt.grid(True)
 
 # 表示する
 plt.show()
+
+
+
+
+
 
 browser=webdriver.Chrome("/usr/local/bin/chromedriver")#スクレイピングの準備
 columnNames=[]
