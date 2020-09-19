@@ -1,9 +1,8 @@
-
-#import calcuiater
-import Beautifulsoup
-#import pandas as pd
-#import requests
-#from datetime import datetime
+# ライブラリの読み込み
+from bs4 import BeautifulSoup
+import pandas as pd
+import requests
+from datetime import datetime
 
 def get_dfs(stock_number):
     dfs = []
@@ -39,6 +38,7 @@ def concatenate(dfs):
 
 #作成したコードリストを読み込む
 code_list = pd.read_csv('code_list.csv')
+print(code_list)
 
 #複数のデータフレームをcsvで保存
 for i in range(len(code_list)):
@@ -48,3 +48,6 @@ for i in range(len(code_list)):
     dfs = get_dfs(k)
     data = concatenate(dfs) 
     data.to_csv('{}-{}.csv'.format(k,v))
+
+
+
