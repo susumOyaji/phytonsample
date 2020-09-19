@@ -1,21 +1,9 @@
-#from selenium import webdriver #Selenium Webdriverをインポートして
-
-#driver = webdriver.Chrome("/usr/local/bin/chromedriver") #Chromeを動かすドライバを読み込み
-
-#driver.get("https://google.co.jp") #googleを開く！
-
-
-
-
-
-
-
 #必要なモジュールのインストール
 from selenium import webdriver #Selenium Webdriverをインポートして
 import pandas as pd
 import numpy as np
 
-%matplotlib inline#Google Chromeブラウザの表示
+#% matplotlib inline
 import matplotlib.pyplot as plt
 
 price = [100, 250, 380, 500, 700]
@@ -38,6 +26,17 @@ plt.grid(True)
 
 # 表示する
 plt.show()
+
+
+
+driver = webdriver.Chrome()
+driver.get('https://www.google.com/')
+time.sleep(5)
+search_box = driver.find_element_by_name("q")
+search_box.send_keys('ChromeDriver')
+search_box.submit()
+time.sleep(5)
+driver.quit()
 
 
 
