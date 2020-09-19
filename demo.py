@@ -1,19 +1,52 @@
+#from selenium import webdriver #Selenium Webdriverをインポートして
+
+#driver = webdriver.Chrome("/usr/local/bin/chromedriver") #Chromeを動かすドライバを読み込み
+
+#driver.get("https://google.co.jp") #googleを開く！
+
+
+
+
+
+
+
 #必要なモジュールのインストール
-from selenium import webdrive
+from selenium import webdriver #Selenium Webdriverをインポートして
 import pandas as pd
 import numpy as np
-from plotlib import pyplot as plt
-import matplotlib as inline #Google Chromeブラウザの表示
-browser=webdriver.Chrome()#スクレイピングの準備
+
+
+%matplotlib inline #Google Chromeブラウザの表示
+import matplotlib.pyplot as plt
+
+
+price = [100, 250, 380, 500, 700]
+number = [1, 2, 3, 4, 5]
+
+# グラフを書く
+plt.plot(price, number, marker="x")
+
+# グラフのタイトル
+plt.title("price / number")
+
+# x軸のラベル
+plt.xlabel("price")
+
+# y軸のラベル
+plt.ylabel("number")
+
+# グリッドを表示する
+plt.grid(True)
+
+# 表示する
+plt.show()
+
+browser=webdriver.Chrome("/usr/local/bin/chromedriver")#スクレイピングの準備
 columnNames=[]
 ETFComparisonsTable=[]
 for num in range(0,50):
-
-
-
-
 #リストから銘柄を選択
-browser.get("https://kabuoji3.com/ranking/?date=2019-07-05&type=1&market=3")
+    browser.get("https://kabuoji3.com/ranking/?date=2019-07-05&type=1&market=3")
 stockClick=browser.find_elements_by_class_name("clickable")
 stockClick[num].find_element_by_tag_name("a").click()
 stockTable=browser.find_element_by_class_name("table_wrap")
@@ -21,9 +54,9 @@ stockLine=stockTable.find_elements_by_tag_name("tr")
 
 #株価のスクレイピング
 if len(stockLine)==302:
-KabukaComparisons=[]
+    KabukaComparisons=[]
 for i in range(2,152):
-stockKabukaPriceAfter=stockLine[i-1].find_elements_by_tag_name("td")
+    stockKabukaPriceAfter=stockLine[i-1].find_elements_by_tag_name("td")
 stockKabukaPriceBefore=stockLine[i].find_elements_by_tag_name("td")
 KabukaComparison=float(stockKabukaPriceAfter[6].text)-float(stockKabukaPriceBefore[6].text)
 KabukaComparisons.append(KabukaComparison)
@@ -32,7 +65,7 @@ stockKabukaPriceBefore=stockLine[153].find_elements_by_tag_name("td")
 KabukaComparison=float(stockKabukaPriceAfter[6].text)-float(stockKabukaPriceBefore[6].text)
 KabukaComparisons.append(KabukaComparison)
 for i in range(154,302):
-stockKabukaPriceAfter=stockLine[i-1].find_elements_by_tag_name("td")
+    stockKabukaPriceAfter=stockLine[i-1].find_elements_by_tag_name("td")
 stockKabukaPriceBefore=stockLine[i].find_elements_by_tag_name("td")
 KabukaComparison=float(stockKabukaPriceAfter[6].text)-float(stockKabukaPriceBefore[6].text)
 KabukaComparisons.append(KabukaComparison)
@@ -62,11 +95,11 @@ stockTable=browser.find_element_by_class_name("table_wrap")
 stockLine=stockTable.find_elements_by_tag_name("tr")
 dates=[]
 for i in range(1,152):
-stockDate=stockLine[i].find_elements_by_tag_name("td")
+    stockDate=stockLine[i].find_elements_by_tag_name("td")
 stockDate=stockDate[0].text
 dates.append(stockDate)
 for i in range(153,302):
-stockDate=stockLine[i].find_elements_by_tag_name("td")
+    stockDate=stockLine[i].find_elements_by_tag_name("td")
 stockDate=stockDate[0].text
 dates.append(stockDate)
 df_date=pd.DataFrame()
@@ -83,7 +116,7 @@ stockTable=browser.find_element_by_class_name("table_wrap")
 stockLine=stockTable.find_elements_by_tag_name("tr")
 targetStockComparisons=[]
 for i in range(2,152):
-targetStockPriceAfter=stockLine[i-1].find_elements_by_tag_name("td")
+    targetStockPriceAfter=stockLine[i-1].find_elements_by_tag_name("td")
 targetStockPriceBefore=stockLine[i].find_elements_by_tag_name("td")
 targetStockComparison=float(targetStockPriceAfter[6].text)-float(targetStockPriceBefore[6].text)
 targetStockComparisons.append(targetStockComparison)
@@ -92,7 +125,7 @@ targetStockPriceBefore=stockLine[153].find_elements_by_tag_name("td")
 targetStockComparison=float(targetStockPriceAfter[6].text)-float(targetStockPriceBefore[6].text)
 targetStockComparisons.append(targetStockComparison)
 for i in range(154,302):
-targetStockPriceAfter=stockLine[i-1].find_elements_by_tag_name("td")
+    targetStockPriceAfter=stockLine[i-1].find_elements_by_tag_name("td")
 targetStockPriceBefore=stockLine[i].find_elements_by_tag_name("td")
 targetStockComparison=float(targetStockPriceAfter[6].text)-float(targetStockPriceBefore[6].text)
 targetStockComparisons.append(targetStockComparison)
@@ -114,11 +147,11 @@ stockTable=browser.find_element_by_class_name("table_wrap")
 stockLine=stockTable.find_elements_by_tag_name("tr")
 dates=[]
 for i in range(2,152):
-stockDate=stockLine[i].find_elements_by_tag_name("td")
+    stockDate=stockLine[i].find_elements_by_tag_name("td")
 stockDate=stockDate[0].text
 dates.append(stockDate)
 for i in range(153,302):
-stockDate=stockLine[i].find_elements_by_tag_name("td")
+    stockDate=stockLine[i].find_elements_by_tag_name("td")
 stockDate=stockDate[0].text
 dates.append(stockDate)
 df_date2=pd.DataFrame()
@@ -141,7 +174,7 @@ table.to_csv("stockPriceData.csv",index=False)
 
 #再び必要なモジュールのインストール
 import seaborn as sns
-%matplotlib inline
+import matplotlib as inline
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
@@ -212,16 +245,16 @@ y_pred=model.predict(x_test)
 #結果の表示
 testUpDown=[]
 for test in y_test:
-if test>0:
-testUpDown.append(1)
+    if test>0:
+        testUpDown.append(1)
 else:
-testUpDown.append(-1)
+    testUpDown.append(-1)
 predUpDown=[]
 for pred in y_pred:
-if pred>0:
-predUpDown.append(1)
+    if pred>0:
+        predUpDown.append(1)
 else:
-predUpDown.append(-1)
+    predUpDown.append(-1)
 print("確率："+str(metrics.accuracy_score(testUpDown,predUpDown)*100)+"%")
 
 #特徴量のグラフの出力
@@ -237,7 +270,7 @@ plt.show()
 #Slackへ
 slackURL="https://hooks.slack.com/services/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"
 def send_slack(content):
-payload={
+    payload={
 
         "text":content,
 
