@@ -15,7 +15,7 @@ from selenium import webdriver
 
 
 
-driver = webdriver.Chrome()#driver = webdriver.Chrome('/usr/local/bin/chromedriver')
+browser = webdriver.Chrome()#driver = webdriver.Chrome('/usr/local/bin/chromedriver')
 #driver.get('https://www.google.com/')
 #time.sleep(5)
 #search_box = driver.find_element_by_name("q")
@@ -47,7 +47,7 @@ for num in range(0,5):
 
 
             
-stockClick=soup.find_elements_by_class_name("clickable")
+stockClick=browser.find_elements_by_class_name("clickable")
 stockClick[num].find_element_by_tag_name("a").click()
 stockTable=browser.find_element_by_class_name("table_wrap")
 stockLine=stockTable.find_elements_by_tag_name("tr")
