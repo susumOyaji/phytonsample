@@ -1,10 +1,13 @@
+# ライブラリの読み込み
+from bs4 import BeautifulSoup
+import requests
 #必要なモジュールのインストール
-from selenium import webdriver #Selenium Webdriverをインポートして
+from selenium  import webdriver  #Selenium Webdriverをインポートして
 import pandas as pd
 import numpy as np
 
 #%matplotlib inline
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 
 
@@ -12,25 +15,37 @@ import matplotlib.pyplot as plt
 
 driver = webdriver.Chrome()
 driver.get('https://www.google.com/')
-time.sleep(5)
-search_box = driver.find_element_by_name("q")
-search_box.send_keys('ChromeDriver')
-search_box.submit()
-time.sleep(5)
-driver.quit()
+#time.sleep(5)
+#search_box = driver.find_element_by_name("q")
+#search_box.send_keys('ChromeDriver')
+#search_box.submit()
+#time.sleep(5)
+#driver.quit()
+#browser=webdriver.Chrome("/usr/local/bin/chromedriver")#スクレイピングの準備
 
-
-
-
-
-
-browser=webdriver.Chrome("/usr/local/bin/chromedriver")#スクレイピングの準備
 columnNames=[]
-ETFComparisonsTable=[]
-for num in range(0,50):
+ETFComparisonsTable = []
+
+
+for num in range(0,5):
 #リストから銘柄を選択
-    browser.get("https://kabuoji3.com/ranking/?date=2019-07-05&type=1&market=3")
-stockClick=browser.find_elements_by_class_name("clickable")
+    #try:
+        #browser.get("https://kabuoji3.com/ranking/?date=2019-07-05&type=1&market=3")
+
+        url = "https://kabuoji3.com/ranking/?date=2019-07-05&type=1&market=3"#ランキングデータ
+        soup = BeautifulSoup(requests.get(url).content,'html.parser')
+        tag_tr = soup.find_all('tr')
+        #head = [h.text for h in tag_tr[0].find_all('th')]
+        data = []
+        for i in range(1,len(tag_tr)):
+            data.append([d.text for d in tag_tr[i].find_all('td')])
+            df = pd.DataFrame(data, columns=head)
+    #except IndexError:
+    #        print('No data')
+
+
+            
+stockClick=soup.find_elements_by_class_name("clickable")
 stockClick[num].find_element_by_tag_name("a").click()
 stockTable=browser.find_element_by_class_name("table_wrap")
 stockLine=stockTable.find_elements_by_tag_name("tr")

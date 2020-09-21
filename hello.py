@@ -4,6 +4,23 @@ import pandas as pd
 import requests
 from datetime import datetime
 
+
+
+def main():
+    #作成したコードリストを読み込む
+    code_list = pd.read_csv('code_list.csv')
+    print(code_list)
+
+#複数のデータフレームをcsvで保存
+    for i in range(len(code_list)):
+        k = code_list.loc[i,'code']
+        v = code_list.loc[i,'name']
+        print(k,v)
+        dfs = get_dfs(k)
+        data = concatenate(dfs) 
+        data.to_csv('{}-{}.csv'.format(k,v))
+
+
 def get_dfs(stock_number):
     dfs = []
     year = [2018,2019] #2017〜2019年までの株価データを取得
@@ -36,18 +53,12 @@ def concatenate(dfs):
         data[c] = data[c].astype(float)
     return data
 
-#作成したコードリストを読み込む
-code_list = pd.read_csv('code_list.csv')
-print(code_list)
 
-#複数のデータフレームをcsvで保存
-for i in range(len(code_list)):
-    k = code_list.loc[i,'code']
-    v = code_list.loc[i,'name']
-    print(k,v)
-    dfs = get_dfs(k)
-    data = concatenate(dfs) 
-    data.to_csv('{}-{}.csv'.format(k,v))
 
+
+
+
+# 最後に呼び出す
+main()
 
 
