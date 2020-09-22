@@ -16,34 +16,24 @@ from selenium import webdriver
 
 
 browser = webdriver.Chrome()#driver = webdriver.Chrome('/usr/local/bin/chromedriver')
-#driver.get('https://www.google.com/')
-#time.sleep(5)
-#search_box = driver.find_element_by_name("q")
-#search_box.send_keys('ChromeDriver')
-#search_box.submit()
-#time.sleep(5)
-#driver.quit()
-#browser=webdriver.Chrome("/usr/local/bin/chromedriver")#スクレイピングの準備
-
 columnNames=[]
 ETFComparisonsTable = []
-
+KabukaComparisonsTable = []
 
 for num in range(0,5):
 #リストから銘柄を選択
-    #try:
-        #browser.get("https://kabuoji3.com/ranking/?date=2019-07-05&type=1&market=3")
-
+    browser.get("https://kabuoji3.com/ranking/?date=2019-07-05&type=1&market=3")
+    try:
         url = "https://kabuoji3.com/ranking/?date=2019-07-05&type=1&market=3"#ランキングデータ
         soup = BeautifulSoup(requests.get(url).content,'html.parser')
         tag_tr = soup.find_all('tr')
-        #head = [h.text for h in tag_tr[0].find_all('th')]
+        head = [h.text for h in tag_tr[0].find_all('th')]
         data = []
         for i in range(1,len(tag_tr)):
             data.append([d.text for d in tag_tr[i].find_all('td')])
             df = pd.DataFrame(data, columns=head)
-    #except IndexError:
-    #        print('No data')
+    except IndexError:
+        print('No data')
 
 
             
@@ -78,7 +68,7 @@ columnNames.append(stockTitle)
 
 #ランキングテーブルの取得
 KabukaTable=pd.DataFrame(KabukaComparisonsTable)
-KabukaTable=ETFTable.T
+KabukaTable=KabukaTable.T#ETFTable.T
 KabukaTable.columns=columnNames
 
 #ランキングテーブルの確認
@@ -134,7 +124,7 @@ df.columns=[meigara_name + "：前日比"]
 df.head()
 
 #データの統合
-stockPriceTable=pd.concat([df_date,ETFTable],axis=1)
+stockPriceTable=pd.concat([df_date,KabukaTable],axis=1)
 stockPriceTable=pd.concat([stockPriceTable,df],axis=1)
 stockPriceTable.head()
 
