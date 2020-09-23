@@ -4,6 +4,7 @@ import requests
 #必要なモジュールのインストール
 from selenium  import webdriver  #Selenium Webdriverをインポートして
 import pandas as pd
+from pandas import DataFrame
 import numpy as np
 
 #%matplotlib inline
@@ -15,7 +16,7 @@ from selenium import webdriver
 
 
 
-browser = webdriver.Chrome()#driver = webdriver.Chrome('/usr/local/bin/chromedriver')
+browser = webdriver.Chrome('C:/Users/seisan1/AppData/Local/Pyhon/chromedriver_win32/chromedriver')#driver = webdriver.Chrome('/usr/local/bin/chromedriver')
 columnNames=[]
 ETFComparisonsTable = []
 KabukaComparisonsTable = []
@@ -31,7 +32,7 @@ for num in range(0,5):
         data = []
         for i in range(1,len(tag_tr)):
             data.append([d.text for d in tag_tr[i].find_all('td')])
-            df = pd.DataFrame(data, columns=head)
+            #df = pd.DataFrame(data, columns=head)
     except IndexError:
         print('No data')
 
@@ -79,7 +80,7 @@ meigara_number = 8848
 meigara_name = "レオパレス21"
 
 #日付データのスクレイピング
-browser=webdriver.Chrome()
+#browser=webdriver.Chrome()
 browser.get("https://kabuoji3.com/stock/{}/".format(meigara_number))
 stockTable=browser.find_element_by_class_name("table_wrap")
 stockLine=stockTable.find_elements_by_tag_name("tr")
@@ -100,7 +101,7 @@ df_date["day"]=df_date["date"].apply(lambda x:int(x.split("-")[2]))
 df_date.head()
 
 #株価前日比の取得
-browser=webdriver.Chrome()
+#browser=webdriver.Chrome()
 browser.get("https://kabuoji3.com/stock/{}/".format(meigara_number))
 stockTable=browser.find_element_by_class_name("table_wrap")
 stockLine=stockTable.find_elements_by_tag_name("tr")
@@ -132,7 +133,8 @@ stockPriceTable.head()
 df_next=df.copy()
 df_next.columns=[meigara_name + "：翌日比"]
 
-#レオパレスの株価のスクレイピングbrowser.get("https://kabuoji3.com/stock/{}/".format(meigara_number))
+#レオパレスの株価のスクレイピング
+browser.get("https://kabuoji3.com/stock/{}/".format(meigara_number))
 stockTable=browser.find_element_by_class_name("table_wrap")
 stockLine=stockTable.find_elements_by_tag_name("tr")
 dates=[]
@@ -140,15 +142,20 @@ for i in range(2,152):
     stockDate=stockLine[i].find_elements_by_tag_name("td")
 stockDate=stockDate[0].text
 dates.append(stockDate)
+print(dates)
 for i in range(153,302):
     stockDate=stockLine[i].find_elements_by_tag_name("td")
 stockDate=stockDate[0].text
 dates.append(stockDate)
+print(dates)
 df_date2=pd.DataFrame()
 df_date2["date"]=dates
 
 #レオパレスの株価テーブルの作成
-df_next=pd.concat([df_date2,df_next],axis=1)
+df_next=pd.concat([df_date2,df_next],axis=1)#連結するオブジェクトを指定
+print(df_date2)
+print('\n')
+print(df_next)
 df_next.index=df_date2["date"]
 
 #データの統合
