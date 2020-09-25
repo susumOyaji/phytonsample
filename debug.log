@@ -1,0 +1,4 @@
+[0924/175530.963:ERROR:process_reader_win.cc(123)] NtOpenThread: {アクセス拒否} プロセスはオブジェクトのアクセスを要求しましたが、アクセス権が与えられていません。 (0xc0000022)
+[0924/175530.964:ERROR:exception_snapshot_win.cc(99)] thread ID 17728 not found in process
+[0924/175531.002:ERROR:process_reader_win.cc(123)] NtOpenThread: {アクセス拒否} プロセスはオブジェクトのアクセスを要求しましたが、アクセス権が与えられていません。 (0xc0000022)
+[0924/175531.002:ERROR:exception_snapshot_win.cc(99)] thread ID 20272 not found in process

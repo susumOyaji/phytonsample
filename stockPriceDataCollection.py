@@ -1,3 +1,5 @@
+#BM Pythonで作る株価予測SlackBot
+
 #import vital tools
 from selenium import webdriver
 import pandas as pd
