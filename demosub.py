@@ -1,6 +1,6 @@
 #再び必要なモジュールのインストール
 import seaborn as sns
-import matplotlib as inline
+%matplotlib inline
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
@@ -46,6 +46,7 @@ for test in y_test:
         testUpDown.append(1)
 else:
     testUpDown.append(-1)
+    
 predUpDown=[]
 for pred in y_pred:
     if pred>0:
