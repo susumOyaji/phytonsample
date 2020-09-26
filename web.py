@@ -4,9 +4,9 @@ from bs4 import BeautifulSoup
 
 
 
-html=requests.get("https://kabuoji3.com/stock").text
+html=requests.get("https://www.updateurself.com/2019/11/14/the-way-to-challenge/").text
 soup = BeautifulSoup(html, "html.parser")
-print(soup.prettify)
+#print(soup.prettify)
 
 #1, scriptやstyleを含む要素を削除する
 for script in soup(["script", "style"]):
@@ -28,4 +28,4 @@ print(lines)
 
 
 #4, リストの空白要素以外をすべて文字列に戻す
-text="\n".join(line for line in lines if line)
+#text="\n".join(line for line in lines if line)
