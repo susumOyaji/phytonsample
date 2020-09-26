@@ -3,34 +3,22 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import requests
 from datetime import datetime
+from selenium  import webdriver  #Selenium Webdriverをインポートして
 
 
-
-def main():
-    #作成したコードリストを読み込む
-    code_list = pd.read_csv('code_list.csv')
-    print(code_list)
-
-#複数のデータフレームをcsvで保存
-    for i in range(len(code_list)):
-        k = code_list.loc[i,'code']
-        v = code_list.loc[i,'name']
-        print(k,v)
-        dfs = get_dfs(k)
-        data = concatenate(dfs) 
-        data.to_csv('{}-{}.csv'.format(k,v))
 
 
 def get_dfs(stock_number):
     dfs = []
-    year = [2018,2019] #2017〜2019年までの株価データを取得
+    year = [2019,2020] #2017〜2019年までの株価データを取得
     for y in year:
         try:
-            print(y)
-            url = 'https://kabuoji3.com/stock/{}/{}/'.format(stock_number,y)
-            soup = BeautifulSoup(requests.get(url).content,'html.parser')
+            url = 'https://kabuoji3.com/stock/{}/{}/'.format(stock_number, y)
+            print(url)
+            soup = BeautifulSoup(requests.get(url).content, 'html.parser')
             tag_tr = soup.find_all('tr')
-            head = [h.text for h in tag_tr[0].find_all('th')]
+            head = [h.text for h in tag_tr[0].find_all('th')]#Error
+                       
             data = []
             for i in range(1,len(tag_tr)):
                 data.append([d.text for d in tag_tr[i].find_all('td')])
@@ -55,10 +43,23 @@ def concatenate(dfs):
 
 
 
+#def main():
+    #作成したコードリストを読み込む
+code_list = pd.read_csv('code_list.csv')
+code_list.head(10)
+
+#複数のデータフレームをcsvで保存
+for i in range(len(code_list)):
+    k = code_list.loc[i,'code']
+    v = code_list.loc[i,'name']
+    print(k,v)
+    dfs = get_dfs(k)
+    data = concatenate(dfs) 
+    data.to_csv('{}-{}.csv'.format(k,v))
 
 
 
 # 最後に呼び出す
-main()
+#main()
 
 
