@@ -37,6 +37,7 @@ while date !=  end_date:
     date = datetime.strftime(strp_date, '%Y/%m/%d' )
     print(date)
     url = 'https://www.kabudragon.com/ranking/{}/yl_age200.html'.format(date)
+    #url = "https://kabuoji3.com/ranking/?date=2019-07-05&type=1&market=3"  #リストから銘柄を選択
     df, flg = get_table(url)
     if flg:
         dfs.append(df)
