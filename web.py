@@ -14,7 +14,7 @@ soup = BeautifulSoup(requests.get(url).content, 'html.parser')
 text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
 print(text)  
   
-#print(soup.prettify)
+print(soup.prettify)
 tag_span = soup.find_all('span')
 for elem in tag_span: 
   try:
@@ -48,7 +48,7 @@ for num in range(0, 1):
         data.append([d.text for d in tag_tr[i].find_all('td')])
         df = pd.DataFrame(data, columns=head)
   except IndexError:
-      print('No data')
+    pass#print('No data')
 
 
 
