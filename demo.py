@@ -15,16 +15,22 @@ from selenium import webdriver
 
 
 
-browser = webdriver.Chrome()
+#browser = webdriver.Chrome()
 #browser = webdriver.Chrome('C:/Users/seisan1/AppData/Local/Pyhon/chromedriver_win32/chromedriver')#driver = webdriver.Chrome('/usr/local/bin/chromedriver')
 columnNames=[]
 #ETFComparisonsTable = []
 KabukaComparisonsTable = []
 
 for num in range(0,4):
-    browser.get("https://kabuoji3.com/ranking/?date=2019-07-05&type=1&market=3")#リストから銘柄を選択
+    url = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code=7667" #^DJI
+    soup = BeautifulSoup(requests.get(url).content, 'html.parser')
+    print(soup)
+    #text=soup.get_text()
+
+
+    #browser.get("https://kabuoji3.com/ranking/?date=2019-07-05&type=1&market=3")#リストから銘柄を選択
     print(num)
-    stockClick=browser.find_elements_by_class_name("clickable")
+    stockClick=soup.find_elements_by_class_name("clickable")
     stockClick[num].find_element_by_tag_name("a").click()
     stockTable=browser.find_element_by_class_name("table_wrap")
     stockLine=stockTable.find_elements_by_tag_name("tr")
