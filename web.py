@@ -1,32 +1,56 @@
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
-import time
-from selenium  import webdriver  #Selenium Webdriverをインポートして
 
 
 
 
-url = "https://kabuoji3.com/ranking/?date=2019-07-05&type=1&market=3"  #リストから銘柄を選択
-urlName = "https://business.nikkei.com"
-headers = {'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36'}
-soup = BeautifulSoup(requests.get(url).content, 'html.parser')
-text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
-print(text)  
-  
-print(soup.prettify)
-tag_span = soup.find_all('span')
-for elem in tag_span: 
-  try:
-    string = elem.get("class").pop(0)
-    if string in "category":#<span class="category">小田嶋隆の「ア・ピース・オブ・警…</span>
-      #print(elem.string)
-      title = elem.find_next_sibling("h3")
-      #print(title.text.replace('\n',''))
-      r = elem.find_previous('a')
-      #print(urlName + r.get('href'), '\n')
-  except:
-    pass
+
+
+def get_htmls(stock_number):
+  urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
+  soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
+  text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
+  #print(text)
+  #print(soup)  
+
+  tag_tr = soup.find_all('tr')
+  #print(tag_tr[0])
+
+  head = [h.text for h in tag_tr[0].find_all('th')]
+  print(head[0])#ソニー（株）
+  data = [d.text for d in tag_tr[0].find_all('td')]
+  print('stoksPrice: '+data[1])
+  print(data[2])
+  #data = []
+  #for i in range(1,len(tag_tr)):
+    #data.append([d.text for d in tag_tr[i].find_all('td')])
+
+  #df = pd.DataFrame(data, columns=head)
+    # except IndexError:
+    #    print('No data')
+
+
+
+stack_code = ['6758','6976','4755']
+
+#複数のデータフレームをcsvで保存
+for i in stack_code:
+  get_htmls(i)
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #browser = webdriver.Chrome()
@@ -39,16 +63,6 @@ for elem in tag_span:
 #stockLine = stockTable.find_elements_by_tag_name("tr")
 
 
-tag_tr = soup.find_all('tr')
-for num in range(0, 1):
-  try:  
-      head = [h.text for h in tag_tr[0].find_all('th')]
-      data = []
-      for i in range(1,len(tag_tr)):
-        data.append([d.text for d in tag_tr[i].find_all('td')])
-        df = pd.DataFrame(data, columns=head)
-  except IndexError:
-    pass#print('No data')
 
 
 

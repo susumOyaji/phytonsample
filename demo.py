@@ -22,7 +22,7 @@ columnNames=[]
 KabukaComparisonsTable = []
 
 for num in range(0,1):
-    url = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code=7667"  #^DJI
+    url = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code=6758"  #^DJI
     soup = BeautifulSoup(requests.get(url).content, 'html.parser')
     print(soup)
     #text=soup.get_text()
@@ -90,10 +90,10 @@ meigara_name = "レオパレス21"
 #日付データのスクレイピング
 #browser=webdriver.Chrome()
 #browser.get("https://kabuoji3.com/stock/{}/".format(meigara_number))
-#stockTable=browser.find_element_by_class_name("table_wrap")
+#stockTable=soup.find_element_by_class_name("table_wrap")
 #stockLine = stockTable.find_elements_by_tag_name("tr")
 
-url = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code=7667"  #^DJI
+url = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code=6758"  #^DJI
 soup = BeautifulSoup(requests.get(url).content, 'html.parser')
 tag_tr = soup.find_all('tr')
 head = [h.text for h in tag_tr[0].find_all('th')]
@@ -104,7 +104,7 @@ for i in range(1,len(tag_tr)):
 
 dates=[]
 for i in range(1,152):
-    stockDate=tag_tr[i].find_elements_by_tag_name("td")
+    stockDate=soup.find_elements_by_tag_name("td")
     stockDate=stockDate[0].text
     dates.append(stockDate)
 for i in range(153,302):
