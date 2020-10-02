@@ -8,7 +8,8 @@ from bs4 import BeautifulSoup
 
 
 def get_htmls(stock_number):
-  urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
+  #urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
+  urlName ='https://info.finance.yahoo.co.jp/ranking/?kd=29&mk=1&tm=d&vl=a'
   soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
   text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   #print(text)
