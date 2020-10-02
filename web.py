@@ -8,8 +8,7 @@ from bs4 import BeautifulSoup
 
 
 def get_htmls(stock_number):
-  #urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
-  urlName ='https://info.finance.yahoo.co.jp/ranking/?kd=29&mk=1&tm=d&vl=a'
+  urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
   soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
   text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   #print(text)
@@ -32,6 +31,22 @@ def get_htmls(stock_number):
     #    print('No data')
 
 
+
+def get_hiprice():
+  urlName ='https://info.finance.yahoo.co.jp/ranking/?kd=29&mk=3&tm=d&vl='
+  soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
+  text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
+  #print(text)
+  print(soup)  
+
+  tag_tr = soup.find_all('tr')
+  #print(tag_tr[0])
+
+  head = [h.text for h in tag_tr[0].find_all('th')]
+  print(head[0])#ソニー（株）
+  data = [d.text for d in tag_tr[0].find_all('td')]
+  print('stoksPrice: '+data[1])
+  print(data[2])
 
 stack_code = ['6758','6976','4755']
 
