@@ -33,7 +33,8 @@ def get_htmls(stock_number):
 
 
 def get_hiprice():
-  urlName ='https://info.finance.yahoo.co.jp/ranking/?kd=29&mk=3&tm=d&vl=a'
+  urlName ='https://info.finance.yahoo.co.jp/ranking/?kd=29&mk=3&tm=d&vl=a'#年初来高値
+  #https://info.finance.yahoo.co.jp/ranking/?kd=1&mk=3&tm=d&vl=a値下がり率
   soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
   text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   #print(text)
