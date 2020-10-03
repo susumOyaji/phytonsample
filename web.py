@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -13,6 +15,9 @@ def get_htmls(stock_number):
   text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   #print(text)
   #print(soup)  
+  # 平均の値を取得する
+  print soup.select_one("#heikin")
+
 
   tag_tr = soup.find_all('tr')
   #print(tag_tr[0])
@@ -89,13 +94,17 @@ print('')
 print('年初来高値: '.decode('utf-8') + highs[2])
 print(' stockPrice: '+highs[4])
 print(' Hi_stockPrice: ' + highs[7])
+print('')
 print('単元当たり出来高: '.decode('utf-8') + volume[3])
 print(' Trading value: ' + volume[5])
 print(' Volume per unit: ' + volume[8])
+print('')
 print('値上がり率: '.decode('utf-8') + price[3])
 print(' stockPrice: ' + price[7])
+print('')
 print('ストップ高: '.decode('utf-8') + stop[2])
 print(' stockPrice: ' + stop[6])
+print('')
 
 
 
