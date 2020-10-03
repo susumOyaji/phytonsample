@@ -43,7 +43,7 @@ def get_Year_to_date_highs():
   return data1
 
 def  Price_drop():
-  urlName = 'https://info.finance.yahoo.co.jp/ranking/?kd=1&mk=3&tm=d&vl=a'#値下がり率
+  urlName = 'https://info.finance.yahoo.co.jp/ranking/?kd=1&mk=3&tm=d&vl=a'#値上がり率
   soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
   text = soup.get_text()  #.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   data2 = [d.text for d in soup.find_all('td')]
@@ -78,16 +78,24 @@ data1 = ''
 
 #複数のデータフレームをcsvで保存
 #for i in stack_code:
-  #get_htmls(i)
-highs = get_Year_to_date_highs()
-price = Price_drop()
-volume = Volume_per_unit()
-stop = Stop_High()
+#  get_htmls(i)
 
-print('年初来高値: '.decode('utf-8')+highs[2]+'¥'.decode('utf-8')+highs[7])
-print('値上がり率: '.decode('utf-8')+price[3]+'¥'.decode('utf-8')+price[7])
-print('単元当たり出来高: '.decode('utf-8')+volume[3]+'¥'.decode('utf-8')+volume[5]+'   '+'¥'.decode('utf-8')+volume[8])
-print('ストップ高: '.decode('utf-8') + stop[2]+'¥'.decode('utf-8')+stop[6])
+
+highs = get_Year_to_date_highs()
+volume = Volume_per_unit()
+price = Price_drop()
+stop = Stop_High()
+print('')
+print('年初来高値: '.decode('utf-8') + highs[2])
+print(' stockPrice: '+highs[4])
+print(' Hi_stockPrice: ' + highs[7])
+print('単元当たり出来高: '.decode('utf-8') + volume[3])
+print(' Trading value: ' + volume[5])
+print(' Volume per unit: ' + volume[8])
+print('値上がり率: '.decode('utf-8') + price[3])
+print(' stockPrice: ' + price[7])
+print('ストップ高: '.decode('utf-8') + stop[2])
+print(' stockPrice: ' + stop[6])
 
 
 
