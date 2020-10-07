@@ -3,7 +3,7 @@
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
-
+import time
 
 
 
@@ -16,7 +16,7 @@ def get_htmls(stock_number):
   #print(text)
   #print(soup)  
   # 平均の値を取得する
-  print soup.select_one("#heikin")
+  #print soup.select_one("#heikin")
 
 
   tag_tr = soup.find_all('tr')
@@ -26,7 +26,8 @@ def get_htmls(stock_number):
   print(head[0])#ソニー（株）
   data = [d.text for d in tag_tr[0].find_all('td')]
   print('stoksPrice: '+data[1])
-  #print(data[2])
+  print(data[2])
+  print('')
   #data = []
   #for i in range(1,len(tag_tr)):
     #data.append([d.text for d in tag_tr[i].find_all('td')])
@@ -74,38 +75,44 @@ def Stop_High():
   #for i in range(1,len(data4)):
     #print('ストップ高: '.decode('utf-8') + data4[i])
   return data4
+ 
   
 
 
 
-stack_code = ['6758', '6976', '4755']
+stack_code = ['6758', '6976', '4755','4661']
 data1 = ''
 
-#複数のデータフレームをcsvで保存
-#for i in stack_code:
-#  get_htmls(i)
+while True:
+  #複数のデータフレームをcsvで保存
+  for i in stack_code:
+    get_htmls(i)
 
 
-highs = get_Year_to_date_highs()
-volume = Volume_per_unit()
-price = Price_drop()
-stop = Stop_High()
-print('')
-print('年初来高値: '.decode('utf-8') + highs[2])
-print(' stockPrice: '+highs[4])
-print(' Hi_stockPrice: ' + highs[7])
-print('')
-print('単元当たり出来高: '.decode('utf-8') + volume[3])
-print(' Trading value: ' + volume[5])
-print(' Volume per unit: ' + volume[8])
-print('')
-print('値上がり率: '.decode('utf-8') + price[3])
-print(' stockPrice: ' + price[7])
-print('')
-print('ストップ高: '.decode('utf-8') + stop[2])
-print(' stockPrice: ' + stop[6])
-print('')
-
+  highs = get_Year_to_date_highs()
+  volume = Volume_per_unit()
+  price = Price_drop()
+  stop = Stop_High()
+    
+  print('')
+  print('年初来高値: '.decode('utf-8') + highs[2])
+  print(' stockPrice: '+highs[4])
+  print(' Hi_stockPrice: ' + highs[7])
+  print('')
+  print('単元当たり出来高: '.decode('utf-8') + volume[3])
+  print(' Trading value: ' + volume[5])
+  print(' Volume per unit: ' + volume[8])
+  print('')
+  print('値上がり率: '.decode('utf-8') + price[3])
+  print(' stockPrice: ' + price[7])
+  print('')
+  if stop:
+    print('ストップ高: '.decode('utf-8') + stop[2])
+    print('stockPrice' + stop[6])
+  else:  
+    print('ストップ高:  non')
+  print('')
+  time.sleep(0)
 
 
 
