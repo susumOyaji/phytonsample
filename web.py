@@ -38,6 +38,13 @@ def get_htmls(stock_number):
 
 
 
+
+
+
+
+
+
+
 def get_Year_to_date_highs():
   urlName ='https://info.finance.yahoo.co.jp/ranking/?kd=29&mk=3&tm=d&vl=a'#年初来高値
   soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
@@ -95,24 +102,28 @@ while True:
   stop = Stop_High()
     
   print('')
-  print('年初来高値: '.decode('utf-8') + highs[2])
+  print('年初来高値: ' + highs[2])
   print(' stockPrice: '+highs[4])
   print(' Hi_stockPrice: ' + highs[7])
   print('')
-  print('単元当たり出来高: '.decode('utf-8') + volume[3])
+  print('単元当たり出来高: ' + volume[3])
+
   print(' Trading value: ' + volume[5])
   print(' Volume per unit: ' + volume[8])
   print('')
-  print('値上がり率: '.decode('utf-8') + price[3])
+  print('値上がり率: ' + price[3])
   print(' stockPrice: ' + price[7])
   print('')
   if stop:
-    print('ストップ高: '.decode('utf-8') + stop[2])
+    print('ストップ高: ' + stop[2])
     print('stockPrice' + stop[6])
   else:  
     print('ストップ高:  non')
   print('')
-  time.sleep(0)
+  time.sleep(60)
+
+
+
 
 
 
