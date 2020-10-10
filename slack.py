@@ -165,7 +165,7 @@ def send_slack(content):
   data=json.dumps(payload)
   requests.post(slackURL,data)
 
-send_slack(resultNotification)
+#send_slack(resultNotification)
 
 
 
