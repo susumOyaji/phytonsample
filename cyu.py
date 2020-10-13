@@ -39,7 +39,7 @@ RFC_rand = RandomizedSearchCV(estimator=RandomForestClassifier(random_state=0), 
 
 #モデリングと予測
 model=RandomForestRegressor(n_estimators=1000)
-model.fit(train_x,train_y)
+model.fit(train_x,train_y.values.ravel())
 y_pred=model.predict(test_x)
 
 #結果の表示
@@ -55,7 +55,7 @@ for pred in y_pred:
     predUpDown.append(1)
   else:
     predUpDown.append(-1)
-print("確率："+str(metrics.accuracy_score(testUpDown,predUpDown)*100)+"%")
+#print("確率："+str(metrics.accuracy_score(testUpDown,predUpDown)*100)+"%")
 
 
 
