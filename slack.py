@@ -119,10 +119,14 @@ x=train[features]
 y=train[meigara_name + "：翌日比"]
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.27)
 
+
+
 #モデリングと予測
 model=RandomForestRegressor(n_estimators=1000)
 model.fit(x_train,y_train)
 y_pred=model.predict(x_test)
+
+
 
 #結果の表示
 testUpDown=[]

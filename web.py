@@ -106,10 +106,10 @@ while True:
   print(' stockPrice: '+highs[4])
   print(' Hi_stockPrice: ' + highs[7])
   print('')
-  print('単元当たり出来高: ' + volume[3])
+  print('単元当たり出来高: ' + volume[3]+' Trading value: ' + volume[5]+' Volume per unit: ' + volume[8])
+  print('単元当たり出来高: ' + volume[13]+' Trading value: ' + volume[15]+' Volume per unit: ' + volume[18])
 
-  print(' Trading value: ' + volume[5])
-  print(' Volume per unit: ' + volume[8])
+  
   print('')
   print('値上がり率: ' + price[3])
   print(' stockPrice: ' + price[7])
