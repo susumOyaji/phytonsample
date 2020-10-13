@@ -44,7 +44,7 @@ y_pred=model.predict(test_x)
 #結果の表示
 testUpDown=[]
 for test in test_y:
-  if test>0:
+  if test>str(0):
     testUpDown.append(1)
   else:
     testUpDown.append(-1)
