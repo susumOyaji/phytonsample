@@ -3,11 +3,64 @@ import numpy as np
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import RandomizedSearchCV
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestClassifier # ランダムフォレスト用
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
-from sklearn import metrics
+
+
+
+'''
+教師データをつくる
+まずは一番面倒な株価の調整後終値から教師データを作るまでのコードを用意します。
+これは終値のリストを渡すと train_X と train_y が返るようにすれば良いでしょう。
+'''
+def train_data(arr):
+    train_X = []
+    train_y = []
+    # 30 日間のデータを学習、 1 日ずつ後ろにずらしていく
+    for i in np.arange(-30, -15):
+        s = i + 14 # 14 日間の変化を素性にする
+        feature = arr.ix[i:s]
+        if feature[-1] < arr[s]: # その翌日、株価は上がったか？
+            train_y.append(1) # YES なら 1 を
+        else:
+            train_y.append(0) # NO なら 0 を
+        train_X.append(feature.values)
+    # 上げ下げの結果と教師データのセットを返す
+    return np.array(train_X), np.array(train_y)
+    #これで train_X (教師データの配列) と train_y (それに対する 1 か 0 かのラベル) が返ってきます。
+
+'''
+リターンインデックスを算出する
+さて、生の株価データそのままですと、会社ごとに価格帯も全然ちがいますから教師データとしてはちょっと使いづらいです。正規化しても良いのですが、ここは資産価値の変化をあらわすリターンインデックスに注目しましょう。算出方法は前回も書きましたがこのように pandas で求まります。
+'''
+returns = pd.Series(close).pct_change() # 騰落率を求める
+ret_index = (1 + returns).cumprod() # 累積積を求める
+ret_index[0] = 1  # 最初の値を 1.0 にする
+
+'''
+リターンインデックスの変化を決定木に学習させる
+さてここからがキモです。
+こうして求まったリターンインデックスから教師データを抽出し分類器に学習させます。
+'''
+# リターンインデックスを教師データを取り出す
+train_X, train_y = train_data(ret_index)
+# 決定木のインスタンスを生成
+clf = tree.DecisionTreeClassifier()
+# 学習させる
+clf.fit(train_X, train_y)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -36,26 +89,6 @@ RFC_raw  = RandomForestClassifier(random_state=0)
 RFC_grid = GridSearchCV(estimator=RandomForestClassifier(random_state=0), param_grid=paramG, scoring='r2', cv=3)
 RFC_rand = RandomizedSearchCV(estimator=RandomForestClassifier(random_state=0), param_distributions=paramR, scoring='r2', cv=3)
 
-
-#モデリングと予測
-model=RandomForestRegressor(n_estimators=1000)
-model.fit(train_x,train_y.values.ravel())
-y_pred=model.predict(test_x)
-
-#結果の表示
-testUpDown=[]
-for test in test_y:
-  if test>str(0):
-    testUpDown.append(1)
-  else:
-    testUpDown.append(-1)
-predUpDown=[]
-for pred in y_pred:
-  if pred>0:
-    predUpDown.append(1)
-  else:
-    predUpDown.append(-1)
-#print("確率："+str(metrics.accuracy_score(testUpDown,predUpDown)*100)+"%")
 
 
 
