@@ -18,7 +18,7 @@ sys.path.append(str(parent))
 # %%
 # 独自モジュールなど
 #import python.config_global as config
-#import python.search_stock as search_stock
+import python.search_stock as search_stock
 
 # %%
 import time

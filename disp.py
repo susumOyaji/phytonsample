@@ -9,7 +9,8 @@ import pandas as pd
 
 # 各ページのランキング表をデータフレーム化する関数
 def get_table(url):
-    soup = BeautifulSoup(requests.get(url).text, "lxml")
+    urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+url
+    soup = BeautifulSoup(requests.get(urlName).text, 'html.parser')
     if len(soup.body.find_all('tr')) > 20:
         start_line = [i  for i in range(14,20) if soup.body.find_all('tr')[i].text.splitlines()[1] == '順位']
         items = [v.text.splitlines() for i, v in enumerate(soup.body.find_all('tr')) if i > start_line[0]]

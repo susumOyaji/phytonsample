@@ -4,7 +4,7 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 import time
-
+import datetime
 
 
 
@@ -87,7 +87,7 @@ def Stop_High():
 
 
 
-stack_code = ['6758', '6976', '4755','4661']
+stack_code = ['6758', '6976', '4755','4661','3922']
 data1 = ''
 
 while True:
@@ -120,6 +120,9 @@ while True:
   else:  
     print('ストップ高:  non')
   print('')
+  dt_now = datetime.datetime.now()
+  print(dt_now)
+# 2019-02-04 21:04:15.412854
   time.sleep(60)
 
 
