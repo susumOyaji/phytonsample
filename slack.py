@@ -170,8 +170,12 @@ def send_slack(content):
   requests.post(slackURL,data)
 
 #send_slack(resultNotification)
-
-
+'''
+print(pandas.__vesion__)
+print(numpy.__vesion__)
+print(matplotlib.__vesion__)
+print(sklearn.__vesion__)
+'''
 
 
 
