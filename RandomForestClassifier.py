@@ -4,8 +4,8 @@
 from sklearn import datasets
 iris = datasets.load_iris()
 
-print(iris['feature_names'])
-print(iris['target_names'])
+print(iris['feature_names'])#特徴名
+print(iris['target_names'])#分類名
 '''
 ['sepal length (cm)', 'sepal width (cm)', 'petal length (cm)', 'petal width (cm)']
 ['setosa' 'versicolor' 'virginica']
@@ -44,6 +44,8 @@ print(accuracy)
 
 
 
+
+
 '''
 2. 回帰：RandomForestRegressor
 scikit-learnのboston(ボストン市の住宅価格)データセットを使用します。
@@ -52,13 +54,14 @@ from sklearn import datasets
 boston = datasets.load_boston()
 
 #feature_name（特徴名）を見てみます。
-
 print(boston['feature_names'])
-['CRIM' 'ZN' 'INDUS' 'CHAS' 'NOX' 'RM' 'AGE' 'DIS' 'RAD' 'TAX' 'PTRATIO'
- 'B' 'LSTAT']
-''' 
-各データには、各物件の人口統計に関する13の特徴量が記されています。 dataには、各物件の特徴量の値が登録されています。 targetには、各物件の価格が登録されています。 それでは、「データの特徴量の値を元に、住宅の価格を予測する」モデルを構築します。
-'''
+#['CRIM' 'ZN' 'INDUS' 'CHAS' 'NOX' 'RM' 'AGE' 'DIS' 'RAD' 'TAX' 'PTRATIO' 'B' 'LSTAT']
+
+
+#各データには、各物件の人口統計に関する13の特徴量が記されています。
+#dataには、各物件の特徴量の値が登録されています。 targetには、各物件の価格が登録されています。
+#それでは、「データの特徴量の値を元に、住宅の価格を予測する」モデルを構築します。
+
 
 # X,yを、それぞれランダムに学習データとテストデータに分ける（学習：テスト = 0.8：0.2）
 from sklearn.model_selection import train_test_split
@@ -76,7 +79,8 @@ RandomForestRegressor(bootstrap=True, criterion='mse', max_depth=None,
            n_estimators=10, n_jobs=1, oob_score=False, random_state=None,
            verbose=0, warm_start=False)
 
-#各パラメータについて詳しくは、分類と同様に公式ドキュメントを参照してください。 それでは、このモデルに沿ってテストデータのy値を予測し、精度を確認します。
+#各パラメータについて詳しくは、分類と同様に公式ドキュメントを参照してください。
+# それでは、このモデルに沿ってテストデータのy値を予測し、精度を確認します。
 
 # テストデータのyの予測値を求める
 y_predicted = regr.predict(X_test)
@@ -93,7 +97,8 @@ print(R2test)
 以下に挙げるのは、Random Forestの機能の一部です。 分類でも回帰でも用いることができますが、ここではボストン市住宅価格予測の回帰モデルを例に挙げて紹介します。
 '''
 #・oob_score
-#Random forestの各決定木を作る際に、モデル構築に用いられなかったサンプルを OOB（Out Of Bag）と言います。 この OOB をバリデーション用データのように用いて、バリデーションスコアを求めることができます。
+#Random forestの各決定木を作る際に、モデル構築に用いられなかったサンプルを OOB（Out Of Bag）と言います。
+#この OOB をバリデーション用データのように用いて、バリデーションスコアを求めることができます。
 
 from sklearn import datasets
 boston = datasets.load_boston()
@@ -122,7 +127,8 @@ print(oob_score)
 
 
 #・feature_importance
-#Random Forest では、各変数の重要度（feature_importance）を求めることができます。 以下のようにして、13種類の特徴量がモデル構築にそれぞれどれだけ寄与したかを求めることができます。
+#Random Forest では、各変数の重要度（feature_importance）を求めることができます。
+#以下のようにして、13種類の特徴量がモデル構築にそれぞれどれだけ寄与したかを求めることができます。
 
 # feature_importanceを求める
 feature_importances = regr.feature_importances_

@@ -29,12 +29,13 @@ print(df_sample)
 #◆Column / Index Access
 #特定の列やインデックス番号にアクセス
 #col_index_access.py
-print(df_sample.columns)   #列名を取得 
-print(df_sample.index)     #インデックス名を取得
-
+'''
+df_sample.columns   #列名を取得 
+df_sample.index     #インデックス名を取得
+'''
 
 df_sample.columns = ["day_no","class","point1","point2"]   # カラム名を上書き
-df_sample.index   = [11,12,13,14,15,16]   # インデックス名を上書きする
+df_sample.index   = [1,2,3,4,5,6]   # インデックス名を上書きする
 
 print(df_sample)
 # Renameメソッドを使う
@@ -78,7 +79,7 @@ df_sample.loc[:,["day_no","point1"]] #複数列を選択する場合にはリス
 df_sample.iloc[:,0]  # 番号で選択
 df_sample.iloc[:,0:2] #複数で連番の場合。リスト表記でも行ける
 
-
+'''
 # ixを使った列選択
 # 列名と列番号両方が使える。基本これを使っておけば良い感
 df_sample.ix[:,"day_no"] # なお、単列選択の場合には結果はPandas.Series Object
@@ -97,6 +98,7 @@ df_sample.ix[:,series_bool]  #また、Booleanの配列でも選択できる
 
 score_select = pd.Series(df_sample.columns).str.contains("score") # "score"を列名に含むかどうかの論理判定
 df_sample.ix[:,np.array(score_select)]   # 論理配列を使って列選択
+'''
 
 #◆Subsetting
 #条件文に基づいたデータの部分選択を行います
@@ -117,7 +119,7 @@ df_sample.query("day_no == 'day1'|day_no == 'day2'")
      # 複数条件の場合は、or条件の "|" もしくは and条件の "&"を間に入れてやる
 
 select_condition = "day1"
-df_sample.query("day_no == select_condition")  # ☓ doesn't work
+#df_sample.query("day_no == select_condition")  # ☓ doesn't work
         # 抽出の条件式はstr表記なので、変数名を直接入れると反応しない
 
 df_sample.query("day_no == @select_condition")  # ◯ it works
@@ -131,11 +133,11 @@ df_sample.query("index  in [11,12] ") #　or条件には、「in」も使える
 #◆Sorting
 #データの並び替えを行います。
 
-df_sample.sort("score1")  # Score1の値で昇順でソート
-df_sample.sort(["score1","score2"])  # Score1とScore2の値で昇順でソート
+df_sample.sort_values("point1")  # Score1の値で昇順でソート
+df_sample.sort_values(["point1","point2"])  # point1とpoint2の値で昇順でソート
 
 
-df_sample.sort("score1",ascending=False)  #score1の値で降順でソート
+df_sample.sort_values("point1",ascending=False)  #point1の値で降順でソート
 #◆pandas.concat
 #データの結合による、レコードや列の追加を行います。 
 
@@ -158,8 +160,7 @@ pd.concat([df_sample,df_addition_row],axis=0)  #結合を行う =rbind
 # Score1、Score2に加えて、Score3の列を追加することを考えます。
 # 追加したいデータを適当に作ります。データフレーム同士の結合を考えます。
 
-df_addition_col =\
-    pd.DataFrame([[120,160,100,180,110,80]]).T #df_sampleと同じ行数を持つDFを作成
+df_addition_col = pd.DataFrame([[120,160,100,180,110,80]]).T #df_sampleと同じ行数を持つDFを作成
 
 df_addition_col.columns =["score3"] #列名は結合後にもそのまま使われる
 df_addition_col.index   = [11,12,13,14,15,16] 
@@ -173,8 +174,7 @@ pd.concat([df_sample,df_addition_col],axis=1) #axis=1は横方向の結合を指
 # 新しいデータのインデックスが結合先と違う場合、データは互い違いな形で結合されます。
 # 下記を試してみて下さい
 
-df_addition_col =\
-    pd.DataFrame([[120,160,100,180,110,80]]).T
+df_addition_col = pd.DataFrame([[120,160,100,180,110,80]]).T
 
 df_addition_col.columns =["score3"]
 df_addition_col.index   = [11,12,13,21,22,23]   #一部はもとのデータとインデックスが一致するが、一部は一致しない
