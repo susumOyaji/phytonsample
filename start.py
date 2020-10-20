@@ -20,6 +20,8 @@ print(data)
 #data.index = [11, 12, 13, 14, 15,16]  #インデックス名を付ける
 #labels = data['day_no'] # 目的変数を取り出す
 
+# 説明変数の格納,要因とした気温と天気のデータ
+#1行目と２行目をスライスを使って配列xに格納しています。
 # 説明変数の格納
 x = data[:,0:2] # 目的変数を取り出す,すべての行の0~1列
 print('説明変数を出力\n',x)
@@ -31,10 +33,10 @@ print("目的変数を出力\n", y)
 
 #学習用データと評価用データに分割
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
-print("学習用の目的変数を出力\n", y_train)
-print("学習用の説明変数を出力\n", x_train)
-print("評価用の目的変数を出力\n", y_test)
-print("評価用の説明変数を出力\n", x_test)
+print("学習用の目的変数を出力-y_train\n", y_train)
+print("評価用の目的変数を出力-y_test\n", y_test)
+print("学習用の説明変数を出力-x_train\n", x_train)
+print("評価用の説明変数を出力-x_test\n", x_test)
 
 
 
