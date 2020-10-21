@@ -8,6 +8,40 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 
 
+filename = 'stock_N225.csv' # 日経平均株価データ
+df = pd.read_csv(filename, index_col=0, parse_dates=True)
+closed = df.asfreq('B')['Adj Close'].dropna() # 調整後終値を抽出
+
+# RSI（Relative Strength Index）
+# 次にトレンドの変化を察知するためにオシレータ系指標の中でも特に代表的な RSI を求めてみます。
+# 計算方法はリンク先に解説がありますので省略します
+# この指標は一般的に 70 を越えると買われすぎ、 30 を下回ると売られすぎと見ます。
+# こういった指標は基本となるローソク足チャートとあわせてサブプロットを利用して上下 2 段組みにするなどするとより見やすいでしょう。
+def calc_rsi(price, n=14):
+    gain = (price - price.shift(1)).fillna(0)
+
+    def rsiCalc(p):
+        avgGain = p[p > 0].sum() / n
+        avgLoss = -p[p < 0].sum() / n
+        rs = avgGain / avgLoss
+        return 100 - 100 / (1 + rs)
+
+    return pd.rolling_apply(gain, n, rsiCalc)
+
+
+
+# 銘柄の値動きと日経平均株価との移動相関を求める
+def rolling_corr_with_N225(stock, window=5):
+    d1 = pd.read_csv("".join(["stock_", stock, ".csv"]), index_col=0, parse_dates=True)
+    d2 = pd.read_csv("stock_N225.csv", index_col=0, parse_dates=True)
+    s1 = d1.asfreq('B')['Adj Close'].pct_change().dropna()
+    s2 = d2.asfreq('B')['Adj Close'].pct_change().dropna()
+    rolling_corr = pd.rolling_corr(s1, s2, window).dropna()
+
+    return rolling_corr
+
+
+
 
 '''
 教師データをつくる
