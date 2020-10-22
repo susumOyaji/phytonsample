@@ -8,6 +8,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 
 
+'''
+def DataRead():
+    with cd.open("./dataset/jpstock/1570_2018.csv", "r", "Shift-JIS", "ignore") as csv_file:
+        df = pd.read_csv(csv_file, quotechar='"', header=1, index_col=0)    # convert data frame type by index_col
+'''
 filename = 'stock_N225.csv' # 日経平均株価データ
 df = pd.read_csv(filename, index_col=0, parse_dates=True)
 closed = df.asfreq('B')['Adj Close'].dropna() # 調整後終値を抽出
