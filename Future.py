@@ -13,9 +13,108 @@ def DataRead():
     with cd.open("./dataset/jpstock/1570_2018.csv", "r", "Shift-JIS", "ignore") as csv_file:
         df = pd.read_csv(csv_file, quotechar='"', header=1, index_col=0)    # convert data frame type by index_col
 '''
+
+
+def train_data(arr):
+    train_X = []
+    train_y = []
+    # 30 日間のデータを学習、 1 日ずつ後ろにずらしていく
+    for i in np.arange(-30, -15):
+        s = i + 14 # 14 日間の変化を素性にする
+        feature = arr.ix[i:s]
+        if feature[-1] < arr[s]: # その翌日、株価は上がったか？
+            train_y.append(1) # YES なら 1 を
+        else:
+            train_y.append(0) # NO なら 0 を
+        train_X.append(feature.values)
+    # 上げ下げの結果と教師データのセットを返す
+    return np.array(train_X), np.array(train_y)
+
+
+# リターンインデックス
+# 金融の世界におけるリターンとは通常はある日を起算日とした資産価格のパーセント変化を指します。
+# 単純なリターンインデックスは pandas を利用して次のように求まります。
+def get_ret_index(close):
+    # データーが昇順（日付が過去が上になって最新が一番下）になっている前提
+    returns = pd.Series(close).pct_change() # 騰落率を求める
+    ret_index = (1 + returns).cumprod() # 累積積を求める
+    ret_index[0] = 1 # 最初の値を 1.0 にする
+    return ret_index
+
+
+
+
+
+# csv ファイルからの時系列データ読み込み
 filename = 'stock_N225.csv' # 日経平均株価データ
 df = pd.read_csv(filename, index_col=0, parse_dates=True)
-closed = df.asfreq('B')['Adj Close'].dropna() # 調整後終値を抽出
+df = df[-30:] # 直近の 30 日間
+# リターンインデックスを求めてリストにする
+indexes = get_ret_index(df)['ret_index'].values.tolist()
+# DTS を表示
+if stock == "9682":
+    ts = df.index.values
+    for t, v in zip(ts, indexes):
+        print(t,v)
+
+
+
+#リターンインデックスの変化を決定木に学習させる
+#さてここからがキモです。
+#こうして求まったリターンインデックスから教師データを抽出し分類器に学習させます。
+
+
+# リターンインデックスを教師データを取り出す
+train_X, train_y = train_data(ret_index)
+# 決定木のインスタンスを生成
+clf = tree.DecisionTreeClassifier()
+# 学習させる
+clf.fit(train_X, train_y)
+
+#これであとは clf.predict() 関数にテストデータを渡すことで予測結果が返ってくるようになります。
+
+#1 が返ってくれば株価は「上がる」
+#0 が返ってくれば株価は「下がる」
+#と予測されたことになります。
+
+
+
+#うまく学習したかどうか分類器を試す
+#さっそく試してみましょう。
+#まずはテストとして、教師データとまったく同じデータをテストデータとして流してみます。
+
+
+test_y = []
+# 過去 30 日間のデータでテストをする
+for i in np.arange(-30, -15):
+    s = i + 14
+    # リターンインデックスのt全く同じ期間をテストとして分類させてみる
+    test_X = ret_index.ix[i:s].values
+
+    # 結果を格納して返す
+    result = clf.predict(test_X)
+    test_y.append(result[0])
+
+print(train_y) # 期待すべき答え
+#=> [1 1 1 0 1 1 0 0 0 1 0 1 0 0 0]
+
+print(np.array(test_y)) # 分類器が出した予測
+#=> [1 1 1 0 1 1 0 0 0 1 0 1 0 0 0]
+#おや、まったく同じ。すなわち全問正解のようですね。
+
+
+
+
+
+
+
+
+
+
+
+
+
+#closed = df.asfreq('B')['Adj Close'].dropna() # 調整後終値を抽出
 
 # RSI（Relative Strength Index）
 # 次にトレンドの変化を察知するためにオシレータ系指標の中でも特に代表的な RSI を求めてみます。
@@ -44,7 +143,6 @@ def rolling_corr_with_N225(stock, window=5):
     rolling_corr = pd.rolling_corr(s1, s2, window).dropna()
 
     return rolling_corr
-
 
 
 
