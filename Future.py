@@ -35,8 +35,11 @@ def train_data(arr):
 # 金融の世界におけるリターンとは通常はある日を起算日とした資産価格のパーセント変化を指します。
 # 単純なリターンインデックスは pandas を利用して次のように求まります。
 def get_ret_index(close):
+    print(close)
     # データーが昇順（日付が過去が上になって最新が一番下）になっている前提
-    returns = pd.Series(close).pct_change() # 騰落率を求める
+    #
+    returns = pd.Series(close).pct_change()  # 騰落率を求める,pct_change() = (A - B) / Bで変化率を算出する。
+    print(returns)
     ret_index = (1 + returns).cumprod() # 累積積を求める
     ret_index[0] = 1 # 最初の値を 1.0 にする
     return ret_index
@@ -48,7 +51,8 @@ def get_ret_index(close):
 # csv ファイルからの時系列データ読み込み
 filename = 'stock_N225.csv' # 日経平均株価データ
 df = pd.read_csv(filename, index_col=0, parse_dates=True)
-df = df[-30:] # 直近の 30 日間
+df = df[-30:]  # 直近の 30 日間
+
 # リターンインデックスを求めてリストにする
 indexes = get_ret_index(df)['ret_index'].values.tolist()
 # DTS を表示
