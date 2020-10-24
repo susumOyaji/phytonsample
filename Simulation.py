@@ -28,6 +28,11 @@ end = datetime.now()
 start = datetime(end.year - 1,end.month,end.day)
 
 # それぞれの企業ごとに、Yahooのサイトからデータを取得します
+
+# csv ファイルからの時系列データ読み込み
+#filename = 'stock_N225.csv' # 日経平均株価データ
+#df = pd.read_csv(filename, index_col=0, parse_dates=True)
+
 for stock in tech_list:   
     # それぞれの名前でDataFrameを作ります。
     globals()[stock] = DataReader(stock, 'yahoo', start, end)
