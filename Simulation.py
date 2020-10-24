@@ -22,7 +22,7 @@ from datetime import datetime
 
 # 所謂ハイテク企業の株価を扱ってみます。
 tech_list = ['AAPL','GOOG','MSFT','AMZN']
-
+tech_list1 = ['stock_N225.csv']
 # 直近1年間のデータを使ってみましょう。
 end = datetime.now()
 start = datetime(end.year - 1,end.month,end.day)
@@ -30,12 +30,13 @@ start = datetime(end.year - 1,end.month,end.day)
 # それぞれの企業ごとに、Yahooのサイトからデータを取得します
 
 # csv ファイルからの時系列データ読み込み
-#filename = 'stock_N225.csv' # 日経平均株価データ
-#df = pd.read_csv(filename, index_col=0, parse_dates=True)
+filename = tech_list1 # 日経平均株価データ
 
-for stock in tech_list:   
+
+for stock in tech_list1:   
     # それぞれの名前でDataFrameを作ります。
-    globals()[stock] = DataReader(stock, 'yahoo', start, end)
+    #globals()[stock] = DataReader(stock, 'yahoo', start, end)
+    globals()[stock] = pd.read_csv(stock, index_col=0, parse_dates=True)
     
 # データの概観を掴むことができます。
 AAPL.describe()
