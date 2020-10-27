@@ -2,6 +2,9 @@
 import pandas as pd
 from pandas import Series,DataFrame
 import numpy as np
+from bs4 import BeautifulSoup
+import requests
+import csv
 
 # 可視化のためのセットです。
 import matplotlib.pyplot as plt
@@ -21,35 +24,53 @@ from datetime import datetime
 
 
 # 所謂ハイテク企業の株価を扱ってみます。
-tech_list = ['AAPL','GOOG','MSFT','AMZN']
+tech_list = ['998407','AAPL','GOOG','MSFT','AMZN']
 tech_list1 = ['stock_N225.csv']
 # 直近1年間のデータを使ってみましょう。
 end = datetime.now()
 start = datetime(end.year - 1,end.month,end.day)
 
 # それぞれの企業ごとに、Yahooのサイトからデータを取得します
+#url = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code=6758"  #^DJI
+#    soup = BeautifulSoup(requests.get(url).content, 'html.parser')
+#    print(soup)
+
+urlName ='https://info.finance.yahoo.co.jp/ranking/?kd=29&mk=3&tm=d&vl=a'#年初来高値
+soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
+text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
+  
+data1 = [d.text for d in soup.find_all('td')]
+print(data1)
+df = data1
+df.to_csv('employee.csv',sep=',')
+
+
 
 # csv ファイルからの時系列データ読み込み
-filename = tech_list1 # 日経平均株価データ
+filename = 'N225.csv' # 日経平均株価データ
+#filename = tech_list # 日経平均株価データ
 
+data = pd.read_csv(filename)
 
-for stock in tech_list1:   
+#for stock in tech_list1:   
     # それぞれの名前でDataFrameを作ります。
     #globals()[stock] = DataReader(stock, 'yahoo', start, end)
-    globals()[stock] = pd.read_csv(stock, index_col=0, parse_dates=True)
+    #globals()[stock] = pd.read_csv(filename, index_col=0, parse_dates=True)
     
 # データの概観を掴むことができます。
-AAPL.describe()
-AAPL.info()
+#AAPL.describe()
+#AAPL.info()
+data.describe()
+data.info()
 
 # 終値の時系列をプロットしてみます。
-AAPL['Adj Close'].plot(legend=True, figsize=(10, 4))
+data['Adj Close'].plot(legend=True, figsize=(10, 4))
 plt.show()
 
 
 
 # 今度は出来高（1日に取引が成立した株の数）をプロットします。
-AAPL['Volume'].plot(legend=True,figsize=(10,4))
+data['Volume'].plot(legend=True,figsize=(10,4))
 plt.show()
 
 
@@ -60,29 +81,33 @@ ma_day = [10,20,50]
 
 for ma in ma_day:
     column_name = "MA {}".format(str(ma))
-    AAPL[column_name] = AAPL['Adj Close'].rolling(ma).mean()
+    data[column_name] = data['Adj Close'].rolling(ma).mean()
 
-AAPL[['Adj Close', 'MA 10', 'MA 20', 'MA 50']].plot(subplots=False, figsize=(10, 4))
+data[['Adj Close', 'MA 10', 'MA 20', 'MA 50']].plot(subplots=False, figsize=(10, 4))
 plt.show()
 
 
 #株式投資のリスクを管理するために、日ごとの変動について計算してみます。
 # pct_changeを使うと、変化の割合を計算できます。
-AAPL['Daily Return'] = AAPL['Adj Close'].pct_change()
+data['Daily Return'] = data['Adj Close'].pct_change()
 # 変化率をプロットしてみましょう。
-AAPL['Daily Return'].plot(figsize=(10, 4), legend=True, linestyle='--', marker='o')
+data['Daily Return'].plot(figsize=(10, 4), legend=True, linestyle='--', marker='o')
 plt.show()
 
 
 
 #前日比（％）のヒストグラムを描いてみましょう。Seabornを使えば、KDEプロットも一緒に描けます。
 # NaNを取り除くコードを書いておく必要があります。
-sns.distplot(AAPL['Daily Return'].dropna(), bins=100, color='purple')
+sns.distplot(data['Daily Return'].dropna(), bins=100, color='purple')
 # こんなコードでもOK
 # AAPL['Daily Return'].hist(bins=100)
 
 
 
+
+
+
+'''
 #ハイテク4社の株価を1つのDataFrameにまとめてみましょう。
 # 簡単なコードで実現出来ます。
 closing_df = DataReader(['AAPL','GOOG','MSFT','AMZN'],'yahoo',start,end)['Adj Close']
@@ -103,5 +128,5 @@ plt.show()
 # GoogleとMicrosoftを比べてみます。
 sns.jointplot('GOOG', 'MSFT', tech_rets, kind='scatter')
 plt.show()
-
+'''
 
