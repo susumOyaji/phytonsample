@@ -40,17 +40,21 @@ soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
 text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   
 data1 = [d.text for d in soup.find_all('td')]
-print(data1)
-df = data1
-df.to_csv('employee.csv',sep=',')
+#print(data1)
+df = pd.DataFrame(np.arange(len(data1)).reshape(14, 9))
+#print(np.arange(len(data1)).reshape(9, 14))
+#df = pd.DataFrame(data1)
+print(df.values)
+print(list(df.columns))
+#df.to_csv('employee.csv',sep=',')
 
 
 
 # csv ファイルからの時系列データ読み込み
-filename = 'N225.csv' # 日経平均株価データ
+#filename = 'N225.csv' # 日経平均株価データ
 #filename = tech_list # 日経平均株価データ
 
-data = pd.read_csv(filename)
+#data = pd.read_csv(df)
 
 #for stock in tech_list1:   
     # それぞれの名前でDataFrameを作ります。
@@ -60,11 +64,11 @@ data = pd.read_csv(filename)
 # データの概観を掴むことができます。
 #AAPL.describe()
 #AAPL.info()
-data.describe()
-data.info()
+df.describe()
+df.info()
 
 # 終値の時系列をプロットしてみます。
-data['Adj Close'].plot(legend=True, figsize=(10, 4))
+df['Adj Close'].plot(legend=True, figsize=(10, 4))
 plt.show()
 
 
