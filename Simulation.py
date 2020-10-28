@@ -40,14 +40,27 @@ soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
 text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   
 data1 = [d.text for d in soup.find_all('td')]
-#print(data1)
-df = pd.DataFrame(np.arange(len(data1)).reshape(14, 9))
-#print(np.arange(len(data1)).reshape(9, 14))
-#df = pd.DataFrame(data1)
-print(df.values)
-print(list(df.columns))
-#df.to_csv('employee.csv',sep=',')
+data2 = np.array(data1).reshape(int(len(data1) / 9), 9).tolist()
+df = pd.DataFrame(data = data2)
+df.columns = ["code_no","class","name","today","stock","day","stock1","stock2","a"]  #カラム名を付ける
+#data2.index   = [11,12,13,14,15,16]  #インデックス名を付ける
 
+data2_del = np.delete(data2, 1, None)
+print(data2)
+print(data2_del)
+
+df.to_csv('CSVファイル名.csv')
+data = pd.read_csv('CSVファイル名.csv',index_col=0)
+data.plot(legend=True, figsize=(10, 4))
+plt.show()
+
+
+#data.plot(x=data["code_no"],y=data["stock2"], kind='hist', bins=15)
+#plt.show()
+
+
+print(list(df.columns))
+print(df.values)
 
 
 # csv ファイルからの時系列データ読み込み
@@ -64,17 +77,17 @@ print(list(df.columns))
 # データの概観を掴むことができます。
 #AAPL.describe()
 #AAPL.info()
-df.describe()
-df.info()
+#df.describe()
+#df.info()
 
 # 終値の時系列をプロットしてみます。
-df['Adj Close'].plot(legend=True, figsize=(10, 4))
+data['code_no'].plot(legend=True, figsize=(10, 3))
 plt.show()
 
 
 
 # 今度は出来高（1日に取引が成立した株の数）をプロットします。
-data['Volume'].plot(legend=True,figsize=(10,4))
+data['code_no'].plot(legend=True,figsize=(10,4))
 plt.show()
 
 
@@ -85,15 +98,15 @@ ma_day = [10,20,50]
 
 for ma in ma_day:
     column_name = "MA {}".format(str(ma))
-    data[column_name] = data['Adj Close'].rolling(ma).mean()
+    data[column_name] = data['code_no'].rolling(ma).mean()
 
-data[['Adj Close', 'MA 10', 'MA 20', 'MA 50']].plot(subplots=False, figsize=(10, 4))
+data[['code_no', 'MA 10', 'MA 20', 'MA 50']].plot(subplots=False, figsize=(10, 4))
 plt.show()
 
 
 #株式投資のリスクを管理するために、日ごとの変動について計算してみます。
 # pct_changeを使うと、変化の割合を計算できます。
-data['Daily Return'] = data['Adj Close'].pct_change()
+data['Daily Return'] = data['code_no'].pct_change()
 # 変化率をプロットしてみましょう。
 data['Daily Return'].plot(figsize=(10, 4), legend=True, linestyle='--', marker='o')
 plt.show()
