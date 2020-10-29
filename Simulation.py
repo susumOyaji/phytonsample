@@ -35,32 +35,67 @@ start = datetime(end.year - 1,end.month,end.day)
 #    soup = BeautifulSoup(requests.get(url).content, 'html.parser')
 #    print(soup)
 
-urlName ='https://info.finance.yahoo.co.jp/ranking/?kd=29&mk=3&tm=d&vl=a'#年初来高値
-soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
-text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
-  
-data1 = [d.text for d in soup.find_all('td')]
-data2 = np.array(data1).reshape(int(len(data1) / 9), 9).tolist()
-df = pd.DataFrame(data = data2)
-df.columns = ["code_no","class","name","today","stock","day","stock1","stock2","a"]  #カラム名を付ける
+urlName1 ='https://info.finance.yahoo.co.jp/ranking/?kd=29&mk=3&tm=d&vl=a'#年初来高値
+soup1 = BeautifulSoup(requests.get(urlName1).content, 'html.parser')
+text1 = soup1.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
+data1 = [d.text for d in soup1.find_all('td')]
+data_1 = np.array(data1).reshape(int(len(data1) / 9), 9).tolist()
+df1 = pd.DataFrame(data = data_1)
+df1.columns = ["code","market","name","Trading time","Transaction price","business day","Year-to-date high","High price","Bulletin board"]  #カラム名を付ける
+#df1.columns = ["ｺｰﾄﾞ","市場","名称","取引時間","取引値","前営業","年初来高値","高値","掲示板"]  #カラム名を付ける
 #data2.index   = [11,12,13,14,15,16]  #インデックス名を付ける
 
-data2_del = np.delete(data2, 1, None)
-print(data2)
-print(data2_del)
 
-df.to_csv('CSVファイル名.csv')
+urlName2 = 'https://info.finance.yahoo.co.jp/ranking/?kd=1&mk=3&tm=d&vl=a'#値上がり率
+soup2 = BeautifulSoup(requests.get(urlName2).content, 'html.parser')
+text2 = soup2.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
+data2 = [d.text for d in soup2.find_all('td')]
+
+urlName3 ='https://info.finance.yahoo.co.jp/ranking/?kd=32&mk=3&tm=d&vl=a'#単元当たり出来高  
+soup3 = BeautifulSoup(requests.get(urlName3).content, 'html.parser')
+text3 = soup3.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
+data3 = [d.text for d in soup3.find_all('td')]
+
+
+urlName4 = 'https://info.finance.yahoo.co.jp/ranking/?kd=27&mk=3&tm=d&vl=a'#ストップ高  
+soup4 = BeautifulSoup(requests.get(urlName4).content, 'html.parser')
+text4 = soup4.get_text()  #.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
+data4 = [d.text for d in soup4.find_all('td')]
+
+
+
+
+
+  
+#data1 = [d.text for d in soup1.find_all('td')]
+#data2 = np.array(data1).reshape(int(len(data1) / 9), 9).tolist()
+#df = pd.DataFrame(data = data2)
+#df.columns = ["ｺｰﾄﾞ","市場","名称","today","stock","day","stock1","stock2","a"]  #カラム名を付ける
+#data2.index   = [11,12,13,14,15,16]  #インデックス名を付ける
+
+print(list(df1.columns))
+print(df1.values)
+
+#データをいじってみよう
+#データから特定の列だけを選択する
+#組み込み関数__get_item___を使った選択
+df1["code"] #列名を書いて指定
+select = df1[["code","market","name","High price"]] #複数列を選択する場合にはリスト表記を使う
+print(select)
+
+
+
+df1.to_csv('CSVファイル名.csv')
 data = pd.read_csv('CSVファイル名.csv',index_col=0)
 data.plot(legend=True, figsize=(10, 4))
-plt.show()
-
-
-#data.plot(x=data["code_no"],y=data["stock2"], kind='hist', bins=15)
 #plt.show()
 
 
-print(list(df.columns))
-print(df.values)
+#data.plot(x=data["ｺｰﾄﾞ"],y=data["stock2"], kind='hist', bins=15)
+#plt.show()
+
+
+
 
 
 # csv ファイルからの時系列データ読み込み
@@ -81,13 +116,13 @@ print(df.values)
 #df.info()
 
 # 終値の時系列をプロットしてみます。
-data['code_no'].plot(legend=True, figsize=(10, 3))
+data['code'].plot(legend=True, figsize=(10, 3))
 plt.show()
 
 
 
 # 今度は出来高（1日に取引が成立した株の数）をプロットします。
-data['code_no'].plot(legend=True,figsize=(10,4))
+data['code'].plot(legend=True,figsize=(10,4))
 plt.show()
 
 
@@ -98,15 +133,15 @@ ma_day = [10,20,50]
 
 for ma in ma_day:
     column_name = "MA {}".format(str(ma))
-    data[column_name] = data['code_no'].rolling(ma).mean()
+    data[column_name] = data['code'].rolling(ma).mean()
 
-data[['code_no', 'MA 10', 'MA 20', 'MA 50']].plot(subplots=False, figsize=(10, 4))
+data[['code', 'MA 10', 'MA 20', 'MA 50']].plot(subplots=False, figsize=(10, 4))
 plt.show()
 
 
 #株式投資のリスクを管理するために、日ごとの変動について計算してみます。
 # pct_changeを使うと、変化の割合を計算できます。
-data['Daily Return'] = data['code_no'].pct_change()
+data['Daily Return'] = data['High price'].astype(float).pct_change(0)
 # 変化率をプロットしてみましょう。
 data['Daily Return'].plot(figsize=(10, 4), legend=True, linestyle='--', marker='o')
 plt.show()
