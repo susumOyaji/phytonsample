@@ -142,7 +142,8 @@ data[['code', 'MA 10', 'MA 20', 'MA 50']].plot(subplots=False, figsize=(10, 4))
 #株式投資のリスクを管理するために、日ごとの変動について計算してみます。
 # pct_changeを使うと、変化の割合を計算できます。
 #for rep in range(5):
-print(type(data['High price']))
+print(type(data['High price'][0]))
+print((data['High price'][0].replace(',','')))
 
 #print(float(data['High price']))
 data['Daily Return'] = data['code'].astype(float).pct_change(1)
