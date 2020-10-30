@@ -117,13 +117,13 @@ data.plot(legend=True, figsize=(10, 4))
 
 # 終値の時系列をプロットしてみます。
 data['code'].plot(legend=True, figsize=(10, 3))
-plt.show()
+#plt.show()
 
 
 
 # 今度は出来高（1日に取引が成立した株の数）をプロットします。
 data['code'].plot(legend=True,figsize=(10,4))
-plt.show()
+#plt.show()
 
 
 # pandasはもともと金融情報を扱うために作られていたので、色々な機能があります。
@@ -136,12 +136,16 @@ for ma in ma_day:
     data[column_name] = data['code'].rolling(ma).mean()
 
 data[['code', 'MA 10', 'MA 20', 'MA 50']].plot(subplots=False, figsize=(10, 4))
-plt.show()
+#plt.show()
 
 
 #株式投資のリスクを管理するために、日ごとの変動について計算してみます。
 # pct_changeを使うと、変化の割合を計算できます。
-data['Daily Return'] = data['High price'].astype(float).pct_change(0)
+#for rep in range(5):
+print(type(data['High price']))
+
+#print(float(data['High price']))
+data['Daily Return'] = data['code'].astype(float).pct_change(1)
 # 変化率をプロットしてみましょう。
 data['Daily Return'].plot(figsize=(10, 4), legend=True, linestyle='--', marker='o')
 plt.show()
