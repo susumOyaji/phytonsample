@@ -22,9 +22,9 @@ def main():
    conn = create_connection(database)
    
    with conn:
-      delete_task(conn, 2)
-      # delete_all_tasks(conn);
-
+      #delete_task(conn, 2)
+      #delete_all_tasks(conn)
+      learn_db_init(database)
 
 
 
@@ -85,7 +85,7 @@ def create_connection(db_file):
 
 
 
-def delete_task(con, id):
+def delete_task(conn, id):
     """
     Delete a task by task id
     :param conn:  Connection to the SQLite database
@@ -93,19 +93,19 @@ def delete_task(con, id):
     :return:
     """
     sql = 'DELETE FROM tasks WHERE id=?'
-    cur = con.cursor()
+    cur = conn.cursor()
     cur.execute(sql, (id,))
     conn.commit()
 
 
-def delete_all_tasks(conn):
+def delete_all_tasks(con):
     """
     Delete all rows in the tasks table
     :param conn: Connection to the SQLite database
     :return:
     """
     sql = 'DELETE FROM tasks'
-    cur = conn.cursor()
+    cur = con.cursor()
     cur.execute(sql)
     conn.commit()
 
