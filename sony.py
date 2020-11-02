@@ -15,13 +15,22 @@ ltday=[];
 
 
 
+def main():
+   database = "stockdatadase.db"
+
+    # create a database connection
+   conn = create_connection(database)
+   
+   with conn:
+      delete_task(conn, 2)
+      # delete_all_tasks(conn);
 
 
 
 
-def test_sqlite3():
-  dbname = 'stockdatabase.db'
-  with closing(sqlite3.connect(dbname)) as conn:
+def learn_db_init(db_file):
+   #dbname = 'stockdatabase.db'
+   with closing(sqlite3.connect(db_file)) as conn:
       con = conn.cursor()
 
       # executeメソッドでSQL文を実行する
@@ -56,6 +65,7 @@ def test_sqlite3():
       for row in con.execute(select_sql):
           print(row)
 
+   return con
 
 
 def create_connection(db_file):
@@ -73,9 +83,9 @@ def create_connection(db_file):
     return conn
 
 
-    
 
-def delete_task(conn, id):
+
+def delete_task(con, id):
     """
     Delete a task by task id
     :param conn:  Connection to the SQLite database
@@ -83,7 +93,7 @@ def delete_task(conn, id):
     :return:
     """
     sql = 'DELETE FROM tasks WHERE id=?'
-    cur = conn.cursor()
+    cur = con.cursor()
     cur.execute(sql, (id,))
     conn.commit()
 
@@ -100,19 +110,7 @@ def delete_all_tasks(conn):
     conn.commit()
 
 
-def main():
 
-   test_sqlite3()
-   delete_task(conn, 2)
-   '''
-    database = "stockdatabase.db"
-
-    # create a database connection
-    conn = create_connection(database)
-    with conn:
-        delete_task(conn, 2)
-        # delete_all_tasks(conn);
-   '''
 
 
 
@@ -267,6 +265,7 @@ def rnd_forest(ltree_scode,tscode,tdate):#株価予想
 
 if __name__ == '__main__':
     main()
+    
 
 letf=["1309","1313","1314","1322","1326","1343","1543","1548","1551","1633","1671","1673","1678","1681","1682","1693","1698","1699"];
 ans=rnd_forest(letf,'6758',"2017-03-07");  
