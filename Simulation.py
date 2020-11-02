@@ -85,9 +85,9 @@ print(select)
 
 
 
-#df1.to_csv('CSVファイル名.csv')
+df1.to_csv('CSVファイル名.csv')
 data = pd.read_csv('CSVファイル名.csv',index_col=0)
-#data.plot(legend=True, figsize=(10, 4))
+data.plot(legend=True, figsize=(10, 4))
 #plt.show()
 
 
@@ -116,13 +116,13 @@ data = pd.read_csv('CSVファイル名.csv',index_col=0)
 #df.info()
 
 # 終値の時系列をプロットしてみます。
-#data['code'].plot(legend=True, figsize=(10, 3))
+data['code'].plot(legend=True, figsize=(10, 3))
 #plt.show()
 
 
 
 # 今度は出来高（1日に取引が成立した株の数）をプロットします。
-#data['code'].plot(legend=True,figsize=(10,4))
+data['code'].plot(legend=True,figsize=(10,4))
 #plt.show()
 
 
@@ -135,18 +135,23 @@ for ma in ma_day:
     column_name = "MA {}".format(str(ma))
     data[column_name] = data['code'].rolling(ma).mean()
 
-#data[['code', 'MA 10', 'MA 20', 'MA 50']].plot(subplots=False, figsize=(10, 4))
+data[['code', 'MA 10', 'MA 20', 'MA 50']].plot(subplots=False, figsize=(10, 4))
 #plt.show()
 
 
 #株式投資のリスクを管理するために、日ごとの変動について計算してみます。
 # pct_changeを使うと、変化の割合を計算できます。
 _data = []
-for rep in range(10):
-    _data.append(int(data['High price'][rep].replace(',', '')))
+for rep in range(5):
+    print(type(data['High price'][rep]))
+    _data = float(data['High price'][rep].replace(',',''))
+    print(_data)
 
-s = pd.Series(_data)    
-data['Daily Return'] = s.pct_change(1)
+    
+
+
+#print(float(data['High price']))
+data['Daily Return'] = _data.pct_change()
 # 変化率をプロットしてみましょう。
 data['Daily Return'].plot(figsize=(10, 4), legend=True, linestyle='--', marker='o')
 plt.show()
