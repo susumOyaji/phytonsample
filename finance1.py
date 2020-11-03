@@ -130,4 +130,6 @@ def showGraph(stocks=stockSymbols , start = stockStartDate , end = today , col="
     plt.legend(my_stocks.columns.values , loc="upper left")
     
     plt.show()
+
+    
 showGraph(stockSymbols)
