@@ -114,7 +114,7 @@ import matplotlib.pyplot as plt
 plt.style.use('fivethirtyeight')
 
 ticker_symbols=[ "SNE" , "AAPL" , "TYOYY" , "RKUNY" ]
-startdate="2014-01-01"
+startdate="2020-01-01"
 today = datetime.today().strftime("%Y-%m-%d")
 print(today)
 

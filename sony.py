@@ -24,12 +24,12 @@ def main():
    with conn:
       #delete_task(conn, 2)
       #delete_all_tasks(conn)
-      learn_db_init(database)
+      learn_db_init()
 
 
 
-def learn_db_init(db_file):
-   #dbname = 'stockdatabase.db'
+def learn_db_init():
+   dbname = 'stockdatabase.db'
    with closing(sqlite3.connect(db_file)) as conn:
       con = conn.cursor()
 
@@ -108,6 +108,24 @@ def delete_all_tasks(con):
     cur = con.cursor()
     cur.execute(sql)
     conn.commit()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
