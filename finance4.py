@@ -37,19 +37,19 @@ end_date= datetime.today().strftime("%Y-%m-%d")
 
 #今回はマイクロソフトの株で確認を行います。マイクロソフトのティッカーシンボルがMSFTです。
 # 今回は2020年の1月1日から2020年の本日までの株式情報を取得して行きましょう。
-microsoft_stock = web.DataReader('MSFT',data_source ="yahoo",start = start_date,end = end_date)
+sony_stock_all = web.DataReader('SNE',data_source ="yahoo",start = start_date,end = end_date)
 
 #まずは取得できているか確認してみましょう。
-print(microsoft_stock)
+print(sony_stock_all)
 
 #使ってない標準ライブラリーをコメントアウトして実行してみます。
 #これで実際にデータが取れていることが確認できます。
 
 #次に必要のないデータをカットして行きましょう。今回は終わり値だけ分析を行います。
-microsoft_stock = web.DataReader('SNE',data_source ="yahoo",start = start_date,end = end_date)["Adj Close"]
+sony_stock = web.DataReader('SNE',data_source ="yahoo",start = start_date,end = end_date)["Adj Close"]
 #これを差し込んで実際に確認してみましょう。
 #終わり値だけ取得できていることが確認できます。
-print(microsoft_stock)
+print(sony_stock)
 #デッドクロスとゴールデンクロスを表示するという意味です。
 '''
 ※投資を初心者の方のために、移動平均とは文字通り過去の履歴の平均値を表示しているものです。
@@ -68,56 +68,74 @@ print(microsoft_stock)
 オンラインサロンなんかも同じことです。現代版の一種の宗教団体が少しビジネスかじっただけです。
 結局のところ成功するためには、自信の作品であり、製品であり、アプリなどを作りサービスを提供しないといけません。
 '''
-
+'''
 list = microsoft_stock
 
 #test = 'test'
 #test_int = 111
-data1 = []
+data1 = {}
 
 
-data1['STCK']=microsoft_stock
+data1['STCK'] = microsoft_stock
 data1['SMA1'] = microsoft_stock.rolling(window=25).mean()#list
 data1['SMA2'] = microsoft_stock.rolling(window=50).mean()#list
 print(data1['STCK'])
 print(data1['SMA1'])
 print(data1['SMA2'])
 
-data1['STCK'].plot(figsize=(18,8))
-data1['SMA1'].plot(figsize=(18,8))
-data1['SMA2'].plot(figsize=(18,8))
-print(data1)
-data1.plot(figsize=(18,8))
+#data1['STCK'].plot(figsize=(18,8))
+#data1['SMA1'].plot(figsize=(18,8))
+#data1['SMA2'].plot(figsize=(18,8))
+#print(data1)
 
-plt.show()
+data1['STCK', 'SMA1', 'SMA2'].plot(figsize=(18,8))
 
-
-
-
-
-
-
-print(data1)
+data1 = {}
+data1[[microsoft_stock,'SMA1','SMA2']]
+'''
 
 
 # ②rollingを使って移動平均を計算します。ローリング統計を用いて単純移動平均を表示してみます。
 # まずはマイクロソフトのデータを価格のみにしてあげましょう。
 data={}
 # 次に短期SMAを設定します。(25期間の)
-data['SMA1'] = microsoft_stock.rolling(window=25).mean
+data['SMA1'] = sony_stock.rolling(window=25).mean()
 
 #次に長期SMAを設定します。(252期間の)
-data['SMA2'] = microsoft_stock.rolling(window=252).mean
+data['SMA2'] = sony_stock.rolling(window=50).mean()
 
-#データをプロットして行きます。
-data[[microsoft_stock,'SMA1','SMA2']].plot(figsize=(18,8))
+
+
+
+#図のタイトルを決めます。
+plt.title("sony stock History")
+
+#終値をプロットさせます。
+#plt.plot(sony_stock["Adj Close"])
+data['STCK'] = sony_stock
+data['STCK'].plot(figsize=(18, 8))
+data['SMA1'].plot(figsize=(18, 8))
+data['SMA2'].plot(figsize=(18, 8))
+#plt.show()
+
+
+monthly = sony_stock_all.groupby(pd.Grouper(level=0, freq='M')).mean()
+print(monthly)
+ax = monthly['High'].plot(legend=True)
+monthly[['Low', 'Open']].plot.bar(ax=ax, rot=30)
+plt.show()
+
+#データをプロットして行きます。data(3要素のリストのリスト)
+#df.plot()=df to displaydata(csv)
+
+data[[sony_stock,'SMA1','SMA2']].plot(figsize=(18,8))
 
 #③デッドクロスとゴールデンクロスを実際に可視化してみます。
 #先ほどと同じように
-data['position'] = np.where(data['SMA1']>data['SMA2'],1,-1)
+data['positions'] = np.where(data['SMA1']>data['SMA2'],1,-1)
 #上記は三項演算ですね。
 
-ax = data[[microsoft_stock,'SMA1','SMA2','positions']].plot(figsize=(10,6))
+ax = data['STCK'],data['SMA1'],data['SMA2'],data['positions'].plot(figsize=(10,6))
 #ここで、アンカーも表示しましょう。
 
 ax.get_legend().set_bbox_to_anchor((0.25,0.85))

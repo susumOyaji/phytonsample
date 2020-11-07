@@ -9,96 +9,97 @@ python finance3
 
 import math
 #pandasのdatareaderをwebとしてインポートします。
-
 import pandas_datareader as web
+
 #行列の計算などに便利なnumpyをnpとしてインポートします。
-
 import numpy as np
+
 #データ集取や加工に便利なpandasをpdとしてインポートします。
-
 import pandas as pd
+
 #次にここが重要です。正規化をするためのSklearnからMinMaxScalerをインポートします。※正規化は後で説明致します。
-
 from sklearn.preprocessing import MinMaxScaler
+
 #層を積み上げるためkerasからSequentialのインポートします。
-
 from keras.models import Sequential
+
 #LSTMをインポートします。
-
 from keras.layers import Dense,LSTM
+
 #最後にグラフ化させるのにMatplotlib.pyplotをpltでインポートします。
-
 import matplotlib.pyplot as plt
-#次は前回と同じように株価を取得していきます。今回は2020年の1月1日から2020年の6月までの株式情報を取得して行きましょう。
 
+#次は前回と同じように株価を取得していきます。今回は2020年の1月1日から2020年の6月までの株式情報を取得して行きましょう。
 from datetime import datetime
 
 
 today = datetime.today().strftime("%Y-%m-%d")
 sony_stock = web.DataReader("SNE",data_source="yahoo",start="2020-01-01",end=today)
+
 #まずは取得できているか確認してみましょう。
-
 print(sony_stock)
+
 #使ってない標準ライブラリーをコメントアウトして実行してみます。
+#このようにgoogleの株が確認できます。2日あいているのは、株式取引が閉鎖されていた日です。
 
-#このようにgoogleの株が確認できます。2日あいているのは、株式取引が閉鎖されていた日です。次に、google_stockのデータの型を確認しましょう。
-
+# 次に、google_stockのデータの型を確認しましょう。
 print(sony_stock.shape)
+
 #これで実行しますと。
-
 #確認の結果、2128行と6列のデータであることが確認できます。次にデータを視覚化させましょう。図のサイズをきます。
-
 plt.figure(figsize=(18,8))
+
 #図のタイトルを決めます。
-
 plt.title("sony stock History")
+
 #終値をプロットさせます。
-
 plt.plot(sony_stock["Close"])
+
 #X軸のラベルを書きます
-
 plt.xlabel("sony_date" ,fontsize=18)
+
 #Y軸のラベルを書きます
-
 plt.ylabel("Close Price ($)",fontsize=18)
+
 #グラフを表示します
-
 plt.show()
+
 #これで実行し確認してみますと。
+#2013年に株を保有していた人は2020年には４倍にまで上がっていることが確認できますね。
 
-#2013年に株を保有していた人は2020年には４倍にまで上がっていることが確認できますね。次にデータを加工するため新しい変数にデータを入れ込みます。
-
+# 次にデータを加工するため新しい変数にデータを入れ込みます。
 sony_data = sony_stock.filter(["Close"])
-#google_dataの各要素をgoogle_close変数に入れ込みます。
 
+#google_dataの各要素をgoogle_close変数に入れ込みます。
 sony_close = sony_data.values
+
 # ここからがすごく重要です。予測したデータと実際の結果がどれだけ似ているのか検証するためにも機会学習をさせるためデータを分ける必要があります。
 # つまり、実際にデータの80％を使用して残りの20％のデータを予測させ、実際のデータと比較します。
+
 # ですので訓練用データとテスト用データに分けましょう。訓練用データは、先ほどのデータに0.8かけてtrainig_data変数を用意します。
-
 trainig_data = math.ceil(len(sony_close)*0.8)
+
 #trainig_data変数の型を確認しましょう。
-
 print(trainig_data)
-#これで実行しますと。
 
+#これで実行しますと。
 #このように2003×0.8の1603が取れます。次にデータの正規化を行っていきます。正規化とは簡単に言いますと、
 # 今のデータをデータ分析しやすい形にするという意味です。イメージとしては、テストの成績をイメージしてください。
 # 科目によって難しさは異なりますよね、例えば平均点が40点の中でとる60点と平均点が90点のテストの中の60点では相対的な出来が異なります。
 # 要は正規化とは統一するというイメージです。データを一定のルールに基づいて変形し利用しやすくしたものです。
 # 今回はMinMaxScalerメソッドを使用します。これは簡単に言いますと計算する前に全体のデータを0〜1の間にそのまま抑えましょうという意味です。
 # 本来であればデータとして2や-5などのデータが存在すると思いますが、これをそのまま縮小させ、0から1の間の割合に入れ込むという意味です。
+
 # まず、正規化変数スケイラーを作成しそれに入れ込みます。
-
 scaler=MinMaxScaler(feature_range=(0,1))
+
 #データセットを保持するスケールデータと呼ばれる変数を作成します。ここでデータを0と1の間で変換しましょう。
-
 scaled_data = scaler.fit_transform(sony_close)
+
 #実際にscaled_dataの中身を確認してみましょう。
-
 print(scaled_data)
-#これを実行しますと
 
+#これを実行しますと
 #このように正規化されたデータが確認できます。
 
 #次に学習のためのデータを作成します。まず初めに行うことは正規化した学習のためのデータをセットすることです。
