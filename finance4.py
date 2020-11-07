@@ -122,7 +122,7 @@ data['SMA2'].plot(figsize=(18, 8))
 monthly = sony_stock_all.groupby(pd.Grouper(level=0, freq='M')).mean()
 print(monthly)
 ax = monthly['High'].plot(legend=True)
-monthly[['Low', 'Open']].plot.bar(ax=ax, rot=30)
+monthly[['Low', 'Open']].plot(ax=ax, rot=30)
 plt.show()
 
 #データをプロットして行きます。data(3要素のリストのリスト)
