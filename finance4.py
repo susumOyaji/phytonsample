@@ -101,7 +101,7 @@ data={}
 data_all = {}
 # 次に短期SMAを設定します。(25期間の)
 data_all['SMA1'] = sony_stock_all.rolling(window=25).mean()
-
+print(data_all['SMA1'])
 #次に長期SMAを設定します。(252期間の)
 data_all['SMA2'] = sony_stock_all.rolling(window=50).mean()
 
@@ -129,10 +129,11 @@ data_all[['Low', 'Open','Adj Close']].plot(ax=ax, rot=30)
 #データをプロットして行きます。data(3要素のリストのリスト)
 #df.plot()=df to displaydata(csv)
 
-data[[sony_stock_all]].plot(figsize=(18,8))
+#data[[sony_stock_all]].plot(figsize=(18,8))
 
 #③デッドクロスとゴールデンクロスを実際に可視化してみます。
 #先ほどと同じように
+#np.where(a < 4, True, False)条件を満たす場合はTrue, 満たさない場合はFalseとする。
 data_all['positions'] = np.where(data_all['SMA1'] > data_all['SMA2'],1,-1)
 #上記は三項演算ですね。
 
