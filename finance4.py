@@ -98,11 +98,12 @@ data1[[microsoft_stock,'SMA1','SMA2']]
 # ②rollingを使って移動平均を計算します。ローリング統計を用いて単純移動平均を表示してみます。
 # まずはマイクロソフトのデータを価格のみにしてあげましょう。
 data={}
+data_all = {}
 # 次に短期SMAを設定します。(25期間の)
-data['SMA1'] = sony_stock.rolling(window=25).mean()
+data_all['SMA1'] = sony_stock_all.rolling(window=25).mean()
 
 #次に長期SMAを設定します。(252期間の)
-data['SMA2'] = sony_stock.rolling(window=50).mean()
+data_all['SMA2'] = sony_stock_all.rolling(window=50).mean()
 
 
 
@@ -114,28 +115,28 @@ plt.title("sony stock History")
 #plt.plot(sony_stock["Adj Close"])
 data['STCK'] = sony_stock
 data['STCK'].plot(figsize=(18, 8))
-data['SMA1'].plot(figsize=(18, 8))
-data['SMA2'].plot(figsize=(18, 8))
+data_all['SMA1'].plot(figsize=(18, 8))
+data_all['SMA2'].plot(figsize=(18, 8))
+
+
+
+data_all = sony_stock_all#.groupby(pd.Grouper(level=0, freq='M')).mean()
+print(data_all)
+ax = data_all['High'].plot(legend=True)
+data_all[['Low', 'Open','Adj Close']].plot(ax=ax, rot=30)
 #plt.show()
-
-
-monthly = sony_stock_all.groupby(pd.Grouper(level=0, freq='M')).mean()
-print(monthly)
-ax = monthly['High'].plot(legend=True)
-monthly[['Low', 'Open']].plot(ax=ax, rot=30)
-plt.show()
 
 #データをプロットして行きます。data(3要素のリストのリスト)
 #df.plot()=df to displaydata(csv)
 
-data[[sony_stock,'SMA1','SMA2']].plot(figsize=(18,8))
+data[[sony_stock_all]].plot(figsize=(18,8))
 
 #③デッドクロスとゴールデンクロスを実際に可視化してみます。
 #先ほどと同じように
-data['positions'] = np.where(data['SMA1']>data['SMA2'],1,-1)
+data_all['positions'] = np.where(data_all['SMA1'] > data_all['SMA2'],1,-1)
 #上記は三項演算ですね。
 
-ax = data['STCK'],data['SMA1'],data['SMA2'],data['positions'].plot(figsize=(10,6))
+ax = data_all[[sony_stock_all,'SMA1','SMA2','positions']].plot(figsize=(10,6))
 #ここで、アンカーも表示しましょう。
 
 ax.get_legend().set_bbox_to_anchor((0.25,0.85))
