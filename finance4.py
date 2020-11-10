@@ -101,10 +101,10 @@ data={}
 data_all = {}
 # 次に短期SMAを設定します。(25期間の)
 data_all['SMA1'] = sony_stock_all.rolling(window=25).mean()
-print(data_all['SMA1'])
+print('SMA1',data_all['SMA1'])
 #次に長期SMAを設定します。(252期間の)
 data_all['SMA2'] = sony_stock_all.rolling(window=50).mean()
-
+print('SMA2',data_all['SMA2'])
 
 
 
@@ -119,7 +119,7 @@ data_all['SMA1'].plot(figsize=(18, 8))
 data_all['SMA2'].plot(figsize=(18, 8))
 
 
-
+##############################################################################
 data_all = sony_stock_all#.groupby(pd.Grouper(level=0, freq='M')).mean()
 print(data_all)
 ax = data_all['High'].plot(legend=True)
@@ -129,7 +129,7 @@ data_all[['Low', 'Open','Adj Close']].plot(ax=ax, rot=30)
 #データをプロットして行きます。data(3要素のリストのリスト)
 #df.plot()=df to displaydata(csv)
 
-#data[[sony_stock_all]].plot(figsize=(18,8))
+data_all[['Low','SMA1','SMA2']].plot(figsize=(18,8))
 
 #③デッドクロスとゴールデンクロスを実際に可視化してみます。
 #先ほどと同じように
