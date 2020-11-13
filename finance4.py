@@ -37,19 +37,19 @@ end_date= datetime.today().strftime("%Y-%m-%d")
 
 #今回はマイクロソフトの株で確認を行います。マイクロソフトのティッカーシンボルがMSFTです。
 # 今回は2020年の1月1日から2020年の本日までの株式情報を取得して行きましょう。
-sony_stock_all = web.DataReader('SNE',data_source ="yahoo",start = start_date,end = end_date)
+sony_stock = web.DataReader('SNE',data_source ="yahoo",start = start_date,end = end_date)
 
 #まずは取得できているか確認してみましょう。
-print(sony_stock_all)
+print(sony_stock)
 
 #使ってない標準ライブラリーをコメントアウトして実行してみます。
 #これで実際にデータが取れていることが確認できます。
 
 #次に必要のないデータをカットして行きましょう。今回は終わり値だけ分析を行います。
-sony_stock = web.DataReader('SNE',data_source ="yahoo",start = start_date,end = end_date)["Adj Close"]
+sony_stock_Adj_Close = web.DataReader('SNE',data_source ="yahoo",start = start_date,end = end_date)["Adj Close"]
 #これを差し込んで実際に確認してみましょう。
 #終わり値だけ取得できていることが確認できます。
-print(sony_stock)
+print(sony_stock_Adj_Close)
 #デッドクロスとゴールデンクロスを表示するという意味です。
 '''
 ※投資を初心者の方のために、移動平均とは文字通り過去の履歴の平均値を表示しているものです。
@@ -100,11 +100,29 @@ data1[[microsoft_stock,'SMA1','SMA2']]
 data={}
 data_all = {}
 # 次に短期SMAを設定します。(25期間の)
-data_all['SMA1'] = sony_stock_all.rolling(window=25).mean()
-print('SMA1',data_all['SMA1'])
+sony_stock['SMA1'] = sony_stock["Adj Close"].rolling(window=25).mean()#移動平均を求める際には、「rolling」と「mean」という関数を利用します。
+print('SMA1',sony_stock)
+
+sony_stock.query('SMA1 >= 5 | SMA1 <= -5').loc[:,['Data','Adj Close','SMA1','乖離率']]
+
+'''
+初めに、csvファイルをpandasに取り込みます。
+>>> import pandas
+>>> df = pandas.read_csv("./USDJPY.csv")
+
+作成したデータフレームに、計算結果のカラムを新規で追加してあげます。右辺が計算式ですね。
+>>> df['２５日移動平均'] = df['終値'].rolling(window=25).mean()
+>>> df['乖離率'] = (df['終値'] - df['２５日移動平均']) / df['２５日移動平均'] * 100
+'''
+
+
+# カラムが追加されていることを確認できます。
+# 25日以前は、必要なデータ数が不足しているので、NaN(Not a Number)となってます。
+
+
 #次に長期SMAを設定します。(252期間の)
-data_all['SMA2'] = sony_stock_all.rolling(window=50).mean()
-print('SMA2',data_all['SMA2'])
+sony_stock['SMA2'] = sony_stock['Adj Close'].rolling(window=50).mean()
+print('SMA2',sony_stock)
 
 
 
@@ -113,31 +131,30 @@ plt.title("sony stock History")
 
 #終値をプロットさせます。
 #plt.plot(sony_stock["Adj Close"])
-data['STCK'] = sony_stock
-data['STCK'].plot(figsize=(18, 8))
-data_all['SMA1'].plot(figsize=(18, 8))
-data_all['SMA2'].plot(figsize=(18, 8))
+
+sony_stock['SMA1'].plot(figsize=(18, 8))
+sony_stock['SMA2'].plot(figsize=(18, 8))
 
 
 ##############################################################################
-data_all = sony_stock_all#.groupby(pd.Grouper(level=0, freq='M')).mean()
-print(data_all)
-ax = data_all['High'].plot(legend=True)
-data_all[['Low', 'Open','Adj Close']].plot(ax=ax, rot=30)
-#plt.show()
+#data_all = sony_stock_all#.groupby(pd.Grouper(level=0, freq='M')).mean()
+#print('data_all',data_all)
+#ax = data_all['High'].plot(legend=True)
+#data_all[['Low', 'Open','Adj Close']].plot(ax=ax, rot=30)
+plt.show()
 
 #データをプロットして行きます。data(3要素のリストのリスト)
 #df.plot()=df to displaydata(csv)
 
-data_all[['Low','SMA1','SMA2']].plot(figsize=(18,8))
+sony_stock[['Low','SMA1','SMA2']].plot(figsize=(18,8))
 
 #③デッドクロスとゴールデンクロスを実際に可視化してみます。
 #先ほどと同じように
 #np.where(a < 4, True, False)条件を満たす場合はTrue, 満たさない場合はFalseとする。
-data_all['positions'] = np.where(data_all['SMA1'] > data_all['SMA2'],1,-1)
+sony_stock['positions'] = np.where(sony_stock['SMA1'] > sony_stock['SMA2'],1,-1)
 #上記は三項演算ですね。
 
-ax = data_all[[sony_stock_all,'SMA1','SMA2','positions']].plot(figsize=(10,6))
+ax = sony_stock[[sony_stock,'SMA1','SMA2','positions']].plot(figsize=(10,6))
 #ここで、アンカーも表示しましょう。
 
 ax.get_legend().set_bbox_to_anchor((0.25,0.85))
