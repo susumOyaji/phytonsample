@@ -34,7 +34,7 @@ from datetime import datetime
 
 
 today = datetime.today().strftime("%Y-%m-%d")
-sony_stock = web.DataReader("SNE",data_source="yahoo",start="2020-01-01",end=today)
+sony_stock = web.DataReader("GOOG",data_source="yahoo",start="2020-01-01",end=today)
 
 #まずは取得できているか確認してみましょう。
 print(sony_stock)
@@ -62,7 +62,7 @@ plt.xlabel("sony_date" ,fontsize=18)
 plt.ylabel("Close Price ($)",fontsize=18)
 
 #グラフを表示します
-plt.show()
+#plt.show()
 
 #これで実行し確認してみますと。
 #2013年に株を保有していた人は2020年には４倍にまで上がっていることが確認できますね。
@@ -80,7 +80,7 @@ sony_close = sony_data.values
 trainig_data = math.ceil(len(sony_close)*0.8)
 
 #trainig_data変数の型を確認しましょう。
-print(trainig_data)
+print('trainig_data',trainig_data)
 
 #これで実行しますと。
 #このように2003×0.8の1603が取れます。次にデータの正規化を行っていきます。正規化とは簡単に言いますと、
@@ -151,17 +151,17 @@ for i in range (60, len(test_data)):
         x_test.append(test_data[ i - 60:i , 0 ])
 #Yは実際の結果ですのでｙを設定する必要はありません。そして前回と同じように
 
-x_test= np.array(x_test)
+x_test = np.array(x_test)
 #このままだと2次元のデータとなっています。LSTMでの予測は3次元での予測となりますので、３次元配列に戻してあげましょう。
-x_test = np.reshape(x_test,(x_test[0],x_test[1],1))
 
+x_test = np.reshape(x_test,(x_test[0],x_test[1],1))#３次元配列。
 
 #次にモデルの予測結果を取得します。
 predictions = model.predict(x_test)
 predictions = scaler.inverse_transform(predictions)
 
-#次に二乗平均平方根誤差も確認しえみます。（略してMSE）
-chek_mse = np.sqrt(np.mean(prediction - y_test)**2)
+#次に二乗平均平方根誤差も確認してみます。（略してMSE）
+chek_mse = np.sqrt(np.mean(predictions - y_test)**2)
 print(chek_mse)
 
 #データをプロットしていきます。
@@ -189,42 +189,3 @@ plt.show()
 # また、補足説明として、上記を理解した上でのテクニカル指標を用いたトレード方法をご紹介しています。
 # クオンツトレーダー向けの講座となりますので、よりいっそう難しくなりますが、株価や為替トレード以外にも応用できますので、
 # 是非、気になる方はご覧ください。以上で、python finance3を終了致します。ご清聴ありがとうございました。(๑╹ω╹๑ )
-'''
-Tweet Share Hatena Pocket RSS feedly Pin it
-この記事のタイトルとURLをコピーする
-【python finance2】pythonでGAFAの株を実際に運用してみよう！
-【python finance4】pythonで株価を分析し確認し予測してみよう！
-最近の記事
-関連記事
-おすすめ記事
-特集記事
-コメント
-0 コメント
-0 トラックバック
-この記事へのコメントはありません。
-
-
-名前（例：山田 太郎）( 必須 )
-E-MAIL( 必須 ) - 公開されません -
-URL
-CAPTCHA
-
-上に表示された文字を入力してください。
-アーカイブ
-月を選択
-
-最近の記事
-[Python财务3]让我们实际使用LSTM预测Google股票价格！
-[Python财务2]让我们实际使用Python操作GAFA股票！
-[Python财务1]让我们用python分析GAFA股票价格！
-【python finance4】pythonで株価を分析し確認し予測してみよう！
- 
- 
- 
-Home Business Blog Team App Download
-Aiが好きな仲間を募集
-私たちの作品
-Copyright © 2020
-
-PAGE TOP
-'''

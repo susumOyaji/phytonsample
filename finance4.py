@@ -135,7 +135,7 @@ plt.title("sony stock History")
 sony_stock['SMA1'].plot(figsize=(18, 8))
 sony_stock['SMA2'].plot(figsize=(18, 8))
 
-
+sony_stock[[sony_stock_Adj_Close, ’SMA1’,‘SMA2’]].plot(figsize=(18,8))
 ##############################################################################
 #data_all = sony_stock_all#.groupby(pd.Grouper(level=0, freq='M')).mean()
 #print('data_all',data_all)
