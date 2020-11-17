@@ -34,7 +34,7 @@ from datetime import datetime
 
 
 today = datetime.today().strftime("%Y-%m-%d")
-sony_stock = web.DataReader("GOOG",data_source="yahoo",start="2020-01-01",end=today)
+sony_stock = web.DataReader("GOOG",data_source="yahoo",start="2012-01-01",end="2020-06-01")
 
 #まずは取得できているか確認してみましょう。
 print(sony_stock)
@@ -97,7 +97,7 @@ scaler=MinMaxScaler(feature_range=(0,1))
 scaled_data = scaler.fit_transform(sony_close)
 
 #実際にscaled_dataの中身を確認してみましょう。
-print(scaled_data)
+print('Scale_Data',scaled_data)
 
 #これを実行しますと
 #このように正規化されたデータが確認できます。
@@ -121,7 +121,7 @@ for i in range (60, len(train_data)):
 x_train,y_train = np.array(x_train),np.array(y_train)
 #ここでx_trainの型を確認してみましょう。
 
-print(x_train.shape)
+print('X_train.Shape',x_train.shape)
 # このように2次元の(1543,60)行列になっていることが確認できますね。
 # LSTMでの予測は3次元での予測となりますので、3次元配列に戻してあげましょう。
 # ここで計算しやすいように2次元配列を3次元配列に変更します。
@@ -153,8 +153,7 @@ for i in range (60, len(test_data)):
 
 x_test = np.array(x_test)
 #このままだと2次元のデータとなっています。LSTMでの予測は3次元での予測となりますので、３次元配列に戻してあげましょう。
-
-x_test = np.reshape(x_test,(x_test[0],x_test[1],1))#３次元配列。
+x_test = np.reshape(x_test,(x_test.shape[0], x_test.shape[1],1))#３次元配列。
 
 #次にモデルの予測結果を取得します。
 predictions = model.predict(x_test)
