@@ -76,7 +76,8 @@ sony_close = sony_data.values
 # ここからがすごく重要です。予測したデータと実際の結果がどれだけ似ているのか検証するためにも機会学習をさせるためデータを分ける必要があります。
 # つまり、実際にデータの80％を使用して残りの20％のデータを予測させ、実際のデータと比較します。
 
-# ですので訓練用データとテスト用データに分けましょう。訓練用データは、先ほどのデータに0.8かけてtrainig_data変数を用意します。
+# ですので訓練用データとテスト用データに分けましょう。
+# 訓練用データは、先ほどのデータに0.8かけてtrainig_data変数を用意します。
 trainig_data = math.ceil(len(sony_close)*0.8)
 
 #trainig_data変数の型を確認しましょう。
@@ -104,8 +105,8 @@ print('Scale_Data',scaled_data)
 
 #次に学習のためのデータを作成します。まず初めに行うことは正規化した学習のためのデータをセットすることです。
 # train_dataという変数を作成し、設置します。
-training_data = math.ceil(len(scaled_data) * 0.8)#my to Add
-train_data = scaled_data[0:training_data , : ]
+#training_data = math.ceil(len(scaled_data) * 0.8)#my to Add
+train_data = scaled_data[0:trainig_data , : ]
 
 #学習用と予測結果の変数を用意します。
 x_train = []
@@ -126,12 +127,10 @@ print('X_train.Shape',x_train.shape)
 # LSTMでの予測は3次元での予測となりますので、3次元配列に戻してあげましょう。
 # ここで計算しやすいように2次元配列を3次元配列に変更します。
 # reshapeを使用して行列改めて作成します。
-
 x_train = np.reshape(x_train,(x_train.shape[0],x_train.shape[1],1))
 #これを差し込みましてもう一度実行してみます。このように
 
 #(1543,60,1)が出力されました。次に、機会学習を行っていきます。
-
 model = Sequential()
 model.add(LSTM(50,return_sequences = True , input_shape= (x_train.shape[1],1)))
 model.add(LSTM(50,return_sequences = False))
@@ -143,15 +142,20 @@ model.compile(loss='mean_squared_error', optimizer='adam')
 #そして80％のデータを機会学習させます。
 model.fit(x_train,y_train,batch_size=1,epochs=1)
 
-#次に使用していなかった1543〜2003までのスケーリングされた値を含む新しい配列を作成しましょう。手順はほとんど同じです。
-test_data = scaled_data[trainig_data - 60 : ,  : ]
+# 次に使用していなかった1543〜2003までのスケーリングされた値を含む新しい配列を作成しましょう。
+# 手順はほとんど同じです。
+test_data = scaled_data[trainig_data - 60 : ,  : ]#traning_data = sony_close
 x_test = [ ]
-y_test = test_data[training_data: , :  ]
+y_test = scaled_data[trainig_data: , :  ]
+#開始位置startと終了位置stopに加えて、増分stepも指定可能。[start:stop:step]のように書く。
+#例えばstepを2とした場合、奇数個目の要素のみ、または偶数個目の要素のみを取得できる。
+
 for i in range (60, len(test_data)):
         x_test.append(test_data[ i - 60:i , 0 ])
-#Yは実際の結果ですのでｙを設定する必要はありません。そして前回と同じように
-
+#Yは実際の結果ですのでｙを設定する必要はありません。
+# そして前回と同じように
 x_test = np.array(x_test)
+
 #このままだと2次元のデータとなっています。LSTMでの予測は3次元での予測となりますので、３次元配列に戻してあげましょう。
 x_test = np.reshape(x_test,(x_test.shape[0], x_test.shape[1],1))#３次元配列。
 
@@ -164,8 +168,9 @@ chek_mse = np.sqrt(np.mean(predictions - y_test)**2)
 print(chek_mse)
 
 #データをプロットしていきます。
-train = data[ : trainig_data_len]
-valid = data[trainig_data_len : ]
+data = []
+train = data[ : trainig_data]
+valid = data[trainig_data : ]
 valid["predictions"] = predictions
 plt.figure(figsize=(16,8))
 plt.title("Model")
