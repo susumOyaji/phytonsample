@@ -171,6 +171,7 @@ print(chek_mse)
 data = []
 train = data[ : trainig_data]
 valid = data[trainig_data : ]
+print(valid)
 valid["predictions"] = predictions
 plt.figure(figsize=(16,8))
 plt.title("Model")
