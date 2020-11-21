@@ -1,4 +1,4 @@
-#このプログラムは、Netflix株の価格を予測しようとします。
+#このプログラムは、Sony株の価格を予測しようとします。
 
 #次に、プログラム全体で使用される依存関係をインストールします。
 #依存関係をインストールします
@@ -98,13 +98,13 @@ predictions = tree_prediction
 #データのプロット
 valid =  df[X.shape[0]:]
 valid['Predictions'] = predictions #予測価格を保持する「Predictions」という新しい列を作成する
-plt.figure(figsize=(16,8))
+plt.figure(figsize=(18,8))
 plt.title('Model')
 plt.xlabel('Days',fontsize=18)
 plt.ylabel('Close Price USD ($)',fontsize=18)
 plt.plot(df['Adj Close'])
 plt.plot(valid[['Adj Close','Predictions']])
-plt.legend(['Train', 'Val', 'Prediction' ], loc='lower right')
+plt.legend(['Train', 'Val', 'Prediction' ], loc='upper left')
 plt.show()
 
 
@@ -113,13 +113,13 @@ predictions = lr_prediction
 #Plot the data
 valid =  df[X.shape[0]:]
 valid['Predictions'] = predictions #Create a new column called 'Predictions' that will hold the predicted prices
-plt.figure(figsize=(16,8))
+plt.figure(figsize=(18,8))
 plt.title('Model')
 plt.xlabel('Days',fontsize=18)
 plt.ylabel('Close Price USD ($)',fontsize=18)
 plt.plot(df['Adj Close'])
 plt.plot(valid[['Adj Close','Predictions']])
-plt.legend(['Train', 'Val', 'Prediction' ], loc='lower right')
+plt.legend(['Train', 'Val', 'Prediction' ], loc='upper left')
 plt.show()
 
 #このように予測値と実際の結果が出力されたことが確認できます。
