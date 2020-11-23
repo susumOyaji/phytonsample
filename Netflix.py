@@ -8,7 +8,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split 
 import matplotlib.pyplot as plt
-plt.style.use('bmh')
+#plt.style.use('bmh')
 from datetime import datetime
 #pandasのdatareaderをwebとしてインポートします。
 import pandas_datareader as web
@@ -20,7 +20,7 @@ sony_stock = web.DataReader("SNE",data_source="yahoo",start="2012-01-01",end=tod
 #データファイルを変数に格納し、データの最初の6行を出力します。
 #df = pd.read_csv('NFLX_Stock.csv')
 df = sony_stock
-df.head(6)
+#df.head(6)
 
 
 #データを視覚化します。Sonyの終値がグラフでどのように見えるかを見たいです。
@@ -29,12 +29,12 @@ plt.title('Sony', fontsize = 18)
 plt.xlabel('Days', fontsize= 18)
 plt.ylabel('Close Price USD ($)', fontsize = 18)
 plt.plot(df['Adj Close'])
-plt.show()
+#plt.show()
 
 
 #ここで、Sonyの終値のみを取得してデータフレームに保存し、画像を印刷したいと思います。
-df = df[['Adj Close']]
-df.head(4)
+#df = df[['Adj Close']]
+#df.head(4)
 
 
 # 将来の「x」日を予測する変数を作成します。
@@ -45,15 +45,15 @@ future_days = 25
 #Create a new column (the target or dependent variable) shifted 'x' units/days up
 df['Prediction'] = df[['Adj Close']].shift(-future_days)
 #print the data
-df.tail(4)
+#df.tail(4)
 
 #フィーチャデータセットを作成して印刷します。
 X = np.array(df.drop(['Prediction'],1))[:-future_days] 
-print(X)
+#print(X)
 
 #ターゲットデータセットを作成して印刷します。
 y = np.array(df ['Prediction'])[:-future_days] 
-print(y)
+#print(y)
 
 
 #データを75％のトレーニングデータセットと25％のテストデータセットに分割します。
@@ -78,7 +78,8 @@ x_future = df.drop(['Prediction'],1)[:-future_days]
 x_future = x_future.tail(future_days)
 #データセットをnumpy配列に
 x_future = np.array(x_future)
-x_future
+#x_future
+
 
 
 
@@ -86,10 +87,12 @@ x_future
 #モデルツリー予測を
 tree_prediction = tree.predict(x_future)
 print( tree_prediction )
-print()
+
+
 #モデル線形回帰予測を
+#回帰分析を使って今までに取得したデータから未来の数値を予測します
+#回帰分析には、線形と非線形回帰がありまして線形回帰モデル以外は非線形回帰モデルになります
 lr_prediction = lr.predict(x_future)
-print(lr_prediction)
 
 
 #予測値を視覚化し、実際の値または有効な値と比較します。
@@ -105,7 +108,7 @@ plt.ylabel('Close Price USD ($)',fontsize=18)
 plt.plot(df['Adj Close'])
 plt.plot(valid[['Adj Close','Predictions']])
 plt.legend(['Train', 'Val', 'Prediction' ], loc='upper left')
-plt.show()
+#plt.show()
 
 
 #Visualize the data
@@ -117,9 +120,9 @@ plt.figure(figsize=(18,8))
 plt.title('Model')
 plt.xlabel('Days',fontsize=18)
 plt.ylabel('Close Price USD ($)',fontsize=18)
-plt.plot(df['Adj Close'])
-plt.plot(valid[['Adj Close','Predictions']])
-plt.legend(['Train', 'Val', 'Prediction' ], loc='upper left')
+plt.plot(df['Adj Close'],color = 'k')
+plt.plot(valid[['Adj Close','Predictions']],color='r')
+plt.legend(['Train', 'Val', 'Prediction' ], loc='upper left')#凡例と表示位置
 plt.show()
 
 #このように予測値と実際の結果が出力されたことが確認できます。
