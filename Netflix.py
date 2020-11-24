@@ -16,7 +16,7 @@ import pandas_datareader as web
 
 today = datetime.today().strftime("%Y-%m-%d")
 #次は株価を取得していきます。今回は2020年の1月1日から本日までの株式情報を取得して行きましょう。
-sony_stock = web.DataReader("SNE",data_source="yahoo",start="2012-01-01",end=today)
+sony_stock = web.DataReader("RKUNY",data_source="yahoo",start="2015-01-01",end=today)
 #データファイルを変数に格納し、データの最初の6行を出力します。
 #df = pd.read_csv('NFLX_Stock.csv')
 df = sony_stock
@@ -24,13 +24,14 @@ df = sony_stock
 
 
 #データを視覚化します。Sonyの終値がグラフでどのように見えるかを見たいです。
+'''
 plt.figure(figsize=(18,8))
 plt.title('Sony', fontsize = 18)
 plt.xlabel('Days', fontsize= 18)
 plt.ylabel('Close Price USD ($)', fontsize = 18)
 plt.plot(df['Adj Close'])
-#plt.show()
-
+plt.show()
+'''
 
 #ここで、Sonyの終値のみを取得してデータフレームに保存し、画像を印刷したいと思います。
 #df = df[['Adj Close']]
@@ -42,6 +43,7 @@ plt.plot(df['Adj Close'])
 # これは本質的に、「x」日上にシフトされた終値です。次に、最後の4行のデータを出力します。
 #Create a variable to predict 'x' days out into the future
 future_days = 25
+
 #Create a new column (the target or dependent variable) shifted 'x' units/days up
 df['Prediction'] = df[['Adj Close']].shift(-future_days)
 #print the data
@@ -62,8 +64,10 @@ x_train,x_test,y_train,y_test = train_test_split(X,y,test_size = 0.25)
 
 # モデルを作成する時間です。
 # このプログラムで使用されるモデルは、ディシジョンツリーリグレッサと線形回帰を使用します。
+
 # デシジョンツリーリグレッサモデル
 tree = DecisionTreeRegressor().fit(x_train, y_train)
+
 # 線形回帰モデルを作成する
 lr = LinearRegression().fit(x_train, y_train)
 
@@ -99,6 +103,7 @@ lr_prediction = lr.predict(x_future)
 #データ予測の視覚
 predictions = tree_prediction
 #データのプロット
+'''
 valid =  df[X.shape[0]:]
 valid['Predictions'] = predictions #予測価格を保持する「Predictions」という新しい列を作成する
 plt.figure(figsize=(18,8))
@@ -108,21 +113,21 @@ plt.ylabel('Close Price USD ($)',fontsize=18)
 plt.plot(df['Adj Close'])
 plt.plot(valid[['Adj Close','Predictions']])
 plt.legend(['Train', 'Val', 'Prediction' ], loc='upper left')
-#plt.show()
-
+plt.show()
+'''
 
 #Visualize the data
 predictions = lr_prediction
 #Plot the data
 valid =  df[X.shape[0]:]
 valid['Predictions'] = predictions #Create a new column called 'Predictions' that will hold the predicted prices
-plt.figure(figsize=(18,8))
+plt.figure(figsize=(16,8))
 plt.title('Model')
 plt.xlabel('Days',fontsize=18)
 plt.ylabel('Close Price USD ($)',fontsize=18)
-plt.plot(df['Adj Close'],color = 'k')
-plt.plot(valid[['Adj Close','Predictions']],color='r')
-plt.legend(['Train', 'Val', 'Prediction' ], loc='upper left')#凡例と表示位置
+plt.plot(df['Adj Close'])
+plt.plot(valid[['Adj Close','Predictions']])
+plt.legend(['Train', 'Val-yuukou', 'Prediction-yosoku' ], loc='upper left')#凡例と表示位置
 plt.show()
 
 #このように予測値と実際の結果が出力されたことが確認できます。

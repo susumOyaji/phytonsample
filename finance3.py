@@ -131,7 +131,8 @@ x_train = np.reshape(x_train,(x_train.shape[0],x_train.shape[1],1))
 #これを差し込みましてもう一度実行してみます。このように
 
 #(1543,60,1)が出力されました。次に、機会学習を行っていきます。
-model = Sequential()
+model = Sequential()## Seqentialモデルのインスタンスを作ります。
+# addメソッドでレイヤを追加しています。
 model.add(LSTM(50,return_sequences = True , input_shape= (x_train.shape[1],1)))
 model.add(LSTM(50,return_sequences = False))
 model.add(Dense(25))
@@ -170,7 +171,7 @@ print(chek_mse)
 #データをプロットしていきます。
 data = []
 train = data[ : trainig_data]
-valid = data[trainig_data : ]
+valid = sony_stock[x_train.shape[0]:]#data[trainig_data : ]
 print(valid)
 valid["predictions"] = predictions
 plt.figure(figsize=(16,8))
