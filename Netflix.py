@@ -13,10 +13,16 @@ from datetime import datetime
 #pandasのdatareaderをwebとしてインポートします。
 import pandas_datareader as web
 
+#層を積み上げるためkerasからSequentialのインポートします。
+from keras.models import Sequential
+#LSTMをインポートします。
+from keras.layers import Dense,LSTM
+
+
 
 today = datetime.today().strftime("%Y-%m-%d")
 #次は株価を取得していきます。今回は2020年の1月1日から本日までの株式情報を取得して行きましょう。
-sony_stock = web.DataReader("RKUNY",data_source="yahoo",start="2015-01-01",end=today)
+sony_stock = web.DataReader("SNE",data_source="yahoo",start="2020-01-01",end=today)
 #データファイルを変数に格納し、データの最初の6行を出力します。
 #df = pd.read_csv('NFLX_Stock.csv')
 df = sony_stock
@@ -40,7 +46,8 @@ plt.show()
 
 # 将来の「x」日を予測する変数を作成します。
 # 次に、ターゲット変数または従属変数を格納するための新しい列を作成します。
-# これは本質的に、「x」日上にシフトされた終値です。次に、最後の4行のデータを出力します。
+# これは本質的に、「x」日上にシフトされた終値です。
+# 次に、最後の4行のデータを出力します。
 #Create a variable to predict 'x' days out into the future
 future_days = 25
 
@@ -72,6 +79,22 @@ tree = DecisionTreeRegressor().fit(x_train, y_train)
 lr = LinearRegression().fit(x_train, y_train)
 
 
+'''
+# 次に、機会学習を行っていきます。
+model = Sequential()## Seqentialモデルのインスタンスを作ります。
+# addメソッドでレイヤを追加しています。
+model.add(LSTM(50,return_sequences = True , input_shape= (x_train.shape[1],1)))
+model.add(LSTM(50,return_sequences = False))
+model.add(Dense(25))
+model.add(Dense(1))
+#モデルをコンパイルして行きます。
+model.compile(loss='mean_squared_error', optimizer='adam')
+
+#そして80％のデータを機会学習させます。
+model.fit(x_train,y_train,batch_size=1,epochs=1)
+'''
+
+
 
 #機能データセットから最後の「x」行を取得して印刷します。
 # このデータセットを使用してモデルをテストし、モデルのパフォーマンスを確認します。
@@ -90,7 +113,6 @@ x_future = np.array(x_future)
 #モデルの予測を表示します。
 #モデルツリー予測を
 tree_prediction = tree.predict(x_future)
-print( tree_prediction )
 
 
 #モデル線形回帰予測を
@@ -98,12 +120,12 @@ print( tree_prediction )
 #回帰分析には、線形と非線形回帰がありまして線形回帰モデル以外は非線形回帰モデルになります
 lr_prediction = lr.predict(x_future)
 
-
+'''
 #予測値を視覚化し、実際の値または有効な値と比較します。
 #データ予測の視覚
 predictions = tree_prediction
 #データのプロット
-'''
+
 valid =  df[X.shape[0]:]
 valid['Predictions'] = predictions #予測価格を保持する「Predictions」という新しい列を作成する
 plt.figure(figsize=(18,8))
@@ -116,8 +138,22 @@ plt.legend(['Train', 'Val', 'Prediction' ], loc='upper left')
 plt.show()
 '''
 
+
+
+
+
 #Visualize the data
 predictions = lr_prediction
+
+
+#次に二乗平均平方根誤差も確認してみます。（略してMSE）
+#chek_mse = np.sqrt(np.mean(predictions - y_test)**2)
+#print(chek_mse)
+
+
+
+
+
 #Plot the data
 valid =  df[X.shape[0]:]
 valid['Predictions'] = predictions #Create a new column called 'Predictions' that will hold the predicted prices
@@ -127,7 +163,7 @@ plt.xlabel('Days',fontsize=18)
 plt.ylabel('Close Price USD ($)',fontsize=18)
 plt.plot(df['Adj Close'])
 plt.plot(valid[['Adj Close','Predictions']])
-plt.legend(['Train', 'Val-yuukou', 'Prediction-yosoku' ], loc='upper left')#凡例と表示位置
+plt.legend(['Training', 'Valid - true', 'Prediction - Ai' ], loc='upper left')#凡例と表示位置
 plt.show()
 
 #このように予測値と実際の結果が出力されたことが確認できます。

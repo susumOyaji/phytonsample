@@ -94,7 +94,8 @@ print('trainig_data',trainig_data)
 # まず、正規化変数スケイラーを作成しそれに入れ込みます。
 scaler=MinMaxScaler(feature_range=(0,1))
 
-#データセットを保持するスケールデータと呼ばれる変数を作成します。ここでデータを0と1の間で変換しましょう。
+# データセットを保持するスケールデータと呼ばれる変数を作成します。
+# ここでデータを0と1の間で変換しましょう。
 scaled_data = scaler.fit_transform(sony_close)
 
 #実際にscaled_dataの中身を確認してみましょう。
@@ -128,9 +129,9 @@ print('X_train.Shape',x_train.shape)
 # ここで計算しやすいように2次元配列を3次元配列に変更します。
 # reshapeを使用して行列改めて作成します。
 x_train = np.reshape(x_train,(x_train.shape[0],x_train.shape[1],1))
-#これを差し込みましてもう一度実行してみます。このように
-
-#(1543,60,1)が出力されました。次に、機会学習を行っていきます。
+#これを差し込みましてもう一度実行してみます。
+# このように1543,60,1)が出力されました。
+# 次に、機会学習を行っていきます。
 model = Sequential()## Seqentialモデルのインスタンスを作ります。
 # addメソッドでレイヤを追加しています。
 model.add(LSTM(50,return_sequences = True , input_shape= (x_train.shape[1],1)))
@@ -168,11 +169,32 @@ predictions = scaler.inverse_transform(predictions)
 chek_mse = np.sqrt(np.mean(predictions - y_test)**2)
 print(chek_mse)
 
+
+
+##################################################
+df = sony_stock
+future_days = 25
+#Create a new column (the target or dependent variable) shifted 'x' units/days up
+df['Prediction'] = df['Adj Close']
+#print(df)
+#print the data
+#df.tail(4)
+
+#フィーチャデータセットを作成して印刷します。
+X = np.array(df.drop(['Prediction'],1))
+print(X)
+
+
+
+
+
+
+
+
 #データをプロットしていきます。
 data = []
 train = data[ : trainig_data]
-valid = sony_stock[x_train.shape[0]:]#data[trainig_data : ]
-print(valid)
+valid = sony_stock[X.shape[0]:]#data[trainig_data : ]
 valid["predictions"] = predictions
 plt.figure(figsize=(16,8))
 plt.title("Model")
