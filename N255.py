@@ -8,12 +8,28 @@ from keras.layers import Dense, LSTM, Dropout, Flatten
 from keras.models import Model
 #層を積み上げるためkerasからSequentialのインポートします。
 from keras.models import Sequential
+from datetime import datetime
+#pandasのdatareaderをwebとしてインポートします。
+import pandas_datareader as web
+
+
+
 
 data = pd.read_csv(r'stock_N225.csv',
                	encoding='shift_jis',
               	index_col='Date',
                	parse_dates=True,
                	dtype='float64').dropna(axis = 1).dropna()
+
+today = datetime.today().strftime("%Y-%m-%d")
+data = web.DataReader("GOOG",data_source="yahoo",start="2012-01-01",end="2020-06-01")
+
+# 次にデータを加工するため新しい変数にデータを入れ込みます。
+sony_data = data.filter(["Close"])
+
+#google_dataの各要素をgoogle_close変数に入れ込みます。
+sony_close = sony_data.values
+
 data.plot()
 plt.show()
 
