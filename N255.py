@@ -17,12 +17,13 @@ import pandas_datareader as web
 
 
 
-
+'''
 data = pd.read_csv(r'stock_N225.csv',
                	encoding='shift_jis',
               	index_col='Date',
                	parse_dates=True,
-               	dtype='float64').dropna(axis = 1).dropna()
+                dtype='float64').dropna(axis=1).dropna()
+'''                
 
 today = datetime.today().strftime("%Y-%m-%d")
 
@@ -38,15 +39,16 @@ data = web.DataReader("SNE",data_source="yahoo",start=start_date,end=end_date)
 
 # 次にデータを加工するため新しい変数にデータを入れ込みます。
 sony_data = data.filter(["Close"])
-
 data = sony_data
+
 #google_dataの各要素をgoogle_close変数に入れ込みます。
 sony_close = sony_data.values
 
-plt.figure(figsize=(16,8))
+plt.figure(figsize=(10,5))
 plt.plot(data)
-
 plt.show()
+
+
 
 model_1 = Sequential()
 model_1.add(Dense(5, activation='relu', input_shape=(20,)))
@@ -109,12 +111,10 @@ model_2.fit(X_train[:,:,np.newaxis], y_train, batch_size=10, epochs=50, callback
 
 #model_1予測
 predicted = model_1.predict(X_test)
-
 result = pd.DataFrame(predicted)
-
 result.columns = ['predict']
 result['actual'] = y_test
-plt.figure(figsize=(16,8))
+plt.figure(figsize=(10,5))
 plt.plot(result)
 plt.show()
 
@@ -125,7 +125,7 @@ predicted = model_2.predict(X_test[:,:,np.newaxis])
 result = pd.DataFrame(predicted)
 result.columns = ['predict']
 result['actual'] = y_test
-plt.figure(figsize=(16,8))
+plt.figure(figsize=(10,5))
 plt.plot(result)
 plt.show()
 
