@@ -85,17 +85,26 @@ def main():
     model = create_model()
     data = read_data()
     x_train, y_train_price, y_train_updown, x_test, y_test_price, y_test_updown, scaler = \
-        build_train_test_data(data)
+        build_train_test_data(data)]
+        
     model.fit(x_train, [y_train_price, y_train_updown],
-              validation_data=(x_test, [y_test_price, y_test_updown]), epochs=100, batch_size=10,
-              callbacks=[CSVLogger('train.log.csv')])
+              validation_data=(x_test, [y_test_price, y_test_updown]), epochs=1000, batch_size=10,verbose=0)
+              #callbacks=[CSVLogger('train.log.csv')])
     model.save('model.h5')
+
+
+
     with open('scaler.pkl', 'wb') as f:
         pickle.dump(scaler, f, protocol=pickle.HIGHEST_PROTOCOL)
-    pred = model.predict(x_test)[0][:, 0].reshape(-1)
+    pred = model.predict(x_test)[0][:, 0].reshape(-1)    
+
     # 標準化を戻す
     pred = scaler.inverse_transform(pred)
     y_test_price = scaler.inverse_transform(y_test_price.astype('float64'))
+
+
+    #学習したモデルで予測した日経平均株価のグラフを書く
+    # plot準備
     result = pd.DataFrame({'pred': pred, 'test': y_test_price})
     result.plot()
     plt.show()

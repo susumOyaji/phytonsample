@@ -30,7 +30,7 @@ from keras.layers import Dense,LSTM
 #"SNE" , "AAPL" , "TYOYY" , "RKUNY"
 today = datetime.today().strftime("%Y-%m-%d")
 #次は株価を取得していきます。今回は2020年の1月1日から本日までの株式情報を取得して行きましょう。
-sony_stock = web.DataReader("RKUNY",data_source="yahoo",start="2020-01-01",end=today)
+sony_stock = web.DataReader("SNE",data_source="yahoo",start="2020-01-01",end=today)
 #データファイルを変数に格納し、データの最初の6行を出力します。
 #df = pd.read_csv('NFLX_Stock.csv')
 df = sony_stock
