@@ -29,21 +29,29 @@ start_date="2020-01-01"
 #終了日はプログラムの実行日にしたいので、日時と文字列を相互に変換するメソッドstrftime関数を使います。様々なフォーマットの日付や時間を操作することが可能です。
 end_date = datetime.today().strftime("%Y-%m-%d")
 
+
+
+
+# ディープラーニングで株価予測
+# モデルは 10 日分の平均株価を入力として、1 日後の平均株価を予測することとします。
+# ですので、取得したデータを読み込んで日付順にソートした後、終値だけを取り出します。
 def read_data():
+    '''
     df = pd.read_csv(r'stock_N225.csv',
                	encoding='shift_jis',
               	index_col='Date',
                	parse_dates=True,
                 dtype='float64').dropna(axis=1).dropna()
-
-    #df = web.DataReader("SNE",data_source="yahoo",start=start_date,end=end_date)
+    '''
+    df = web.DataReader("RKUNY",data_source="yahoo",start=start_date,end=end_date)
     df = df.sort_index()
-    closes = df['Close'].values
-    print(closes)
+    closes = df['Adj Close'].values
+    base_data = closes.reshape(-1,1)
+    print(base_data)
     return closes
 
 
-
+#今回のネットワークはごく単純な LSTM とし、Keras を使って組んでいきます。
 def create_model():
     inputs = Input(shape=(10, 1))
     x = LSTM(300, activation='relu')(inputs)
@@ -57,10 +65,16 @@ def create_model():
     return model
 
 
+
+
+
+# 平均株価の値を直接予測するため活性化関数は linear を使います。中間層の数は 300 としていますが特に理由はありません。
+# 後で検証に使用するため 2 値予測も含んでいます。
+# 全データのうち、80% を学習用データ、20% を検証用データに割り当てます。また、データの標準化も行います。
 def build_train_test_data(base_data):
     scaler = StandardScaler()
-    #data = scaler.fit_transform(base_data)
-    data = base_data
+    data = scaler.fit_transform(base_data)
+    #data = base_data
     x_data = []
     y_data_price = []
     y_data_updown = []
@@ -81,15 +95,17 @@ def build_train_test_data(base_data):
     return x_train, y_train_price, y_train_updown, x_test, y_test_price, y_test_updown, scaler
 
 
+
+#では学習していきます。エポックは 100、バッチサイズは 10 としていますが、これらも特に理由はありません。
 def main():
     model = create_model()
     data = read_data()
-    x_train, y_train_price, y_train_updown, x_test, y_test_price, y_test_updown, scaler = \
-        build_train_test_data(data)]
+    x_train, y_train_price, y_train_updown, x_test, y_test_price, y_test_updown, scaler =  \
+        build_train_test_data(data)
         
     model.fit(x_train, [y_train_price, y_train_updown],
-              validation_data=(x_test, [y_test_price, y_test_updown]), epochs=1000, batch_size=10,verbose=0)
-              #callbacks=[CSVLogger('train.log.csv')])
+              validation_data=(x_test, [y_test_price, y_test_updown]), epochs=10, batch_size=10,
+              callbacks=[CSVLogger('train.log.csv')])
     model.save('model.h5')
 
 
@@ -100,6 +116,7 @@ def main():
 
     # 標準化を戻す
     pred = scaler.inverse_transform(pred)
+    #pred = scaler.inverse_transform(pred)
     y_test_price = scaler.inverse_transform(y_test_price.astype('float64'))
 
 
