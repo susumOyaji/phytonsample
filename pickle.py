@@ -31,7 +31,14 @@ end_date = datetime.today().strftime("%Y-%m-%d")
 
 
 
-
+'''
+a = [8.50500011,  8.58500004,  8.57999992,  8.51000023,  8.53999996,  8.52499962]
+  #8.50500011  8.43000031  8.39000034  8.32499981  8.31000042  8.46000004
+  #8.46000004  8.36999989  8.36999989  8.13000011  8.06999969  7.98999977
+  #7.78999996  7.92999983  7.78999996  7.78999996  7.79500008  7.91499996)
+base_data = np.array(a).reshape(-1, 1).tolist()
+print(base_data)
+'''
 # ディープラーニングで株価予測
 # モデルは 10 日分の平均株価を入力として、1 日後の平均株価を予測することとします。
 # ですので、取得したデータを読み込んで日付順にソートした後、終値だけを取り出します。
@@ -45,10 +52,14 @@ def read_data():
     '''
     df = web.DataReader("RKUNY",data_source="yahoo",start=start_date,end=end_date)
     df = df.sort_index()
-    closes = df['Adj Close'].values
-    base_data = closes.reshape(-1,1)
-    print(base_data)
-    return closes
+
+    closes = df['Adj Close'].values.reshape(-1,1).tolist()
+    #closes = np.array2string(closes, separator=', ', formatter={'float_kind': lambda x: '{: .4f}'.format(x)})
+    
+    print(closes)
+    base_data = closes#.reshape(-1,1)
+    
+    return base_data#closes
 
 
 #今回のネットワークはごく単純な LSTM とし、Keras を使って組んでいきます。
