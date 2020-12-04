@@ -24,21 +24,14 @@ def read_data():
 today = datetime.today().strftime("%Y-%m-%d")
 
 #次に、2014年から今日までの6年間のデータを取得しましょう。期日を決めて行きます。
-start_date="2020-01-01"
+start_date="2016-01-01"
 
 #終了日はプログラムの実行日にしたいので、日時と文字列を相互に変換するメソッドstrftime関数を使います。様々なフォーマットの日付や時間を操作することが可能です。
 end_date = datetime.today().strftime("%Y-%m-%d")
 
 
 
-'''
-a = [8.50500011,  8.58500004,  8.57999992,  8.51000023,  8.53999996,  8.52499962]
-  #8.50500011  8.43000031  8.39000034  8.32499981  8.31000042  8.46000004
-  #8.46000004  8.36999989  8.36999989  8.13000011  8.06999969  7.98999977
-  #7.78999996  7.92999983  7.78999996  7.78999996  7.79500008  7.91499996)
-base_data = np.array(a).reshape(-1, 1).tolist()
-print(base_data)
-'''
+
 # ディープラーニングで株価予測
 # モデルは 10 日分の平均株価を入力として、1 日後の平均株価を予測することとします。
 # ですので、取得したデータを読み込んで日付順にソートした後、終値だけを取り出します。
@@ -55,10 +48,7 @@ def read_data():
 
     closes = df['Adj Close'].values.reshape(-1,1).tolist()
     #closes = np.array2string(closes, separator=', ', formatter={'float_kind': lambda x: '{: .4f}'.format(x)})
-    
-    print(closes)
     base_data = closes#.reshape(-1,1)
-    
     return base_data#closes
 
 
@@ -85,7 +75,8 @@ def create_model():
 def build_train_test_data(base_data):
     scaler = StandardScaler()
     data = scaler.fit_transform(base_data)
-    #data = base_data
+    
+    base_data = np.array(base_data)
     x_data = []
     y_data_price = []
     y_data_updown = []
@@ -115,7 +106,7 @@ def main():
         build_train_test_data(data)
         
     model.fit(x_train, [y_train_price, y_train_updown],
-              validation_data=(x_test, [y_test_price, y_test_updown]), epochs=10, batch_size=10,
+              validation_data=(x_test, [y_test_price, y_test_updown]), epochs=100, batch_size=10,
               callbacks=[CSVLogger('train.log.csv')])
     model.save('model.h5')
 
@@ -130,8 +121,8 @@ def main():
     #pred = scaler.inverse_transform(pred)
     y_test_price = scaler.inverse_transform(y_test_price.astype('float64'))
 
-
     #学習したモデルで予測した日経平均株価のグラフを書く
+    y_test_price = y_test_price.flatten()
     # plot準備
     result = pd.DataFrame({'pred': pred, 'test': y_test_price})
     result.plot()
