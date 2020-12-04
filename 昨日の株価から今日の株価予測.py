@@ -42,7 +42,7 @@ import pandas_datareader as web
 today = datetime.today().strftime("%Y-%m-%d")
 
 #次に、2014年から今日までの6年間のデータを取得しましょう。期日を決めて行きます。
-start_date="2016-01-01"
+start_date="2020-01-01"
 
 #終了日はプログラムの実行日にしたいので、日時と文字列を相互に変換するメソッドstrftime関数を使います。様々なフォーマットの日付や時間を操作することが可能です。
 end_date = datetime.today().strftime("%Y-%m-%d")
@@ -51,7 +51,7 @@ end_date = datetime.today().strftime("%Y-%m-%d")
 # モデルは 10 日分の平均株価を入力として、1 日後の平均株価を予測することとします。
 # ですので、取得したデータを読み込んで日付順にソートした後、終値だけを取り出します。
 df = web.DataReader("RKUNY",data_source="yahoo",start=start_date,end=end_date)
-df = df.sort_index()
+#df = df.sort_index()
 print(df)
 
 '''
@@ -129,9 +129,9 @@ train_start = 0
 train_end = int(np.floor(0.8*n))
 test_start = train_end 
 test_end = n
-data_train = df.loc[np.arange(train_start, train_end), :]
-data_test = df.loc[np.arange(test_start, test_end), :]
-テトレーニングデータの先頭を表示
+data_train = df.iloc[np.arange(train_start, train_end), :]
+data_test = df.iloc[np.arange(test_start, test_end), :]
+#テトレーニングデータの先頭を表示
 data_train.head()
 
 '''
