@@ -5,9 +5,16 @@ import time
 import datetime
 
 
+
+def sample():
+  print('sample')
+
+  
 def get_stock_list(low, high, target_code):
-  urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+target_code
-  #https://stock.web0000.jp/
+  print('get_stock_list to get_stock_list()')
+  
+  #urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+target_code
+  urlName = "https://stock.web0000.jp/"
   soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
   text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   #print(text)
@@ -32,5 +39,5 @@ def get_stock_list(low, high, target_code):
   #df = pd.DataFrame(data, columns=head)
 	# except IndexError:
   print('No data')
-  return
-
+  return data
+  

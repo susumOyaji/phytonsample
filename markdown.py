@@ -18,7 +18,9 @@ sys.path.append(str(parent))
 # %%
 # 独自モジュールなど
 #import python.config_global as config
-import search_stock as search_stock
+#import search_stock as search_stock
+import search_stock
+
 
 # %%
 import time
@@ -32,9 +34,6 @@ import matplotlib.pyplot as plt
 
 
 
-# %%
-def search_stock():
-    return
 
 
 # %%
@@ -194,6 +193,9 @@ if __name__ == '__main__':
   high = 200000
   target_code = '7974'
   stock_list = search_stock.get_stock_list(low, high, target_code)
+  #search_stock.sample()
+  #stock_list = search_stock.get_stock_list()
+  
   # ここまでがWEBから渡ってくる値
   g = start(target_code, stock_list)
   print(g)
