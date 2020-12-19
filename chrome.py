@@ -22,11 +22,11 @@ driver.get('http://example.selenium.jp/reserveApp/')
 
 month_elem = driver.find_element_by_id("reserve_month")
 month_elem.clear()
-month_elem.send_keys("8")
+month_elem.send_keys("12")
  
 day_elem = driver.find_element_by_id("reserve_day")
 day_elem.clear()
-day_elem.send_keys("2")
+day_elem.send_keys("25")
  
 term_elem = driver.find_element_by_id("reserve_term")
 term_elem.clear()
