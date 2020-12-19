@@ -3,7 +3,8 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import time
 import datetime
-
+from selenium import webdriver
+import chromedriver_binary
 
 
 def sample():
@@ -12,32 +13,12 @@ def sample():
   
 def get_stock_list(low, high, target_code):
   print('get_stock_list to get_stock_list()')
+  driver = webdriver.Chrome()  # Optional argument, if not specified will search path.
+  driver.get('https://stock.web0000.jp/') 
+  time.sleep(5) # Let the user actually see something!
   
-  #urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+target_code
-  urlName = "https://stock.web0000.jp/"
-  soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
-  text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
-  #print(text)
-  #print(soup)  
-  # 平均の値を取得する
-  #print soup.select_one("#heikin")
-
-
-  tag_tr = soup.find_all('tr')
-  #print(tag_tr[0])
-
-  head = [h.text for h in tag_tr[0].find_all('th')]
-  print(head[0])#ソニー（株）
-  data = [d.text for d in tag_tr[0].find_all('td')]
-  print('stoksPrice: '+data[1])
-  print(data[2])
-  print('')
-  #data = []
-  #for i in range(1,len(tag_tr)):
-	#data.append([d.text for d in tag_tr[i].find_all('td')])
-
-  #df = pd.DataFrame(data, columns=head)
-	# except IndexError:
-  print('No data')
-  return data
+  
+  month_elem = driver.find_element_by_id("input-57")
+  month_elem.clear()
+  month_elem.send_keys("12")
   
