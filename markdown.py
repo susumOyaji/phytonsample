@@ -39,7 +39,7 @@ import matplotlib.pyplot as plt
 # %%
 def get_data(code):
   '''指定した銘柄のデーターをリターンインデックス込みで取得する'''
-  data = search_stock.get_stock_data(code)
+  data = search_stock.get_stock_list(code)
   if data is None:
     return None
   data = search_stock.get_ret_index(data)

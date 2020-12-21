@@ -15,7 +15,7 @@ def get_stock_list(low, high, target_code):
   print('get_stock_list to get_stock_list()')
   driver = webdriver.Chrome("c:/Users/chromedriver_win32/chromedriver.exe")  # Optional argument, if not specified will search path.
   driver.get('https://stock.web0000.jp/') 
-  time.sleep(5) # Let the user actually see something!
+  time.sleep(0) # Let the user actually see something!
   
   
   #month_elem = driver.find_element_by_id("__nuxt")
@@ -32,9 +32,11 @@ def get_stock_list(low, high, target_code):
   month_elem.clear()
   month_elem.send_keys("6758")
 
-  driver.findElement(By.type("button")).click();
+  month_elem = driver.find_element_by_class_name("v-btn__content")
+  #month_elem.clear()
+  month_elem.click()
   
-
+'''
   # 一番最初の「りんご」が返却される
   fruit = driver.find_element_by_class_name('fruit')
   # 一番最初の「りんご」「メロン」「桃」の全てがリストで返却される
@@ -44,3 +46,4 @@ def get_stock_list(low, high, target_code):
 
   #このような条件が複雑な指定方法では find_element_by_css_selector を使うと良いでしょう。 ここではclass属性の親子関係関係に着目して要素を絞り込みます。
   apple = driver.find_element_by_css_selector('.menu .apple')
+  '''
