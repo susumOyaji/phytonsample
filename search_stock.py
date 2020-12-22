@@ -4,13 +4,15 @@ from bs4 import BeautifulSoup
 import time
 import datetime
 from selenium import webdriver
-#import chromedriver_binary
+import chromedriver_binary
 
 
 
-  
+# pip install chromedriver-binary==87.0.4280.88
+# pip install chromedriver-binary==75.0.3770.8.0 
 def get_stock_list(low, high, target_code):
-  driver = webdriver.Chrome("c:/Users/chromedriver_win32/chromedriver.exe")  # Optional argument, if not specified will search path.
+  #driver = webdriver.Chrome("c:/Users/chromedriver_win32/chromedriver.exe")  # Optional argument, if not specified will search path.
+  driver = webdriver.Chrome()
   urlName = 'https://stock.web0000.jp/'
   driver.get(urlName) 
 
