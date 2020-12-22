@@ -39,7 +39,7 @@ import matplotlib.pyplot as plt
 # %%
 def get_data(code):
   '''指定した銘柄のデーターをリターンインデックス込みで取得する'''
-  data = search_stock.get_stock_list(code)
+  data = search_stock.get_stock_data(code)
   if data is None:
     return None
   data = search_stock.get_ret_index(data)
@@ -193,9 +193,6 @@ if __name__ == '__main__':
   high = 200000
   target_code = '7974'
   stock_list = search_stock.get_stock_list(low, high, target_code)
-  #search_stock.sample()
-  #stock_list = search_stock.get_stock_list()
-  
   # ここまでがWEBから渡ってくる値
   g = start(target_code, stock_list)
   print(g)
