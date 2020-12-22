@@ -37,7 +37,13 @@ def get_stock_list(low, high, target_code):
 
 
 
+def get_stock_data(code):
+  print('get_stock_list to get_stock_list()')
+  return code
 
+
+def get_ret_index(data):
+  return data  
 
 
 
@@ -62,10 +68,3 @@ def get_stock_list(low, high, target_code):
   #このような条件が複雑な指定方法では find_element_by_css_selector を使うと良いでしょう。 ここではclass属性の親子関係関係に着目して要素を絞り込みます。
   apple = driver.find_element_by_css_selector('.menu .apple')
   '''
-def get_stock_data(code):
-  print('get_stock_list to get_stock_list()')
-  return code
-
-
-def get_ret_index(data):
-  return data  
