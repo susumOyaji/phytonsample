@@ -10,10 +10,12 @@ import chromedriver_binary
 
 # pip install chromedriver-binary==87.0.4280.88
 # pip install chromedriver-binary==75.0.3770.8.0 
+urlName = 'https://stock.web0000.jp/'
+
 def get_stock_list(low, high, target_code):
   #driver = webdriver.Chrome("c:/Users/chromedriver_win32/chromedriver.exe")  # Optional argument, if not specified will search path.
   driver = webdriver.Chrome()
-  urlName = 'https://stock.web0000.jp/'
+  
   driver.get(urlName) 
 
  
@@ -35,12 +37,28 @@ def get_stock_list(low, high, target_code):
   month_elem = driver.find_element_by_class_name("container")
   month_elem.click()
 
-  soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
+  
 
 
 
 def get_stock_data(code):
-  print('get_stock_list to get_stock_list()')
+  soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
+  text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
+  #print(text)
+  #print(soup)  
+
+  tag_tr = soup.find_all('td')
+  #print(tag_tr[0])
+
+  head = [h.text for h in tag_tr[0].find_all('th')]
+  print(head[0])#ソニー（株）
+  data = [d.text for d in tag_tr[0].find_all('td')]
+  print('stoksPrice: '+data[1])
+  print(data[2])
+  print('')
+
+
+
   return code
 
 
