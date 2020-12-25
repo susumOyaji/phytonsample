@@ -46,6 +46,24 @@ def get_stock_data(code):
   text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   #print(text)
   #print(soup)  
+  print(soup.head.title)
+
+  '''class属性が「colBoxTopstories」のdivタグを検索する'''
+  #topstories = soup.find('div', class_='v-data-table__wrapper')
+  topstories = soup.select('body')
+  print(topstories)
+  
+  '''
+  elems = soup.select('div',id='__layout')
+  for elem in elems:
+    print(elem)
+  '''
+
+  tag_tr = soup.find_all("tbody")
+  head = [h.text for h in tag_tr[0].find_all('td')]
+
+
+  tag_tr = soup.find_all('tr')
 
   month_elem = driver.find_element_by_id("__layout")
   month_elem = driver.find_element_by_class_name("v-data-table-header")
