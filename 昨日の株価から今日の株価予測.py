@@ -12,7 +12,9 @@ import numpy as np
 # 機械学習のためのライブラリのインポート
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_absolute_error
-import tensorflow as tf
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 from datetime import datetime
 #pandasのdatareaderをwebとしてインポートします。
 import pandas_datareader as web
@@ -167,11 +169,10 @@ n_neurons_1 = 256
 n_neurons_2 = 128
  
 # セッションの開始
-net = tf.compat.v1.InteractiveSession()
+net = tf.InteractiveSession()
  
 # プレースホルダーの作成
-#X = tf.compat.v1.placeholder(dtype=tf.float32, shape=[None, n_stocks])
-X = tf.placeholder("float32", shape=[None, 784])
+X = tf.compat.v1.placeholder(dtype=tf.float32, shape=[None, n_stocks])
 Y = tf.placeholder(dtype=tf.float32, shape=[None])
  
 # 初期化
@@ -222,6 +223,7 @@ net.run(tf.global_variables_initializer())
 batch_size = 128
 mse_train = []
 mse_test = []
+array =[]
  
 # 訓練開始(500回の反復処理)
 epochs = 500
