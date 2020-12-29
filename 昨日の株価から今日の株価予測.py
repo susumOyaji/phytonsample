@@ -223,7 +223,7 @@ net.run(tf.global_variables_initializer())
 batch_size = 128
 mse_train = []
 mse_test = []
-array =[]
+
  
 # 訓練開始(500回の反復処理)
 epochs = 500
@@ -240,7 +240,7 @@ pred_test = net.run(out, feed_dict={X: X_test})
  
 # 予測データの最初の2つを表示
 pred_test[0][0:2]
-array([-0.45388696, -0.44489673], dtype=float32)
+#array([-0.45388696, -0.44489673], dtype=float32)
 
 #scaler.inverse_transform()を使って元の値へ復元してあげましょう。
 # 予測値をテストデータに戻そう（値も正規化からインバース）
