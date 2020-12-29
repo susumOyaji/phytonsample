@@ -167,10 +167,11 @@ n_neurons_1 = 256
 n_neurons_2 = 128
  
 # セッションの開始
-net = tf.InteractiveSession()
+net = tf.compat.v1.InteractiveSession()
  
 # プレースホルダーの作成
-X = tf.placeholder(dtype=tf.float32, shape=[None, n_stocks])
+#X = tf.compat.v1.placeholder(dtype=tf.float32, shape=[None, n_stocks])
+X = tf.placeholder("float32", shape=[None, 784])
 Y = tf.placeholder(dtype=tf.float32, shape=[None])
  
 # 初期化
