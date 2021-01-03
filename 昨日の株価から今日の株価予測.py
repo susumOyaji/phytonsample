@@ -49,10 +49,16 @@ start_date="2020-01-01"
 #終了日はプログラムの実行日にしたいので、日時と文字列を相互に変換するメソッドstrftime関数を使います。様々なフォーマットの日付や時間を操作することが可能です。
 end_date = datetime.today().strftime("%Y-%m-%d")
 
+
+
+# csv ファイルからの時系列データ読み込み
+filename = 'ti_N225.csv' # 日経平均株価データ
+df = pd.read_csv(filename, index_col=0, parse_dates=True)
+
 # ディープラーニングで株価予測
 # モデルは 10 日分の平均株価を入力として、1 日後の平均株価を予測することとします。
 # ですので、取得したデータを読み込んで日付順にソートした後、終値だけを取り出します。
-df = web.DataReader("RKUNY",data_source="yahoo",start=start_date,end=end_date)
+#df = web.DataReader("TYOYY",data_source="yahoo",start=start_date,end=end_date)
 #df = df.sort_index()
 print(df)
 
@@ -233,11 +239,14 @@ for e in range(epochs):
 #テストデータを使って訓練したモデルから予測を出力
 #モデルは訓練データのみ「学習」していますので、テストデータは全く新しい見たことの無いデータな訳です。
 
-#復習ですが、テストデータには「始値」が含まれていません。各日にちの「高値」「安値」「終値」「取引量」のみです。それらを使って、翌日（次の日）の始値を予測するのが今回の目的です。
+# 復習ですが、テストデータには「始値」が含まれていません。
+# 各日にちの「高値」「安値」「終値」「取引量」のみです。
+# それらを使って、翌日（次の日）の始値を予測するのが今回の目的です。
 
 # テストデータで予測
 pred_test = net.run(out, feed_dict={X: X_test})
- 
+test_train = net.run(out, feed_dict={X: X_train}) 
+
 # 予測データの最初の2つを表示
 pred_test[0][0:2]
 #array([-0.45388696, -0.44489673], dtype=float32)
@@ -247,12 +256,16 @@ pred_test[0][0:2]
 pred_test = np.concatenate((pred_test.T, X_test), axis=1)
 pred_inv = scaler.inverse_transform(pred_test)
 
+test_train = np.concatenate((test_train.T, X_test), axis=1)
+test_inv = scaler.inverse_transform(test_train)
+
+
 #予測が出ました
 #では、確認してみましょう。特徴量があっているかの確認を含めて、まずは元データの最後尾のデータを出してあげます。
 
 # 元データの最後尾
-df_shift.tail(1)
-
+print(df_shift.tail(1))
+print()
 '''
  	id 	Date 	Open 	High 	Low 	Close 	Volume
 3369 	13102 	2018/11/15 	2158.0 	2171.0 	2125.0 	2164.0 	1066200.0
@@ -264,8 +277,8 @@ df_shift.tail(1)
 #では、今回訓練したニューラルネットワークは一体16日の終値をいくらで予測したのか確認して見ましょう
 #また正規化を戻しましたが、ちゃんと戻っているのか確認のためdata_testとtest_invも表示させます。
 # テストデータの最後のデータ（正規化前）
-data_test.tail()
-
+print('data_test',data_test.tail())
+print()
 '''
 	Open 	High 	Low 	Close 	Volume
 3365 	2104.0 	2244.0 	2123.0 	2150.0 	4479000.0
@@ -275,7 +288,8 @@ data_test.tail()
 3369 	2158.0 	2171.0 	2125.0 	2164.0 	1066200.0
 '''
 # テストデータの最後のデータ（正規化を戻した後）
-print(pred_inv[-5:-1])
+print('test_inv', test_inv[-5:-1])
+print()
 '''
 [[2.1040e+03 2.2440e+03 2.1230e+03 2.1500e+03 4.4790e+06]
  [2.0930e+03 2.1580e+03 2.1040e+03 2.1430e+03 1.5431e+06]
@@ -283,7 +297,9 @@ print(pred_inv[-5:-1])
  [2.1360e+03 2.1590e+03 2.1170e+03 2.1430e+03 2.2096e+06]]
 '''
 # モデルが予測したデータ
-print(pred_inv[-5:-1])
+print('pred_inv', pred_inv[-5:-1])
+print()
+
 '''
 [[2.15364204e+03 2.24400000e+03 2.12300000e+03 2.15000000e+03
   4.47900000e+06]
@@ -307,15 +323,12 @@ ax1 = fig.add_subplot(111)
 line1, = ax1.plot(test_inv[:,0])
 line2, = ax1.plot(pred_inv[:,0])
 plt.show()
-#非常に大きな値幅で予測は外れていましたが、このようにプロットしてみると、意外とそれなりにトレンドを読んで予測しているのがわかります。
 
 
-
-#非常に大きな値幅で予測は外れていましたが、このようにプロットしてみると、意外とそれなりにトレンドを読んで予測しているのがわかります。
-
-#グラフだけでは予想の評価として曖昧なので、MAE（平均絶対誤差）という指標を算出してあげましょう。MAEとは、予測した値と実際の値の誤差を指標化したものです。
-
-#つまり値が小さければ誤差が少ない、値が大きければ誤差が大きいを意味します。
+# 非常に大きな値幅で予測は外れていましたが、このようにプロットしてみると、意外とそれなりにトレンドを読んで予測しているのがわかります。
+# グラフだけでは予想の評価として曖昧なので、MAE（平均絶対誤差）という指標を算出してあげましょう。
+# MAEとは、予測した値と実際の値の誤差を指標化したものです。
+# つまり値が小さければ誤差が少ない、値が大きければ誤差が大きいを意味します。
 # MAEの計算
 mae_test = mean_absolute_error(test_inv, pred_inv)
 print(mae_test)

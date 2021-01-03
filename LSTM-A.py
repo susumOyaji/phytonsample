@@ -29,12 +29,17 @@ from datetime import datetime
 
 today = datetime.today().strftime("%Y-%m-%d")
 #次に、期日を決めて行きます。
-start_date="2020-01-01"
+start_date = "2020-01-01"
+
+
+# csv ファイルからの時系列データ読み込み
+filename = 'stock_N225.csv' # 日経平均株価データ
+df = pd.read_csv(filename, index_col=0, parse_dates=True)
 
 #終了日はプログラムの実行日にしたいので、日時と文字列を相互に変換するメソッドstrftime関数を使います。様々なフォーマットの日付や時間を操作することが可能です。
 end_date = datetime.today().strftime("%Y-%m-%d")
 # データを読み込む
-df = web.DataReader("RKUNY",data_source="yahoo",start=start_date,end=end_date)
+#df = web.DataReader("RKUNY",data_source="yahoo",start=start_date,end=end_date)
 print(df)
 
 
