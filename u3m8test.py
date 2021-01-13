@@ -15,7 +15,7 @@ reload(sys)
 
 #tsリンクが得られる,パラメータurlは.m3u8リンクである
 def get_ts(url):
-	path = "E:#Clone Videos";#既定のビデオ保存パス
+	path = "E://Clone Videos";#既定のビデオ保存パス
 	
 	#String all_url = url.split('/');
   #'https:#d.ossrs.net:8088/live/livestream.m3u8'										
