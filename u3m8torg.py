@@ -36,11 +36,12 @@ def get_ts(url):
 # スライスダウンロード関数、引数moviesは.tsリンクです。
 def down_ts(movies):
     # os.chdir(path)
-    error_get = []  # エラーが発生したリンクを格納するリストを作成します。
-    movie_name = []
+   
+    i = 0
     print("Downloaded中")
     for _url in movies:
-        movie_name.append(_url.split('/')[-1][-6:])  # 接続で最後の 6 ビットをファイル名として抽出します。
+        movie_name = ("%03d.ts" % (i))  # ビデオクリップの名前とパス(_url.split('/')[-1][-6:])  # 接続で最後の 6 ビットをファイル名として抽出します。
+        error_get = []  # エラーが発生したリンクを格納するリストを作成します。
         try:
             movie = requests.get(_url, headers={'Connection': 'close'}, timeout=60,verify=False)  # .ts リンクを開きます
             print('movie',movie)
@@ -48,13 +49,13 @@ def down_ts(movies):
             error_get.append(_url)
             continue
         print('movie_name',movie_name)
-        movie_content = open('C://Reptile_video/' + movie_name[0], 'wb')  # ファイルをローカルに作成します
+        movie_content = open('C://Reptile_video/' + movie_name, 'wb')  # ファイルをローカルに作成します
         movie_content.writelines(movie)  # スライスをダウンロードします
         if error_get:
             down_ts(error_get)  # エラー一覧を再ダウンロードします
         else:
             print("ダウンロードは成功しました。")
-    
+            i = i+1            
     print("すべてのスライスのダウンロードが完了しました。")
     num = len(movies)  # リスト要素の数を取得します
 
@@ -94,7 +95,7 @@ def del_ts(num):
     path = "C://Reptile_video/out.ts"  # ファイルを削除するパス
     os.remove(path)  # ファイルをクリアします
     for i in range(0, num):
-        path = ("E://Reptile_video/%03d.ts" % i)  # ファイルを削除するパス
+        path = ("C://Reptile_video/%03d.ts" % i)  # ファイルを削除するパス
         os.remove(path)  # ファイルをクリアします
     print("クリーンアップが完了し、プログラムが終了します")
 
@@ -102,10 +103,10 @@ def del_ts(num):
 # メイン関数コードを次に示します。
 if __name__ == "__main__":
     url = 'https://d.ossrs.net:8088/live/livestream.m3u8'# input("请输入.m3u8链接：")
-    movie_name = 'sample.mp4'  # input("input to VideoName")
+    movie_name = 'sample'  # input("input to VideoName")
     movie_all = []
     movie_all = get_ts(url)
     num = down_ts(movie_all)
     merge_ts(num)
     change_mp4(movie_name)
-    del_ts(num)
+    #del_ts(num)
