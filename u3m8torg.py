@@ -23,7 +23,8 @@ def get_ts(url):
 
     urls = open(url_next, 'rb')
     for line in urls.readlines():
-        line2 = line.decode()						# bytes -> str
+        line2 = line.decode()
+        print(line2)						# bytes -> str
         if '.ts' in line2:  # 抽出.tsファイルのリンク
             # 完全な .ts ネットワーク リンクにステッチされ、movies リストに保存され、line2[:-1] は末尾の改行を削除します
             movies.append(url_pre + line2[:-1])
@@ -35,7 +36,10 @@ def get_ts(url):
 
 # スライスダウンロード関数、引数moviesは.tsリンクです。
 def down_ts(movies):
-    # os.chdir(path)
+    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+    filePath = os.path.join(desktop, "somefile.txt")
+
+    os.chdir(desktop)
    
     i = 0
     print("Downloaded中")
