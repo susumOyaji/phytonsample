@@ -1,15 +1,15 @@
 #EXTM3U
 #EXT-X-VERSION:3
-#EXT-X-MEDIA-SEQUENCE:4190
+#EXT-X-MEDIA-SEQUENCE:4439
 #EXT-X-TARGETDURATION:19
-#EXTINF:12.858, no desc
-livestream-4190.ts
 #EXTINF:13.160, no desc
-livestream-4191.ts
+livestream-4439.ts
 #EXT-X-DISCONTINUITY
 #EXTINF:10.031, no desc
-livestream-4192.ts
+livestream-4440.ts
 #EXTINF:18.514, no desc
-livestream-4193.ts
+livestream-4441.ts
 #EXTINF:12.858, no desc
-livestream-4194.ts
+livestream-4442.ts
+#EXTINF:13.160, no desc
+livestream-4443.ts
