@@ -36,7 +36,6 @@ def get_ts(url):
 # スライスダウンロード関数、引数moviesは.tsリンクです。
 def down_ts(movies):
     # os.chdir(path)
-   
     i = 0
     print("Downloaded中")
     for _url in movies:
