@@ -6,18 +6,26 @@ from kivy.uix.label import Label
 from bs4 import BeautifulSoup
 import requests
 
-class get_Year_to_date_highs(BoxLayout):
-    def __init__(self, **kwargs): #クラス初期化
-        super().__init__(**kwargs)
-
+class get_Year_to_date_highs(App):
+    #def __init__(self, **kwargs): #クラス初期化
+    #    super().__init__(**kwargs)
+    def build(self):
         urlName ='https://info.finance.yahoo.co.jp/ranking/?kd=29&mk=3&tm=d&vl=a'#年初来高値
         soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
         text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   
         data1 = [d.text for d in soup.find_all('td')]
-        for i in range(1, len(data1)):
+        #for i in range(1, len(data1)):
         #  print('年初来高値: '.decode('utf-8')+data1[i])
-            self.add_widget(label(text= i,font_size=10, pos=(400, 100)))
+
+        z = Label(
+            text=data1,
+            text_size=(600, None),
+            line_height=1.5
+        )
+        return z    
+
+        #self.add_widget(label(text= i,font_size=10, pos=(400, 100)))
 
   
 
