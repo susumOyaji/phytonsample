@@ -15,9 +15,9 @@ class get_Year_to_date_highs(BoxLayout):
         text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   
         data1 = [d.text for d in soup.find_all('td')]
-        #for i in range(1, len(data1)):
+        for i in range(1, len(data1)):
         #  print('年初来高値: '.decode('utf-8')+data1[i])
-        self.add_widget(Button(text= 'data1',font_size=98, pos=(400, 100)))
+            self.add_widget(label(text= i,font_size=10, pos=(400, 100)))
 
   
 
