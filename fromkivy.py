@@ -43,10 +43,10 @@ def get_htmls(stock_number):
 
 
 class MainScreen(BoxLayout): #ユーザーインタフェースを記述するクラス
-    text = StringProperty()    # プロパティの追加
+    text = StringProperty()  # プロパティの追加
+    orientation='vertical'
     def __init__(self, **kwargs): #クラス初期化
         super().__init__(**kwargs)
-        self.title = 'greeting'    # ウィンドウの名前を変更
         
         
         response = get_htmls('6758')
@@ -60,7 +60,7 @@ class MainScreen(BoxLayout): #ユーザーインタフェースを記述する�
 
         # MainScreenに追加する、BoxLayoutというWidgetを用意
         bl = BoxLayout()
-        bl.orientation = "vertical"
+        bl.orientation = "vertical"#horizontal 
 
         # blに追加する３つのボタンを用意
         btn3 = Button(text="how")
@@ -82,8 +82,9 @@ class MainScreen(BoxLayout): #ユーザーインタフェースを記述する�
 class MyApp(App): #アプリケーションのロジックを記述するクラス
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.title = 'greeting'  # ウィンドウの名前を変更
-    
+        self.title = 'Python Ios App'  # ウィンドウの名前を変更
+       
+
     def on_start(self):
         print("App Start!!")
 
