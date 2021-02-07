@@ -1,6 +1,23 @@
 #EXTM3U
 #EXT-X-VERSION:3
+<<<<<<< HEAD
 #EXT-X-MEDIA-SEQUENCE:4446
+=======
+#EXT-X-MEDIA-SEQUENCE:19188
+#EXT-X-TARGETDURATION:19
+#EXTINF:12.858, no desc
+livestream-19188.ts
+#EXTINF:13.160, no desc
+livestream-19189.ts
+#EXT-X-DISCONTINUITY
+#EXTINF:10.031, no desc
+livestream-19190.ts
+#EXTINF:18.514, no desc
+livestream-19191.ts
+#EXTINF:12.858, no desc
+livestream-19192.ts
+#EXT-X-MEDIA-SEQUENCE:4439
+>>>>>>> b042afe9753f2e27d7fd7414f7a2ac54a2a2d3b0
 #EXT-X-TARGETDURATION:19
 #EXTINF:12.858, no desc
 livestream-4446.ts
@@ -12,4 +29,11 @@ livestream-4448.ts
 #EXTINF:18.514, no desc
 livestream-4449.ts
 #EXTINF:12.858, no desc
+<<<<<<< HEAD
 livestream-4450.ts
+=======
+livestream-4442.ts
+#EXTINF:13.160, no desc
+livestream-4443.ts
+
+>>>>>>> b042afe9753f2e27d7fd7414f7a2ac54a2a2d3b0

@@ -5,6 +5,10 @@ import requests
 from imp import reload
 reload(sys)
 
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+
 
 # tsリンクが得られる,パラメータurlは.m3u8リンクである
 def get_ts(url):
@@ -104,6 +108,8 @@ def del_ts(num):
     print("クリーンアップが完了し、プログラムが終了します")
 
 
+
+
 # メイン関数コードを次に示します。
 if __name__ == "__main__":
     url = 'https://d.ossrs.net:8088/live/livestream.m3u8'# input("请输入.m3u8链接：")
@@ -114,3 +120,4 @@ if __name__ == "__main__":
     merge_ts(num)
     change_mp4(movie_name)
     #del_ts(num)
+    SampleApp().run()
