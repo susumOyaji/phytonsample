@@ -1,4 +1,6 @@
 BoxLayout:
+    orientation: 'vertical'     # 'horizontal'だと横一列
+    
     Label:
         text: "Good Morning"
     Label:

@@ -9,7 +9,9 @@ from kivy.config import Config  # 追加
 from kivy.properties import StringProperty  # 追加
 from kivy.uix.widget import Widget  # 追加
 from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ListProperty
 import japanize_kivy
+#import pndas as pd
 
 Config.set('graphics', 'width', '400')  # 追加
 Config.set('graphics', 'height', '600')  # 追加
@@ -51,7 +53,7 @@ class MainScreen(BoxLayout): #ユーザーインタフェースを記述する�
         
         response = get_htmls('6758')
        #Label(font_name='/path/font/meiryo.ttc', text='はろーワールド')
-        btn = Label(text=str(get_htmls('6758')))
+        btn = Label(text=str(get_htmls('4755')))
         print(response)
         self.add_widget(btn)
 
@@ -112,6 +114,30 @@ class MyApp(App): #アプリケーションのロジックを記述するクラ�
         #s.add_widget(l2)
         #return s
         #return SampleScreen()
+class MainScreen(Widget):
+    text = StringProperty()    # プロパティの追加
+    color = ListProperty([1,1,1,1])
+
+    def __init__(self, **kwargs):
+        super(MainScreen, self).__init__(**kwargs)
+        self.text = ''
+
+    def buttonClicked(self):        # ボタンをクリック時
+        self.text = 'Hello PythonWorld'
+
+    def geturlClicked(self):        # ボタンをクリック時
+        #self.text = 'Get Url'
+        self.text = str(get_htmls('6758'))
+        #self.color = [0, 1, 1 , 1 ]
+
+
+class TestApp(App):
+    def __init__(self, **kwargs):
+        super(TestApp, self).__init__(**kwargs)
+        self.title = 'Python to IosApp'
+
+    def build(self):
+        return MainScreen()
 
 if __name__ == '__main__':
-    MyApp().run()
+    TestApp().run()
