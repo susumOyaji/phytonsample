@@ -1,7 +1,7 @@
 # coding: UTF-8
 
 import requests
-import pandas as pd
+import pndas as pd
 from bs4 import BeautifulSoup
 import time
 import datetime
