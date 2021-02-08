@@ -10,11 +10,23 @@ MainScreen: # ルートに追加
             id: label1
             font_size: 15
             text: root.text    # root(MainScreen)の変数テキストの値を取得
-            #color: root.color
+            size_hint_y: 0.5
+            canvas.before:
+            Color:  
+                rgba: 0, 1, 1, 1
+            Rectangle:            
+                pos: self.pos     
+                size: self.size
+
+        Label:
+            id: label2
+            font_size: 15
+            text: root.text    # root(MainScreen)の変数テキストの値を取得
+            #color: root.color    
 
         Button:
             id: button1
-            text: "OK"
+            text: "漢字"
             font_size: 68
             on_press: root.buttonClicked()  # ボタンをクリックした時にpython側の関数を呼ぶ
 

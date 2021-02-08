@@ -9,12 +9,12 @@ from kivy.config import Config  # 追加
 from kivy.properties import StringProperty  # 追加
 from kivy.uix.widget import Widget  # 追加
 from kivy.properties import StringProperty
-from kivy.properties import StringProperty, ListProperty
+#from kivy.properties import StringProperty, ListProperty
 import japanize_kivy
 #import pndas as pd
 
-Config.set('graphics', 'width', '400')  # 追加
-Config.set('graphics', 'height', '600')  # 追加
+Config.set('graphics', 'width', '600')  # 追加
+Config.set('graphics', 'height', '1000')  # 追加
 
 
 
@@ -116,7 +116,7 @@ class MyApp(App): #アプリケーションのロジックを記述するクラ�
         #return SampleScreen()
 class MainScreen(Widget):
     text = StringProperty()    # プロパティの追加
-    color = ListProperty([1,1,1,1])
+    
 
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
@@ -136,8 +136,21 @@ class TestApp(App):
         super(TestApp, self).__init__(**kwargs)
         self.title = 'Python to IosApp'
 
+    def on_start(self):
+        stack_code = ['998407','6758', '6976', '4755']
+        data1 = ''
+        print("App Start!!")
+
     def build(self):
-        return MainScreen()
+        MS = MainScreen()
+        return MS
+
+    def on_stop(self):
+        print("App End!!")
+    
+
+    #def build(self):
+    #    return MainScreen()
 
 if __name__ == '__main__':
     TestApp().run()
