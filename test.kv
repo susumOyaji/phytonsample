@@ -1,37 +1,83 @@
-MainScreen: # ルートに追加
+TextWidget:
 
-<MainScreen>:
+<TextWidget>:
+    #rows:2
+    #cols:1
+    #padding: 1.0
+    #spacing: 1.0
     BoxLayout:
-        orientation: 'vertical'
+        #orientation: 'vertical'
         size: root.size
-
+        size_hint_y: None
+        #height: self.minimum_height       
+        #padding: 20,50,20, 10
         # ラベル
         Label:
-            id: label1
-            font_size: 15
-            text: root.text    # root(MainScreen)の変数テキストの値を取得
-            size_hint_y: 0.5
+            #padding_x: 20
+            #pos: 10, 700
+            bold: True
+            text_size: self.size
+            halign: 'right'
+            valign: 'middle'  
             canvas.before:
-            Color:  
-                rgba: 0, 1, 1, 1
-            Rectangle:            
-                pos: self.pos     
-                size: self.size
+                Color:
+                    rgba: 1.0, 0.5, 0.5, 1.0
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint_y: 0.1
+            id: label1
+            #markup: True
+            font_size: 68
+            text: root.text
+            color: root.color
 
         Label:
-            id: label2
-            font_size: 15
-            text: root.text    # root(MainScreen)の変数テキストの値を取得
-            #color: root.color    
-
-        Button:
-            id: button1
-            text: "漢字"
+            canvas.before:
+                Color:
+                    rgba: 0.5, 0.5, 0.5, 0.3
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint_y: 0.1
+            id: label1
             font_size: 68
-            on_press: root.buttonClicked()  # ボタンをクリックした時にpython側の関数を呼ぶ
-
-        Button:
-            id: button2
-            text: "GetUrl"
+            text: root.text
+            color: root.color    
+        
+        Label:
+            canvas.before:
+                Color:
+                    rgba: 1.0, 1.0, 0.5, 0.3
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint_y: 0.1
+            id: label1
             font_size: 68
-            on_press: root.geturlClicked()  # ボタンをクリックした時にpython側の関数を呼ぶ    
+            text: root.text
+            color: root.color        
+   
+
+           
+        BoxLayout:
+            #orientation: 'vertical'
+            size_hint_y: 0.1
+            #padding: 20,30,20, 10
+            Button:
+                id: button1
+                text: "Up"
+                font_size: 68
+                on_press: root.buttonClicked()
+
+            Button:
+                id: button2
+                text: "Mid"
+                font_size: 68
+                on_press: root.buttonClicked2()
+
+            Button:
+                id: button3
+                text: "Down"
+                font_size: 68
+                on_press: root.buttonClicked3()

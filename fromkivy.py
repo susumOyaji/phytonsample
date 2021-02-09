@@ -8,8 +8,11 @@ import requests
 from kivy.config import Config  # 追加
 from kivy.properties import StringProperty  # 追加
 from kivy.uix.widget import Widget  # 追加
-from kivy.properties import StringProperty
-#from kivy.properties import StringProperty, ListProperty
+from kivy.properties import StringProperty,ListProperty
+from kivy.core.text import LabelBase, DEFAULT_FONT
+from kivy.resources import resource_add_path
+
+
 import japanize_kivy
 #import pndas as pd
 
@@ -116,19 +119,21 @@ class MyApp(App): #アプリケーションのロジックを記述するクラ�
         #return SampleScreen()
 class MainScreen(Widget):
     text = StringProperty()    # プロパティの追加
-    
+    color = ListProperty([1,1,1,1])
 
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
-        self.text = ''
+        self.text = '99999999999'
+        self.color = [0, 1, 0 , 1 ]
 
     def buttonClicked(self):        # ボタンをクリック時
         self.text = 'Hello PythonWorld'
+        self.color = [0, 1, 0 , 1 ]
 
     def geturlClicked(self):        # ボタンをクリック時
         #self.text = 'Get Url'
         self.text = str(get_htmls('6758'))
-        #self.color = [0, 1, 1 , 1 ]
+        self.color = [0, 1, 0 , 1 ]
 
 
 class TestApp(App):
