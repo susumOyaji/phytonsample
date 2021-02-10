@@ -6,63 +6,77 @@ TextWidget:
     #padding: 1.0
     #spacing: 1.0
     BoxLayout:
-        #orientation: 'vertical'
+        orientation: 'vertical'
         size: root.size
-        size_hint_y: None
+        #size_hint_y: None
         #height: self.minimum_height       
         #padding: 20,50,20, 10
         # ラベル
-        Label:
-            #padding_x: 20
-            #pos: 10, 700
-            bold: True
-            text_size: self.size
-            halign: 'right'
-            valign: 'middle'  
-            canvas.before:
-                Color:
-                    rgba: 1.0, 0.5, 0.5, 1.0
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-            size_hint_y: 0.1
-            id: label1
-            #markup: True
-            font_size: 68
-            text: root.text
-            color: root.color
+        FloatLayout:
+            #pos_hint:{'top': 0.5}
+            #size:30,30
+            #size_hint_y: 0.3
+            Label:
+                size_hint: 0.8,0.1
+                pos_hint:{'x':0.1,'top': 1.0}
+                #pos:150,0.0
+                #padding_x: 20
+                #pos: 10, 700
+                bold: True
+                text_size: self.size
+                halign: 'right'
+                valign: 'middle'  
+                canvas.before:
+                    Color:
+                        rgba: 0.8, 0.5, 0.5, 1.0
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+               
+                id: label1
+                #markup: True
+                #font_size: 6
+                text: 'root.text'
+                color: root.color
 
-        Label:
-            canvas.before:
-                Color:
-                    rgba: 0.5, 0.5, 0.5, 0.3
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-            size_hint_y: 0.1
-            id: label1
-            font_size: 68
-            text: root.text
-            color: root.color    
+            Label:
+                size_hint: 0.8,0.2
+                pos_hint:{'x':0.1, 'top':.88}
+                canvas.before:
+                    Color:
+                        rgba: 0.5, 0.5, 0.5, 1.0
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                
+                #pos:70, 750
+                id: label1
+                font_size: 68
+                text: root.text
+                color: root.color    
         
-        Label:
-            canvas.before:
-                Color:
-                    rgba: 1.0, 1.0, 0.5, 0.3
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-            size_hint_y: 0.1
-            id: label1
-            font_size: 68
-            text: root.text
-            color: root.color        
+            Label:
+                size_hint: 0.8,0.2
+                pos_hint:{'x':0.1, 'y':0.46}
+                canvas.before:
+                    Color:
+                        rgba: 0.5, 0.5, 0.5, 1.0
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                
+                #pos:70, 600
+                id: label1
+                font_size: 68
+                text: root.text
+                color: root.color        
    
 
            
         BoxLayout:
+            size_hint_y: 0.5
             #orientation: 'vertical'
-            size_hint_y: 0.1
+            #size_hint_y: 0.1
             #padding: 20,30,20, 10
             Button:
                 id: button1

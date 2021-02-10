@@ -7,13 +7,16 @@ from kivy.properties import StringProperty, ListProperty
 
 from kivy.core.text import LabelBase, DEFAULT_FONT
 from kivy.resources import resource_add_path
+from kivy.graphics import Color
+from kivy.graphics import Rectangle
+from kivy.uix.floatlayout import FloatLayout
 
 import japanize_kivy
 from kivy.config import Config  # 追加
 
 
-Config.set('graphics', 'width', '600')  # 追加
-Config.set('graphics', 'height', '1000')  # 追加
+Config.set('graphics', 'width', '760')  # 追加
+Config.set('graphics', 'height', '1300')  # 追加
 
 # デフォルトに使用するフォントを変更する
 #resource_add_path('./fonts')
@@ -24,9 +27,12 @@ class TextWidget(Widget):
     text  = StringProperty()
     color = ListProperty([0,0,0,0])
 
+
+
+
     def __init__(self, **kwargs):
         super(TextWidget, self).__init__(**kwargs)
-        self.text = 'start'
+        
         
 
     def buttonClicked(self):
@@ -45,6 +51,8 @@ class TestApp(App):
     def __init__(self, **kwargs):
         super(TestApp, self).__init__(**kwargs)
         self.title = 'Python to Iphone App'
+        self.text = 'start'
+
 
 if __name__ == '__main__':
     TestApp().run()
