@@ -1,13 +1,6 @@
 TextWidget:
 
 <TextWidget>:
-    canvas.after:
-        Color:
-            rgba: 1, 1, 1, 1
-        Line:
-            rectangle: self.x+1,self.y+1,self.width-1,self.height-1
-            dash_offset: 5
-            dash_length: 3
     #rows:2
     #cols:1
     #padding: 1.0
@@ -116,7 +109,7 @@ TextWidget:
            
         BoxLayout:
             size_hint_y: None
-            #height: self.minimum_height
+            height: self.minimum_height
             #orientation: 'vertical'
             #size_hint_y: 0.1
             #padding: 20,30,20, 10
