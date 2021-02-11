@@ -25,7 +25,9 @@ TextWidget:
                 bold: True
                 text_size: self.size
                 halign: 'right'
-                valign: 'middle'  
+                valign: 'middle'
+                multiline:True
+                #background_color:1,50,0,1  
                 canvas.before:
                     Color:
                         rgba: 0.8, 0.5, 0.5, 1.0
@@ -74,7 +76,8 @@ TextWidget:
 
            
         BoxLayout:
-            size_hint_y: 0.5
+            size_hint_y: None
+            height: self.minimum_height
             #orientation: 'vertical'
             #size_hint_y: 0.1
             #padding: 20,30,20, 10

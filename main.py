@@ -15,8 +15,8 @@ import japanize_kivy
 from kivy.config import Config  # 追加
 
 
-Config.set('graphics', 'width', '760')  # 追加
-Config.set('graphics', 'height', '1300')  # 追加
+Config.set('graphics', 'width', '600')  # 追加
+Config.set('graphics', 'height', '1000')  # 追加
 
 # デフォルトに使用するフォントを変更する
 #resource_add_path('./fonts')
