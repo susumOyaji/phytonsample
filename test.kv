@@ -1,6 +1,13 @@
 TextWidget:
 
 <TextWidget>:
+    canvas.after:
+        Color:
+            rgba: 1, 1, 1, 1
+        Line:
+            rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+            dash_offset: 5
+            dash_length: 3
     #rows:2
     #cols:1
     #padding: 1.0
@@ -76,7 +83,36 @@ TextWidget:
                 text: root.text
                 color: root.color        
    
-
+        ScrollView:
+            GridLayout:
+                cols:1
+                size_hint_y: None
+                row_default_height: 200
+                height: self.minimum_height
+                Button:
+                    text: "1"
+                Button:
+                    text: "2"
+                Button:
+                    text: "3"
+                Button:
+                    text: "4"
+                Button:
+                    text: "5"
+                Button:
+                    text: "6"
+                Button:
+                    text: "7"
+                Button:
+                    text: "8"
+                Button:
+                    text: "9"
+                Button:
+                    text: "10"
+                Button:
+                    text: "11"
+                Button:
+                    text: "12"
            
         BoxLayout:
             size_hint_y: None
