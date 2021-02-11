@@ -19,6 +19,9 @@ TextWidget:
             Label:
                 size_hint: 0.9,0.1
                 pos_hint:{'x':0.05,'top': 0.99}
+                background_normal: 'normal.png'
+                background_down: 'down.png'
+                border: 30,30,30,30
                 #pos:150,0.0
                 #padding_x: 20
                 #pos: 10, 700
@@ -77,11 +80,15 @@ TextWidget:
            
         BoxLayout:
             size_hint_y: None
-            height: self.minimum_height
+            #height: self.minimum_height
             #orientation: 'vertical'
             #size_hint_y: 0.1
             #padding: 20,30,20, 10
             Button:
+                markup: True
+                background_normal: 'normal.png'
+                background_down: 'down.png'
+                border: 100,100,100,100
                 id: button1
                 text: "Up"
                 font_size: 68
