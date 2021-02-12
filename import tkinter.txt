@@ -50,3 +50,71 @@ main_window.rowconfigure(0, weight=1)
 main_frame.columnconfigure(1, weight=1)
 
 main_window.mainloop()
+
+
+
+
+
+
+ #! /usr/bin/env python
+02:     
+03:     """
+04:     button.py 
+05:     
+06:     This demonstration script creates a toplevel window containing
+07:     several button widgets.
+08:     
+09:     June 14, 2005
+10:     """
+11:     
+12:     
+13:     import Tkinter as Tk
+14:     import template as A
+15:     
+16:     
+17:     class Button(Tk.Button):
+18:         """ Buttons to change bg of frames """
+19:         def __init__(self, master, obj, color_name, color_id):
+20:             Tk.Button.__init__(self, master, text=color_name, width=15, command=self.command)
+21:             self.obj = obj
+22:             self.color_id = color_id
+23:     
+24:         def command(self):
+25:             self.obj.demo_frame.config(bg=self.color_id)
+26:             self.obj.demo_buttons.config(bg=self.color_id)
+27:             
+28:     
+29:     class Demo(A.Demo):
+30:         """a demo class """
+31:         
+32:         def __init__(self, cmain):
+33:             A.Demo.__init__(self, cmain, __file__)
+34:             self.ini_frame()
+35:     
+36:         def ini_demo_called(self):
+37:             """ This method should be defined"""
+38:             self.ini_demo_called_0()
+39:             self.ini_frame()
+40:     
+41:         def ini_frame(self):
+42:             self.demo_main_frame.master.title("Button Demonstration")
+43:             self.demo_main_frame.master.geometry('+50+50')
+44:             A.Label(self.demo_main_frame, text=
+45:             "If you click on any of the four buttons below, " 
+46:             "the background of the button area will change to the color indicated in the button."
+47:             , width=35, wraplength='8c')
+48:             for name, code in [('Deeppink', '#FF1493'), ('Cornflowerblue', '#6495ED'),
+49:                                  ('Springgreen', '#00FF7F'), ('Gold', '#FFD700')]:
+50:                 b = Button(self.demo_frame, self, name, code) 
+51:                 b.pack(padx=10, pady=5)
+52:     
+53:     
+54:     ##------------------------------------------------ 
+55:     def demo(*av):
+56:         """ function called by `index.py'"""
+57:         d = Demo(False)
+58:         d.demo_window.focus_set()
+59:     
+60:     if __name__ == '__main__':
+61:         d = Demo(True)
+62:         d.demo_main_frame.mainloop()
