@@ -1,5 +1,8 @@
+#rootウィジェット
 TextWidget:
 
+#<>の間にウィジェットクラスの名前としてクラスが宣言される場合、
+#そのクラスの全てのインスタンスをグラフィカルに表現する方法を定義します。
 <TextWidget>:
     #rows:2
     #cols:1
@@ -13,20 +16,32 @@ TextWidget:
         #padding: 20,50,20, 10
         # ラベル
         FloatLayout:
-            #pos_hint:{'top': 0.5}
-            #size:30,30
-            #size_hint_y: 0.3
+            #anchor_x: 'center'
+            #anchor_y: 'center'
+            #Widget:
+            canvas:
+                Color:
+                    rgba: 1,0,0,1
+                Ellipse:
+                    pos: self.pos
+                    size: self.size
+                Color:
+                    rgba: 1,1,1,1
+                Line:
+                    width: 3
+                    rounded_rectangle:10,320,150,80,5
+                    #radius=[0, 50, 0, 50], source=TEXTURE    
+                
             Label:
                 size_hint: 0.9,0.1
                 pos_hint:{'x':0.05,'top': 0.99}
-                background_normal: 'normal.png'
-                background_down: 'down.png'
-                border: 30,30,30,30
+                radius:50
                 #pos:150,0.0
                 #padding_x: 20
                 #pos: 10, 700
                 bold: True
-                text_size: self.size
+                #text_size: (10, 10)
+                #text_size: self.size
                 halign: 'right'
                 valign: 'middle'
                 multiline:True
