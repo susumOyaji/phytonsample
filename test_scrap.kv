@@ -34,7 +34,32 @@ TextWidget:
         #padding: 20,50,20, 10
         # ラベル
         FloatLayout:
-           
+            MyLabel:
+                #size_hint: 0.9,0.1
+                #pos_hint:{'x':0.05,'top': 0.99}
+                #radius:50
+                #pos:150,0.0
+                #padding_x: 20
+                #pos: 10, 700
+                bold: True
+                #text_size: (10, 10)
+                #text_size: self.size
+                halign: 'right'
+                valign: 'middle'
+                multiline:True
+                #background_color:1,50,0,1  
+                #canvas.before:
+                #    Color:
+                #        rgba: 0.8, 0.5, 0.5, 1.0
+                #    Rectangle:
+                        #pos: 10,500
+                        #size: 100,100
+               
+                id: label1
+                #markup: True
+                font_size: 30
+                text: 'root.text'
+                color: 1,1,1,1
               
             Label:
                 id: label1
@@ -43,26 +68,39 @@ TextWidget:
                 color: 1,1,0,1#text color
                 size_hint: 0.8,0.2#
                 pos_hint:{'x':0.1, 'top':.88}#
-                halign: 'right'
-                valign: 'middle'
-                multiline:True
-                #background_color:1,1,0,1  
                 canvas:
                     Color:
-                        rgba: 0.5, 0.5, 0.5, 1.0# line to color
+                        rgba: 1, 0.5, 0.5, 1.0# line to color
+                    #Rectangle:
+                    #    pos: self.pos
+                    #    size: self.size
+                    Line:
+                        rectangle: (self.x+30, self.y+100, self.width-50, self.height-200)
+                        
+                        #width: 3
+                        #rounded_rectangle:0.1,800,100,100,5
+                        #radius=[0, 50, 0, 50], source=TEXTURE
+                    Rectangle:
+                        #pos: self.x+30, self.y+100
+                        #size: self.width-50, self.height-200      
+                        #pos:70, 750
+                          
+        
+            Label:
+                size_hint: 0.8,0.2
+                pos_hint:{'x':0.1, 'y':0.46}
+                canvas.before:
+                    Color:
+                        rgba: 0.5, 0.5, 0.5, 1.0
                     Rectangle:
                         pos: self.pos
                         size: self.size
-                    Line:
-                        #rectangle: (self.x+30, self.y+100, self.width-50, self.height-200)
-                        
-                        width: 3
-                        rounded_rectangle:self.x,self.y,480,100,5#(self.x+30, self.y+100, self.width-50, self.height-200,5)
-                        #radius=[0, 50, 0, 50], source=TEXTURE
-                    
-                      
-        
-             
+                
+                #pos:70, 600
+                id: label1
+                font_size: 68
+                text: root.text
+                color: root.color        
    
         ScrollView:
             GridLayout:
@@ -74,10 +112,9 @@ TextWidget:
                     text: "1"
                 Button:
                     text: "2"
-
-
-
-
+               
+               
+           
         BoxLayout:
             size_hint_y: None
             #height: self.minimum_height
@@ -101,6 +138,4 @@ TextWidget:
                 id: button3
                 text: "Down"
                 font_size: 68
-                on_press: root.buttonClicked3()       
-           
-      
+                on_press: root.buttonClicked3()
