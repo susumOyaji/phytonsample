@@ -1,0 +1,249 @@
+#: import get_color_from_hex kivy.utils.get_color_from_hex
+
+CalculatorRoot
+
+
+
+<CalculatorRoot>
+    Calculator1
+        id: calculator1
+
+<calculator1>
+# ��ʑS�̂̃��C�A�E�g
+    orientation: "vertical" # �I�u�W�F�N�g�𐅕��ɔz�u
+    display: display_input
+
+    ActionBar:
+
+        ActionView:
+            ActionPrevious:
+                title: '�d��'
+                with_previous: False # true���Ɠ��̃��S���{�^���ɂȂ�H
+
+            ActionButton:
+                text: '�؂�ւ�'
+                on_press: print("push ");app.root.change_calc2()
+
+#            ActionButton:
+#                text: '��'
+#                icon: 'atlas://data/images/defaulttheme/audio-volume-high'
+
+#            ActionGroup:    # �{�^�����O���[�v������
+#                text: '���'
+#                ActionButton:
+#                    text: '�֐��d��'
+#                ActionButton:
+#                    text: '�v���O���}�['
+
+
+    TextInput:  # �����\������
+        id: display_input
+        size_hint_y: 1  #�@�c�̑傫����S�̂́@1/5.5�@�̊����ŕ\������   
+        font_size: 60
+        hint_text: '0'
+
+    Keyboard:   # �e�[���L�[�̕\������
+        size_hint_y: 3.5    #�@�c�̑傫����S�̂́@3.5/4.5�@�̊����ŕ\������
+
+
+<Keyboard@GridLayout>:  # class Keyboard(GridLayout):�Ɠ����Ӗ�
+
+    # 4��~5�s�̃{�^�����쐬����
+    cols: 4
+    rows: 5
+
+    spacing: 2
+    padding: 4
+
+    # 1���
+    ClearButton:    # �{�^���̎��
+        text: "C"   # �{�^���̕\����
+    CalcButton:
+        text: "%"
+    DelButton:
+        text: "<x"
+    OperatorButton:
+        text: "/"
+
+    # 2���
+    NumberButton:
+        text: "7"
+    NumberButton:
+        text: "8"
+    NumberButton:
+        text: "9"
+    OperatorButton:
+        text: "*"
+
+    # 3���
+    NumberButton:
+        text: "4"
+    NumberButton:
+        text: "5"
+    NumberButton:
+        text: "6"
+    OperatorButton:
+        text: "-"
+
+    # 4���
+    NumberButton:
+        text: "1"
+    NumberButton:
+        text: "2"
+    NumberButton:
+        text: "3"
+    OperatorButton:
+        text: "+"
+
+    # 5���
+    CalcButton:
+        text: "+/-"
+    NumberButton:
+        text: "0"
+    CalcButton:
+        text: "."
+    EqualButton:
+        text: "="
+
+<ButtonFormat@Button>:
+    font_size: '30dp'
+    background_normal: ''
+    background_down: ''
+    background_color: get_color_from_hex("#83481F")
+    on_press: self.background_color = get_color_from_hex("#825534")
+    on_release: self.background_color = get_color_from_hex("#823600")
+
+
+<NumberButton@ButtonFormat>:
+    #font: "Roboto"
+    font_size: '30dp'
+    bold: True
+    on_press:  app.root.ids['calculator1'].print_number(self.text)   # �{�^���������ꂽ�Ƃ� main.py�́@Calculator�N���X��print_number()�����s�����
+
+<OperatorButton@ButtonFormat>:
+    on_press:  app.root.ids['calculator1'].print_operator(self.text)
+
+<ClearButton@ButtonFormat>:
+    on_press:  app.root.ids['calculator1'].clear_display()
+
+<DelButton@ButtonFormat>:
+    on_press:  app.root.ids['calculator1'].del_char()
+
+<EqualButton@ButtonFormat>:
+    on_press:  app.root.ids['calculator1'].calculate()
+
+<CalcButton@ButtonFormat>:  #�����_��\������\�肾��������
+    on_press:  app.root.ids['calculator1'].print_point(self.text)
+
+
+<Calculator2@BoxLayout>
+    id: calculator2
+
+    orientation: "vertical" # �I�u�W�F�N�g�𐅕��ɔz�u
+    display: display_input
+
+    ActionBar:
+        ActionView:
+            ActionPrevious:
+                title: '�d��2'
+                with_previous: False # true���Ɠ��̃��S���{�^���ɂȂ�H
+            ActionOverflow:
+
+            ActionButton:
+                text: '�؂�ւ�'
+                on_press: print("push2 ");app.root.change_calc()
+
+
+    TextInput:  # �����\������
+        id: display_input
+        size_hint_y: 1  #�@�c�̑傫����S�̂́@1/4.5�@�̊����ŕ\������   
+        font_size: 60
+    Keyboard2:   # �e�[���L�[�̕\������
+        size_hint_y: 3.5    #�@�c�̑傫����S�̂́@3.5/4.5�@�̊����ŕ\������
+
+
+<Keyboard2@GridLayout>:  # class Keyboard(GridLayout):�Ɠ����Ӗ�
+
+    # 4��~5�s�̃{�^�����쐬����
+    cols: 4
+    rows: 5
+
+    spacing: 2
+    padding: 4
+
+    # 1���
+    ClearButton2:    # �{�^���̎��
+        text: "�폜"   # �{�^���̕\����
+
+    CalcButton2:
+        text: "��]"
+    DelButton2:
+        text: "<x"
+    OperatorButton2:
+        text: "��"
+
+    # 2���
+    NumberButton2:
+        text: "��"
+        calc_val: '7'
+    NumberButton2:
+        text: "��"
+        calc_val: '8'
+    NumberButton2:
+        text: "��"
+        calc_val: '9'
+
+    OperatorButton2:
+        text: "��"
+
+    # 3���
+    NumberButton2:
+        text: "�l"
+    NumberButton2:
+        text: "��"
+    NumberButton2:
+        text: "�Z"
+    OperatorButton2:
+        text: "��"
+
+    # 4���
+    NumberButton2:
+        text: "��"
+    NumberButton2:
+        text: "��"
+    NumberButton2:
+        text: "�O"
+    OperatorButton2:
+        text: "�a"
+
+    # 5���
+    CalcButton2:
+        text: "+/-"
+    NumberButton2:
+        text: "��"
+    CalcButton2:
+        text: "."
+    EqualButton2:
+        text: "="
+
+<ButtonFormat2@Button>:
+    font_size: '30dp'
+    background_normal: ''
+    background_down: ''
+    background_color: get_color_from_hex("#398133")
+    on_press: self.background_color = get_color_from_hex("#73FF66")
+    on_release: self.background_color = get_color_from_hex("#52824E")
+
+
+<NumberButton2@ButtonFormat2>:
+    bold: True
+
+<OperatorButton2@ButtonFormat2>:
+
+<ClearButton2@ButtonFormat2>:
+
+<DelButton2@ButtonFormat2>:
+
+<EqualButton2@ButtonFormat2>:
+
+<CalcButton2@ButtonFormat2>:
