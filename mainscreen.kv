@@ -1,19 +1,19 @@
 #rootウィジェット
-TextWidget:
+
     #orientation: 'vertical'
 <Button>:
     color: .8,.9,0,1
-    font_size: 32
-    size_hint: .4, .3
+    font_size: 18
+    size_hint: .6, .08
 
 #<>の間にウィジェットクラスの名前としてクラスが宣言される場合、
 #そのクラスの全てのインスタンスをグラフィカルに表現する方法を定義します。
-<TextWidget>:
+<mainscreen>:
 <FloatLayout>:
     Button:
         text: 'Hello'
-        pos_hint: {'center_x': 0, 'center_y': 0}
-    #Button:
-    #    text: 'World!'
-    #    pos_hint: {'right': 1, 'y': 0}
+        pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+    Button:
+        text: 'World!'
+        pos_hint: {'right': 1, 'y': 0}
   
