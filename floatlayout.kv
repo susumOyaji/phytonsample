@@ -9,25 +9,64 @@
 #<>の間にウィジェットクラスの名前としてクラスが宣言される場合、
 #そのクラスの全てのインスタンスをグラフィカルに表現する方法を定義します。
 
-<FloatLayout>:
-#<GridLayout>:
-    #rows:1
-    Button:
-        text: 'Newyork Dow!'
-        pos_hint: {'center_x': 0.5, 'center_y': 0.9}
-    Button:
-        text: 'Nikkei225!'
-        pos_hint: {'right': 1, 'y': 0}
+<Mainscreen>:
+    rows: 2
+    FloatLayout:
+        Button:
+            text: 'F1'
+            size_hint: .3, .3
+            pos: 1, 1
+    RelativeLayout:
+        Button:
+            text: 'R1'
+            size_hint: .3, .3
+            pos: 0, 0
     GridLayout:
-        cols: 1
+        cols:2
         spacing: 10
-        Label:
+        Button:
             text: 'G1'
             size_hint_x: None
-            #width: 500 
+            width: 500 
         Button:
             text: 'G2'
         Button:
             text: 'G3'
             size_hint_x: None
             width: 50
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'top'
+        Button:
+            text: 'A1'  
+            size_hint: [.5, .5]
+        Button:
+            text: 'A2'
+            size_hint: [.2, .2]
+    BoxLayout:
+        orientation: 'horizontal'
+        Button:
+            text: 'B1'
+        Button:
+            text: 'B2'
+            size_hint: [2, .3]
+            pos_hint: {'y': .4}
+        Button:
+            text: 'B3' 
+    StackLayout:
+        orientation: 'rl-tb'
+        padding: 10
+        Button:
+            text: 'S1'
+            size_hint: [.6, .2] 
+        Button:
+            text: 'S2'
+            size_hint: [.4, .4]
+        Button:
+            text: 'S3'
+            size_hint: [.3, .2]
+        Button:
+            text: 'S4'
+            size_hint: [.4, .3] 
+
+

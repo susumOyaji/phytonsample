@@ -2,6 +2,8 @@
 import kivy
 kivy.require('2.0.0')
 
+#from kivy.clock import Clock
+#from kivy.core.window import Window
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.label import Label
@@ -18,21 +20,49 @@ import japanize_kivy
 from kivy.config import Config  # 追加
 
 
-Config.set('graphics', 'width', '600')  # 追加
-Config.set('graphics', 'height', '1000')  # 追加
+Config.set('graphics', 'width', '1000')  # 追加
+Config.set('graphics', 'height', '300')  # 追加
+Config.set('graphics', 'position', 'custom')
+Config.set('graphics', 'left', 2000)
+Config.set('graphics', 'top',  100)
 
 # デフォルトに使用するフォントを変更する
 #resource_add_path('./fonts')
 #LabelBase.register(DEFAULT_FONT, 'mplus-2c-regular.ttf') #日本語が使用できるように日本語フォントを指定する
 
+class Mainscreen(GridLayout):
+    pass
+
 class FloatLayoutApp(App):
-    def build(self):
-        return FloatLayout()
+   def build(self):
+        #Clock.schedule_interval(self.show, 0)
+        return Mainscreen()
 
 if __name__=="__main__":
     FloatLayoutApp().run()
 
-'''    
+
+
+
+
+
+
+
+
+''''
+             Button:
+            text: 'Newyork Dow!'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+        Button:
+            text: 'Nikkei225!'
+            pos_hint: {'right': 1, 'y': 0}
+           
+
+
+
+
+
+
 class TextWidget(Widget):
     text  = StringProperty()
     color = ListProperty([0,0,0,0])
