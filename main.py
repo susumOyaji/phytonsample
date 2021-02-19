@@ -20,8 +20,8 @@ import japanize_kivy
 from kivy.config import Config  # 追加
 
 
-Config.set('graphics', 'width', '1000')  # 追加
-Config.set('graphics', 'height', '300')  # 追加
+Config.set('graphics', 'width', '600')  # 追加
+Config.set('graphics', 'height', '1000')  # 追加
 Config.set('graphics', 'position', 'custom')
 Config.set('graphics', 'left', 2000)
 Config.set('graphics', 'top',  100)
@@ -35,7 +35,7 @@ class Mainscreen(GridLayout):
 
 class FloatLayoutApp(App):
    def build(self):
-        #Clock.schedule_interval(self.show, 0)
+        
         return Mainscreen()
 
 if __name__=="__main__":

@@ -1,72 +1,116 @@
 #rootウィジェット
 
     #orientation: 'vertical'
+
+<Label>
+    size_hint: .8, .2
+
+
 <Button>:
     color: .8,.9,0,1
     font_size: 18
-    size_hint: .6, .08
+    size_hint: .8, .3
+
+<ScrollButton@Button>
+    #background_color: (.6, .3, .3, 1)
+    pos_hint_x: {'center_x': .5}
+    size_hint: None, None
+    size: 500, 80    
 
 #<>の間にウィジェットクラスの名前としてクラスが宣言される場合、
 #そのクラスの全てのインスタンスをグラフィカルに表現する方法を定義します。
 
 <Mainscreen>:
+    canvas.after:
+        Color:
+            rgba: 1, 1, 1, 1
+        Line:
+            rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+            dash_offset: 5
+            dash_length: 3
+    cols:1
     rows: 2
     FloatLayout:
-        Button:
-            text: 'F1'
-            size_hint: .3, .3
-            pos: 1, 1
-    RelativeLayout:
-        Button:
-            text: 'R1'
-            size_hint: .3, .3
-            pos: 0, 0
-    GridLayout:
-        cols:2
-        spacing: 10
-        Button:
-            text: 'G1'
-            size_hint_x: None
-            width: 500 
-        Button:
-            text: 'G2'
-        Button:
-            text: 'G3'
-            size_hint_x: None
-            width: 50
-    AnchorLayout:
-        anchor_x: 'right'
-        anchor_y: 'top'
-        Button:
-            text: 'A1'  
-            size_hint: [.5, .5]
-        Button:
-            text: 'A2'
-            size_hint: [.2, .2]
-    BoxLayout:
-        orientation: 'horizontal'
-        Button:
-            text: 'B1'
-        Button:
-            text: 'B2'
-            size_hint: [2, .3]
-            pos_hint: {'y': .4}
-        Button:
-            text: 'B3' 
-    StackLayout:
-        orientation: 'rl-tb'
-        padding: 10
-        Button:
-            text: 'S1'
-            size_hint: [.6, .2] 
-        Button:
-            text: 'S2'
-            size_hint: [.4, .4]
-        Button:
-            text: 'S3'
-            size_hint: [.3, .2]
-        Button:
-            text: 'S4'
-            size_hint: [.4, .3] 
-
+        size_hint_y: 0.5
+        Label:
+            text: 'L-F1'
+            #size_hint: .3, .2
+            pos_hint:{ 'center_x': .5,'center_y': .8}
+            borders: 5, 'solid', (1,0,0,1)
+            canvas.before:
+                Color:
+                    rgba: 1, .5, 0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        Label:
+            text: 'L-F2'
+            #size_hint: .3, .2
+            pos_hint:{ 'center_x': .5,'center_y': .5}
+            canvas.before:
+                Color:
+                    rgba: 1, .5, 0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size 
+        Label:
+            text: 'L-F3'
+            #size_hint: .3, .2
+            pos_hint:{ 'center_x': .5,'center_y': .2}
+            canvas.before:
+                Color:
+                    rgba: 1, .5, 0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size        
+       
+    #BoxLayout:
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        #size_hint: None, None
+        size_hint: (1, .9)
+        bar_width: 15
+        bar_color: 1, 0, 0, 1   # red
+        bar_inactive_color: 0, 0, 1, 1   # blue
+        effect_cls: "ScrollEffect"
+        scroll_type: ['bars']
+        #size: 600, 600
+        pos_hint: {'center_x': .5, 'center_y': .5}
+           
+        GridLayout:
+            cols: 1
+            padding: 0 #左右
+            spacing: 10 #上下
+            size_hint_y: None
+            pos_hint_x: {'center_x': .5}
+            height: self.minimum_height
+            
+            ScrollButton:
+                text: '1'
+            ScrollButton:
+                text: '2'
+            ScrollButton:
+                text: '3'
+            ScrollButton:
+                text: '4'
+            ScrollButton:
+                text: '5'
+            ScrollButton:
+                text: '6'
+            ScrollButton:
+                text: '7'
+            ScrollButton:
+                text: '2'
+            ScrollButton:
+                text: '3'
+            ScrollButton:
+                text: '4'
+            ScrollButton:
+                text: '5'
+            ScrollButton:
+                text: '6'
+        
+      
+           
 
