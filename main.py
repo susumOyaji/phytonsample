@@ -15,6 +15,8 @@ from kivy.graphics import Color
 from kivy.graphics import Rectangle
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
+from kivy.properties import ObjectProperty
+
 
 import japanize_kivy
 from kivy.config import Config  # 追加
@@ -30,12 +32,38 @@ Config.set('graphics', 'top',  100)
 #resource_add_path('./fonts')
 #LabelBase.register(DEFAULT_FONT, 'mplus-2c-regular.ttf') #日本語が使用できるように日本語フォントを指定する
 
+
+
+
 class Mainscreen(GridLayout):
-    pass
+    def __init__(self, label1, label2, label3):
+        self.label1 = label1
+        self.label2 = label2
+        self.label3 = label3
+       
+
+    def status(self):
+        return "Job:{} | HP:{} | MP:{} | Atk:{} | Def:{} | Weapon:{}".format \
+                (self.job, self.hp, self.mp)
+
+    #pass
+
+
+
+class Pricedisp(Mainscreen):
+    seconds_string = 'Stack Card'
+    newyork = 'New York Dow Price $30,000'
+    #nikei225 = 'Nikei225 Price ¥30,000'
+
+
+     
+   
+
+  
 
 class FloatLayoutApp(App):
-   def build(self):
-        
+    def build(self):
+        self.title = 'Stack Card(Python)'        
         return Mainscreen()
 
 if __name__=="__main__":
