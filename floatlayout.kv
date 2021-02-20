@@ -35,7 +35,7 @@
         Label:
             id:label1
             text: root.seconds_string
-            pos_hint:{ 'center_x': .5,'center_y': .8}
+            pos_hint:{ 'center_x': .5,'center_y': .85}
             borders: 5, 'solid', (1,0,0,1)
             canvas.before:
                 Color:
@@ -46,7 +46,8 @@
         Label:
             id:label2
             text: root.newyork
-            pos_hint:{ 'center_x': .5,'center_y': .5}
+            font_size: 20
+            pos_hint:{ 'center_x': .5,'center_y': .60}
             canvas.before:
                 Color:
                     rgba: 1, .5, 0, 1
@@ -55,14 +56,26 @@
                     size: self.size 
         Label:
             id:label3
-            text: root.nikei
-            pos_hint:{ 'center_x': .5,'center_y': .2}
+            text: root.nikei225
+            font_size: 20
+            pos_hint:{ 'center_x': .5,'center_y': .35}
             canvas.before:
                 Color:
                     rgba: 1, .5, 0, 1
                 Rectangle:
                     pos: self.pos
-                    size: self.size        
+                    size: self.size
+        Label:
+            id:label4
+            text: root.nikei225
+            font_size: 20
+            pos_hint:{ 'center_x': .5,'center_y': .1}
+            canvas.before:
+                Color:
+                    rgba: 1, .5, 0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size                            
        
     #BoxLayout:
     ScrollView:
@@ -81,13 +94,13 @@
         GridLayout:
             cols: 1
             padding: 0 #左右
-            spacing: 10 #上下
+            spacing: 15 #上下
             size_hint_y: None
-            pos_hint_x: {'center_x': .5}
+            pos_hint_x: {'center_x': .5,'center_y': 0.5}
             height: self.minimum_height
             
             ScrollButton:
-                text: '1'
+                text: root.sony
             ScrollButton:
                 text: '2'
             ScrollButton:

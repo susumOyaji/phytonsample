@@ -5,6 +5,8 @@ kivy.require('2.0.0')
 #from kivy.clock import Clock
 #from kivy.core.window import Window
 from kivy.app import App
+from bs4 import BeautifulSoup
+import requests
 from kivy.uix.widget import Widget
 from kivy.uix.label import Label
 from kivy.properties import StringProperty, ListProperty
@@ -31,39 +33,116 @@ Config.set('graphics', 'top',  100)
 # デフォルトに使用するフォントを変更する
 #resource_add_path('./fonts')
 #LabelBase.register(DEFAULT_FONT, 'mplus-2c-regular.ttf') #日本語が使用できるように日本語フォントを指定する
+class Creature(object):
+    def __init__(self, level=1, weapon=None):
+        self.level = level
+        self.hp = 0
+        self.mp = 0
+        self.attack = 0
+        self.defence = 0
+        self.weapon = weapon
+        self.job = "neet"
+
+    def status(self):
+        return "Job:{} | HP:{} | MP:{} | Atk:{} | Def:{} | Weapon:{}".format \
+                (self.job, self.hp, self.mp, self.attack, self.defence, self.weapon)
+
+
+class Warrior(Creature):
+    def __init__(self, level):
+        super().__init__(level)
+        self.attack += 3 * level
+        if self.weapon is None:
+            self.weapon = "sword"
+        if self.job == "neet":
+            self.job = "Warrior"
+        else: self.job += "Warrior"
+
+
+class Magician(Creature):
+    def __init__(self, level):
+        super().__init__(level)
+        self.mp += 4 * level
+        if self.weapon is None:
+            self.weapon = "rod"
+        if self.job == "neet":
+            self.job = "Magic"
+        else: self.job += "Magic"   
+
+
+
+
+
+def get_htmls(stock_number):
+  urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
+  soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
+  text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
+  
+  tag_tr = soup.find_all('tr')
+  #print(tag_tr[0])
+
+  head = [h.text for h in tag_tr[0].find_all('th')]
+  print(head[0])#ソニー（株）
+  data = [d.text for d in tag_tr[0].find_all('td')]
+  print('stoksPrice: '+data[1])
+  print(data[2])
+  print('')
+  return data
+ 
 
 
 
 
 class Mainscreen(GridLayout):
-    def __init__(self, label1, label2, label3):
-        self.label1 = label1
-        self.label2 = label2
-        self.label3 = label3
-       
-
-    def status(self):
-        return "Job:{} | HP:{} | MP:{} | Atk:{} | Def:{} | Weapon:{}".format \
-                (self.job, self.hp, self.mp)
-
-    #pass
+    pass
 
 
+    #stack_code = ['998407','6758', '6976', '4755']
+    #while True:
+    #複数のデータフレームをcsvで保存
+    #    for i in stack_code:
+    #        get_htmls(i)
 
-class Pricedisp(Mainscreen):
+    #Labei1
     seconds_string = 'Stack Card'
-    newyork = 'New York Dow Price $30,000'
-    #nikei225 = 'Nikei225 Price ¥30,000'
 
 
-     
+    #Label2
+    NewYorkDow = '998407'
+    Newyork_responce = get_htmls(NewYorkDow)
+    newyork1 = Newyork_responce[1]
+    newyork2 = Newyork_responce[2]
+    newyork = 'NewYork Dow \n$' + newyork1 + '  ' + newyork2
+    
+
+
+    #Label3
+    nikei225 = '998407'
+    Nikei225_responce = get_htmls(nikei225)
+    nikei225_1 = Nikei225_responce[1]
+    nikei225_2 = Nikei225_responce[2]
+    nikei225 = 'Nikei225 \n$' + nikei225_1  + '  ' + nikei225_2
+   
+
+    sony = '7698'
+    
+
+
+
+
+
    
 
   
 
 class FloatLayoutApp(App):
     def build(self):
-        self.title = 'Stack Card(Python)'        
+        self.title = 'Stack Card(Python)'
+
+        print(Warrior(5).status())
+            #Job:Warrior | HP:0 | MP:0 | Atk:15 | Def:0 | Weapon:sword
+        print(Magician(5).status())
+            #Job:Magic | HP:0 | MP:20 | Atk:0 | Def:0 | Weapon:rod
         return Mainscreen()
 
 if __name__=="__main__":
