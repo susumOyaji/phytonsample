@@ -1,0 +1,89 @@
+
+<Button@Button>:
+    font_size: 15
+    font_name: 'Verdana'
+
+<Label@Label>:
+    font_size: 15
+    font_name: 'Verdana'
+
+<TextInput@TextInput>:
+    font_size: 15
+    font_name: 'Verdana'
+    padding_y: 3
+
+
+<Row>:
+    size_hint_y: None
+    height: self.minimum_height
+    height: 40
+
+    Button:
+        text: root.button_text
+        size_hint_x: None
+        top: 200
+
+    Button:
+        text: 'World 1'
+        width: 300
+
+<Rows>:
+    size_hint_y: None
+    height: self.minimum_height
+    orientation: "vertical"
+
+User:
+    BoxLayout:
+        orientation: "vertical"
+        padding : 20, 5
+
+
+        BoxLayout:
+            orientation: "horizontal"
+            #padding : 10, 10
+            spacing: 10, 10
+            size: 450, 40
+            size_hint: None, None
+
+            Label:
+                size_hint_x: .2
+                text: "Test 1"
+                text_size: self.size
+                valign: 'bottom'
+                halign: 'center'
+
+            Label:
+                size_hint_x: .8
+                text: "Test 2"
+                text_size: self.size
+                valign: 'bottom'
+                halign: 'center'
+
+
+        ScrollView:
+            Rows:
+                id: rows
+
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_x: .2
+            size_hint_y: .2
+
+            Button:
+                text: "+Add More"
+                on_press: root.add_more()
+
+
+        BoxLayout:
+            orientation: "horizontal"
+            padding : 10, 5
+            spacing: 10, 10
+            size_hint: .5, .35
+            pos_hint: {'x': .25, 'y':.25}
+
+            Button:
+                text: 'Ok'
+
+            Button:
+                text: 'Cancel'

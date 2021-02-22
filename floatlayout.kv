@@ -1,3 +1,10 @@
+
+
+#複数行インデント挿入
+#Ctrl + ]
+
+#複数行インデント削除
+#Ctrl + [
 #rootウィジェット
 
     #orientation: 'vertical'
@@ -21,6 +28,7 @@
 #そのクラスの全てのインスタンスをグラフィカルに表現する方法を定義します。
 
 <Mainscreen>:
+    spacing: 20 #上下
     canvas.after:
         Color:
             rgba: 1, 1, 1, 1
@@ -28,101 +36,85 @@
             rectangle: self.x+1,self.y+1,self.width-1,self.height-1
             dash_offset: 5
             dash_length: 3
-    cols:1
-    rows: 2
-    FloatLayout:
-        size_hint_y: 0.5
-        Label:
-            id:label1
-            text: root.seconds_string
-            pos_hint:{ 'center_x': .5,'center_y': .85}
-            borders: 5, 'solid', (1,0,0,1)
-            canvas.before:
-                Color:
-                    rgba: 1, .5, 0, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-        Label:
-            id:label2
-            text: root.newyork
-            font_size: 20
-            pos_hint:{ 'center_x': .5,'center_y': .60}
-            canvas.before:
-                Color:
-                    rgba: 1, .5, 0, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size 
-        Label:
-            id:label3
-            text: root.nikei225
-            font_size: 20
-            pos_hint:{ 'center_x': .5,'center_y': .35}
-            canvas.before:
-                Color:
-                    rgba: 1, .5, 0, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-        Label:
-            id:label4
-            text: root.nikei225
-            font_size: 20
-            pos_hint:{ 'center_x': .5,'center_y': .1}
-            canvas.before:
-                Color:
-                    rgba: 1, .5, 0, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size                            
+   
+    Label:
+        id:label1
+        text: root.seconds_string
+        pos_hint:{ 'center_x': .5,'center_y': .85}
+        borders: 5, 'solid', (1,0,0,1)
+        canvas.before:
+            Color:
+                rgba: 1, .5, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+    Label:
+        id:label2
+        text: root.newyork
+        font_size: 20
+        pos_hint:{ 'center_x': .5,'center_y': .60}
+        canvas.before:
+            Color:
+                rgba: 1, .5, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size 
+    Label:
+        id:label3
+        text: root.nikei225
+        font_size: 20
+        pos_hint:{ 'center_x': .5,'center_y': .35}
+        canvas.before:
+            Color:
+                rgba: 1, .5, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+    Label:
+        id:label4
+        text: root.rakuten
+        font_size: 20
+        pos_hint:{ 'center_x': .5,'center_y': .1}
+        canvas.before:
+            Color:
+                rgba: 1, .5, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size                            
        
-    #BoxLayout:
-    ScrollView:
-        do_scroll_x: False
-        do_scroll_y: True
-        #size_hint: None, None
-        size_hint: (1, .9)
-        bar_width: 15
-        bar_color: 1, 0, 0, 1   # red
-        bar_inactive_color: 0, 0, 1, 1   # blue
-        effect_cls: "ScrollEffect"
-        scroll_type: ['bars']
-        #size: 600, 600
-        pos_hint: {'center_x': .5, 'center_y': .5}
-           
-        GridLayout:
-            cols: 1
-            padding: 0 #左右
-            spacing: 15 #上下
+    BoxLayout:
+        pos_hint:{ 'center_x': .5,'center_y': .1}
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
             size_hint_y: None
-            pos_hint_x: {'center_x': .5,'center_y': 0.5}
-            height: self.minimum_height
+            #height: self.minimum_height
+            orientation: "vertical"
+            #size_hint: None, None
+            #size_hint: (1, .9)
+            #bar_width: 15
+            #bar_color: 1, 0, 0, 1   # red
+            #bar_inactive_color: 0, 0, 1, 1   # blue
+            #effect_cls: "ScrollEffect"
+            #scroll_type: ['bars']
+            #size: 600, 600
+            #pos_hint_x: {'center_x': .5}
             
-            ScrollButton:
-                text: root.sony
-            ScrollButton:
-                text: '2'
-            ScrollButton:
-                text: '3'
-            ScrollButton:
-                text: '4'
-            ScrollButton:
-                text: '5'
-            ScrollButton:
-                text: '6'
-            ScrollButton:
-                text: '7'
-            ScrollButton:
-                text: '2'
-            ScrollButton:
-                text: '3'
-            ScrollButton:
-                text: '4'
-            ScrollButton:
-                text: '5'
-            ScrollButton:
-                text: '6'
+            GridLayout:
+                id: layout_content
+                cols: 1
+                padding: 0 #左右
+                spacing: 15 #上下
+                size_hint_x: 0.5 #任意の1より大きい値
+                size_hint_y: None
+
+                #pos_hint_x: {'center_x': .5,'center_y': 0.5}
+                row_default_height: 100
+                height: self.minimum_height
+                
+                ScrollButton:
+                    text: root.sony
+               
         
       
            

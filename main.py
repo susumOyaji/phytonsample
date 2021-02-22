@@ -17,8 +17,13 @@ from kivy.graphics import Color
 from kivy.graphics import Rectangle
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.scrollview import ScrollView
+from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
 
+from kivy.core.window import Window
+from kivy.app import runTouchApp
+from kivy.uix.button import Button
 
 import japanize_kivy
 from kivy.config import Config  # 追加
@@ -72,6 +77,10 @@ class Magician(Creature):
 
 
 
+def add_row(self):
+        self.row_count += 1
+        self.add_widget(Row(button_text=str(self.row_count)))
+
 
 def get_htmls(stock_number):
   urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
@@ -93,7 +102,7 @@ def get_htmls(stock_number):
 
 
 
-class Mainscreen(GridLayout):
+class Mainscreen(BoxLayout):
     pass
 
 
@@ -117,16 +126,18 @@ class Mainscreen(GridLayout):
 
 
     #Label3
-    nikei225 = '998407'
-    Nikei225_responce = get_htmls(nikei225)
-    nikei225_1 = Nikei225_responce[1]
-    nikei225_2 = Nikei225_responce[2]
-    nikei225 = 'Nikei225 \n$' + nikei225_1  + '  ' + nikei225_2
-   
+    rakuten = '4755'
+    rakuten_responce = get_htmls(rakuten)
+    rakuten1 = rakuten_responce[1]
+    rakuten2 = rakuten_responce[2]
+    nikei225 = 'Nikei225 \n$' + rakuten1  + '  ' + rakuten2
+    rakuten = 'Rakuten \n$' + rakuten1  + '  ' + rakuten2
 
     sony = '7698'
-    
 
+   
+
+   
 
 
 
@@ -138,7 +149,7 @@ class Mainscreen(GridLayout):
 class FloatLayoutApp(App):
     def build(self):
         self.title = 'Stack Card(Python)'
-
+        #self.root = Builder.load_file('floatlayout.kv')
         print(Warrior(5).status())
             #Job:Warrior | HP:0 | MP:0 | Atk:15 | Def:0 | Weapon:sword
         print(Magician(5).status())
