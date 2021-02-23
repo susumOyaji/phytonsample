@@ -41,6 +41,8 @@
     Label:
         id:label1
         text: root.seconds_string
+        font_size: 40
+        bold:True
         pos_hint:{ 'center_x': .5,'center_y': .85}
         #borders: 5, 'solid', (1,0,0,1)
         canvas.before:
@@ -132,8 +134,7 @@
                     rectangle: self.x+1,self.y+1,self.width-1,self.height-1
                     dash_offset: 5
                     dash_length: 3
-        Button:
-            text: "4"
+       
     BoxLayout:
         orientation: "horizontal"
         padding : 10, 5
