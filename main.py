@@ -75,11 +75,22 @@ class Magician(Creature):
         else: self.job += "Magic"   
 
 
+def add_more(self):
+        self.ids.rows.add_row()
 
+def sub_more(self):
+        self.ids.rows.remove_row()            
 
 def add_row(self):
         self.row_count += 1
         self.add_widget(Row(button_text=str(self.row_count)))
+
+
+def remove_row(self):
+        if self.content.children:
+            self.content.remove_widget(self.content.children[0])
+            self.row_count -= 1
+
 
 
 def get_htmls(stock_number):
@@ -107,7 +118,7 @@ class Mainscreen(BoxLayout):
 
 
     stack_code = ['998407','6758', '6976', '4755']
-    while True:
+    #while True:
     #複数のデータフレームをcsvで保存
     for i in stack_code:
         get_htmls(i)

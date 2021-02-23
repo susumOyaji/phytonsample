@@ -13,8 +13,8 @@ class User(Screen):
     def add_more(self):
         self.ids.rows.add_row()
 
-    #def sub_more(self):
-        #self.ids.rows.remove_row()    
+    def sub_more(self):
+        self.ids.rows.remove_row()    
 
 
 class Row(BoxLayout):
@@ -31,6 +31,14 @@ class Rows(BoxLayout):
     def add_row(self):
         self.row_count += 1
         self.add_widget(Row(button_text=str(self.row_count)))
+    
+    def remove_row(self):
+        if self.content.children:
+            self.content.remove_widget(self.content.children[0])
+            self.row_count -= 1
+
+
+
 
 
 class Test1(App):
