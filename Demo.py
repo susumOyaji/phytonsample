@@ -13,6 +13,9 @@ class User(Screen):
     def add_more(self):
         self.ids.rows.add_row()
 
+    #def sub_more(self):
+        #self.ids.rows.remove_row()    
+
 
 class Row(BoxLayout):
     button_text = StringProperty("")

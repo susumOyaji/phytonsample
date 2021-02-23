@@ -4,8 +4,10 @@
     font_name: 'Verdana'
 
 <Label@Label>:
+    pos_hint: {'center_x': .5, 'center_y':.5}
     font_size: 15
     font_name: 'Verdana'
+    
 
 <TextInput@TextInput>:
     font_size: 15
@@ -35,22 +37,29 @@
 User:
     BoxLayout:
         orientation: "vertical"
-        padding : 20, 5
+        padding : 10, 5 #左、上
 
 
         BoxLayout:
-            orientation: "horizontal"
-            #padding : 10, 10
+            orientation: "vertical"
+            padding : 5, 10
             spacing: 10, 10
-            size: 450, 40
+            size: 450, 350
             size_hint: None, None
 
             Label:
-                size_hint_x: .2
+                size_hint_x: .8
+                size_hint_y: .5
                 text: "Test 1"
                 text_size: self.size
-                valign: 'bottom'
+                valign: 'center'
                 halign: 'center'
+                canvas.before:
+                    Color:
+                        rgba: 1, .5, 0, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
 
             Label:
                 size_hint_x: .8
@@ -58,6 +67,12 @@ User:
                 text_size: self.size
                 valign: 'bottom'
                 halign: 'center'
+                canvas.before:
+                    Color:
+                        rgba: 1, .5, 0, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
 
 
         ScrollView:
@@ -67,12 +82,20 @@ User:
 
         BoxLayout:
             orientation: "horizontal"
-            size_hint_x: .2
-            size_hint_y: .2
+            size_hint_x: .5
+            size_hint_y: .35
+
+            padding : 10, 5
+            spacing: 10, 10
+            #size_hint: .5, .35
+            #pos_hint: {'x': .25, 'y':.25}
 
             Button:
                 text: "+Add More"
                 on_press: root.add_more()
+            Button:
+                text: "-Sub More"
+                #on_press: root.sub_more()    
 
 
         BoxLayout:

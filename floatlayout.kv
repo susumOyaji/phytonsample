@@ -28,20 +28,21 @@
 #そのクラスの全てのインスタンスをグラフィカルに表現する方法を定義します。
 
 <Mainscreen>:
-    spacing: 20 #上下
-    canvas.after:
-        Color:
-            rgba: 1, 1, 1, 1
-        Line:
-            rectangle: self.x+1,self.y+1,self.width-1,self.height-1
-            dash_offset: 5
-            dash_length: 3
+    orientation: "vertical"
+    #spacing: 10,10 #上下
+    #canvas.after:
+    #    Color:
+    #        rgba: 1, 1, 1, 1
+    #    Line:
+    #        rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+    #        dash_offset: 5
+    #        dash_length: 3
    
     Label:
         id:label1
         text: root.seconds_string
         pos_hint:{ 'center_x': .5,'center_y': .85}
-        borders: 5, 'solid', (1,0,0,1)
+        #borders: 5, 'solid', (1,0,0,1)
         canvas.before:
             Color:
                 rgba: 1, .5, 0, 1
@@ -81,41 +82,35 @@
             Rectangle:
                 pos: self.pos
                 size: self.size                            
-       
     BoxLayout:
-        pos_hint:{ 'center_x': .5,'center_y': .1}
+        size_hint: 0.8, 0.8
+        pos_hint:{ 'center_x': .5,}
+        padding: 50, 10 #左右、上
+        spacing: 100, 100 #
+        canvas.after:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+                dash_offset: 5
+                dash_length: 3
+        #pos_hint:{ 'center_x': .5,'center_y': .85}  
         ScrollView:
-            do_scroll_x: False
-            do_scroll_y: True
-            size_hint_y: None
-            #height: self.minimum_height
-            orientation: "vertical"
-            #size_hint: None, None
-            #size_hint: (1, .9)
-            #bar_width: 15
-            #bar_color: 1, 0, 0, 1   # red
-            #bar_inactive_color: 0, 0, 1, 1   # blue
-            #effect_cls: "ScrollEffect"
-            #scroll_type: ['bars']
-            #size: 600, 600
-            #pos_hint_x: {'center_x': .5}
-            
             GridLayout:
-                id: layout_content
-                cols: 1
-                padding: 0 #左右
-                spacing: 15 #上下
-                size_hint_x: 0.5 #任意の1より大きい値
+                cols:1
+                size_hint_x: 1.0 #
                 size_hint_y: None
-
-                #pos_hint_x: {'center_x': .5,'center_y': 0.5}
-                row_default_height: 100
+                row_default_height: 50
                 height: self.minimum_height
-                
-                ScrollButton:
-                    text: root.sony
-               
-        
-      
-           
+                Button:
+                    text: root.rakuten
+                Button:
+                    text: "2"
+                Button:
+                    text: "3"
+                Button:
+                    text: "4"
 
+
+           
+    

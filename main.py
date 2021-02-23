@@ -106,11 +106,11 @@ class Mainscreen(BoxLayout):
     pass
 
 
-    #stack_code = ['998407','6758', '6976', '4755']
-    #while True:
+    stack_code = ['998407','6758', '6976', '4755']
+    while True:
     #複数のデータフレームをcsvで保存
-    #    for i in stack_code:
-    #        get_htmls(i)
+    for i in stack_code:
+        get_htmls(i)
 
     #Labei1
     seconds_string = 'Stack Card'
