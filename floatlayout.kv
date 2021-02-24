@@ -10,8 +10,8 @@
     #orientation: 'vertical'
 
 <Label>
-    size_hint: .8, .2
-
+    size_hint: 1.0, .2
+    
 
 <Button>:
     color: .8,.9,0,1
@@ -27,9 +27,10 @@
 #<>の間にウィジェットクラスの名前としてクラスが宣言される場合、
 #そのクラスの全てのインスタンスをグラフィカルに表現する方法を定義します。
 
-<Mainscreen>:
+<Mainscreen>
     orientation: "vertical"
-    #spacing: 10,10 #上下
+    spacing: 10,10 #上下
+    #padding:10,10
     #canvas.after:
     #    Color:
     #        rgba: 1, 1, 1, 1
@@ -37,58 +38,107 @@
     #        rectangle: self.x+1,self.y+1,self.width-1,self.height-1
     #        dash_offset: 5
     #        dash_length: 3
-   
-    Label:
-        id:label1
-        text: root.seconds_string
-        font_size: 40
-        bold:True
-        pos_hint:{ 'center_x': .5,'center_y': .85}
-        #borders: 5, 'solid', (1,0,0,1)
-        canvas.before:
-            Color:
-                rgba: 1, .5, 0, 1
-            Rectangle:
-                pos: self.pos
-                size: self.size
-    Label:
-        id:label2
-        text: root.newyork
-        font_size: 20
-        pos_hint:{ 'center_x': .5,'center_y': .60}
-        canvas.before:
-            Color:
-                rgba: 1, .5, 0, 1
-            Rectangle:
-                pos: self.pos
-                size: self.size 
-    Label:
-        id:label3
-        text: root.nikei225
-        font_size: 20
-        pos_hint:{ 'center_x': .5,'center_y': .35}
-        canvas.before:
-            Color:
-                rgba: 1, .5, 0, 1
-            Rectangle:
-                pos: self.pos
-                size: self.size
-    Label:
-        id:label4
-        text: root.rakuten
-        font_size: 20
-        pos_hint:{ 'center_x': .5,'center_y': .1}
-        canvas.before:
-            Color:
-                rgba: 1, .5, 0, 1
-            Rectangle:
-                pos: self.pos
-                size: self.size                            
     BoxLayout:
-        size_hint: 0.8, 0.8
+        orientation: "vertical"
+        size_hint: 0.8, 0.3
         pos_hint:{ 'center_x': .5,}
-        padding: 50, 10 #左右、上
+        padding: 10, 10 #左右、上
         spacing: 100, 100 #
+        canvas.after:
+            Color:
+                rgba: .8, .9, 0, 1
+            Line:
+                rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+                dash_offset: 5
+                dash_length: 3
+
+        BoxLayout: #StckCard
+            orientation: "vertical"
+            size_hint: 1.0, 0.3　
+            #pos_hint:{ 'center_x': .5,}
+            padding: 0.0, 5.0 #左右、上
+            #spacing: 100, 100 #
+            canvas.after:
+                Color:
+                    rgba: .8, .9, 0, 1
+                Line:
+                    rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+                    dash_offset: 5
+                    dash_length: 3
+            Label:
+                id:label1
+                text: 'root.seconds_string'
+                font_size: 50
+                bold:True
+                valign: 'center'
+                halign: 'center'
+                canvas.before:
+                    Color:
+                        rgba: .8, .9, 0, 1
+                    Line:
+                        width: 2
+                        rounded_rectangle:self.x,self.y,self.width,self.height,5    
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+        BoxLayout: #NewYork Dow
+            orientation: "vertical"
+            size_hint: 1.0, 0.3
+            #pos_hint:{ 'center_x': .5,}
+            padding: 0.0, 5.0 #左右、上
+            #spacing: 100, 100 #                
+            Label:
+                id:label2
+                text: 'root.newyork'
+                font_size: 20
+                #pos_hint:{ 'center_x': .5,'center_y': .60}
+                canvas.before:
+                    Color:
+                        rgba: 1, .5, 0, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+        BoxLayout: #Nikkei225
+            orientation: "vertical"
+            size_hint: 1.0, 0.3
+            #pos_hint:{ 'center_x': .5,}
+            padding: 0.0, 5.0 #左右、上
+            #spacing: 100, 100 #                   
+            Label:
+                id:label3
+                text: 'root.nikei225'
+                font_size: 20
+                #pos_hint:{ 'center_x': .5,'center_y': .35}
+                canvas.before:
+                    Color:
+                        rgba: 1, .5, 0, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+        BoxLayout: #MyFuture
+            orientation: "vertical"
+            size_hint: 1.0, 0.3
+            #pos_hint:{ 'center_x': .5,}
+            padding: 0.0, 5.0 #左右、上
+            #spacing: 100, 100 #                    
+            Label:
+                id:label4
+                text: root.rakuten
+                font_size: 20
+                #pos_hint:{ 'center_x': .5,'center_y': .1}
+                canvas.before:
+                    Color:
+                        rgba: 1, .5, 0, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size                            
+    #User:
+    BoxLayout:
+        size_hint: 0.8, 0.6
+        pos_hint:{ 'center_x': .5,}
+        padding: 10, 10 #左右、上
+        spacing: 10, 10 #
         canvas.after:
             Color:
                 rgba: 1, 1, 1, 1
@@ -98,26 +148,17 @@
                 dash_length: 3
         #pos_hint:{ 'center_x': .5,'center_y': .85}  
         ScrollView:
-            GridLayout:
-                cols:1
-                size_hint_x: 1.0 #
-                size_hint_y: None
-                row_default_height: 50
-                height: self.minimum_height
-                Button:
-                    text: root.rakuten
-                Button:
-                    text: "2"
-                Button:
-                    text: "3"
-                Button:
-                    text: "4"
+            Rows:
+                id: rows
+
+
+          
     BoxLayout:
         orientation: "horizontal"
         size_hint_x: .5
-        size_hint_y: .35
-        padding: 10, 5
-        spacing: 10, 10
+        size_hint_y: .05
+        #padding: 10, 5
+        #spacing: 10, 10
         #size_hint: .5, .35
         #pos_hint: {'x': .25, 'y':.25}
 
@@ -137,9 +178,9 @@
        
     BoxLayout:
         orientation: "horizontal"
-        padding : 10, 5
-        spacing: 10, 10
-        size_hint: .5, .35
+        #padding: 10, 5
+        #spacing: 10, 10
+        size_hint: .5, .05
         pos_hint: {'x': .25, 'y':.25}
 
         Button:

@@ -20,17 +20,18 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
+from kivy.uix.screenmanager import Screen
 
-from kivy.core.window import Window
-from kivy.app import runTouchApp
+#from kivy.core.window import Window
+#from kivy.app import runTouchApp
 from kivy.uix.button import Button
 
 import japanize_kivy
 from kivy.config import Config  # 追加
 
 
-Config.set('graphics', 'width', '600')  # 追加
-Config.set('graphics', 'height', '1000')  # 追加
+Config.set('graphics', 'width', '900')  # 追加
+Config.set('graphics', 'height', '1820')  # 追加
 Config.set('graphics', 'position', 'custom')
 Config.set('graphics', 'left', 2000)
 Config.set('graphics', 'top',  100)
@@ -75,6 +76,37 @@ class Magician(Creature):
         else: self.job += "Magic"   
 
 
+class User(Screen):
+
+    def add_more(self):
+        self.ids.rows.add_row()
+
+    #def sub_more(self):
+    #    self.ids.rows.remove_row()    
+
+
+class Row(BoxLayout):
+    button_text = StringProperty("")
+
+
+class Rows(ScrollView):
+    row_count = 0
+
+    def __init__(self, **kwargs):
+        super(Rows, self).__init__(**kwargs)
+        self.add_row()
+
+    def add_row(self):
+        self.row_count += 1
+        self.add_widget(Row(button_text=str(self.row_count)))
+
+    def remove_row(self):
+        if self.content.children:
+            self.content.remove_widget(self.content.children[0])
+            self.row_count -= 1
+
+
+
 def add_more(self):
         self.ids.rows.add_row()
 
@@ -114,9 +146,7 @@ def get_htmls(stock_number):
 
 
 class Mainscreen(BoxLayout):
-    pass
-
-
+    #pass
     stack_code = ['998407','6758', '6976', '4755']
     #while True:
     #複数のデータフレームをcsvで保存
@@ -128,7 +158,7 @@ class Mainscreen(BoxLayout):
 
 
     #Label2
-    NewYorkDow = '998407'
+    NewYorkDow = '6758'
     Newyork_responce = get_htmls(NewYorkDow)
     newyork1 = Newyork_responce[1]
     newyork2 = Newyork_responce[2]
