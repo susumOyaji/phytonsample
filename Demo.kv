@@ -38,43 +38,6 @@ User:
     BoxLayout:
         orientation: "vertical"
         padding: 10, 5 #左、上
-
-
-        BoxLayout:
-            orientation: "vertical"
-            padding: 5, 10
-            spacing: 10, 10
-            size: 450, 350
-            size_hint: None, None
-
-            Label:
-                size_hint_x: .8
-                size_hint_y: .5
-                text: "Test 1"
-                text_size: self.size
-                valign: 'center'
-                halign: 'center'
-                canvas.before:
-                    Color:
-                        rgba: 1, .5, 0, 1
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
-
-            Label:
-                size_hint_x: .8
-                text: "Test 2"
-                text_size: self.size
-                valign: 'bottom'
-                halign: 'center'
-                canvas.before:
-                    Color:
-                        rgba: 1, .5, 0, 1
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
-
-
         ScrollView:
             Rows:
                 id: rows

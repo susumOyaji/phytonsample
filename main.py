@@ -31,7 +31,7 @@ from kivy.config import Config  # 追加
 
 
 Config.set('graphics', 'width', '900')  # 追加
-Config.set('graphics', 'height', '1820')  # 追加
+Config.set('graphics', 'height', '1320')  # 追加
 Config.set('graphics', 'position', 'custom')
 Config.set('graphics', 'left', 2000)
 Config.set('graphics', 'top',  100)
@@ -87,10 +87,13 @@ class User(Screen):
 
 class Row(BoxLayout):
     button_text = StringProperty("")
+    id = ObjectProperty(None)
 
 
 class Rows(ScrollView):
     row_count = 0
+    
+    content = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super(Rows, self).__init__(**kwargs)
@@ -98,7 +101,20 @@ class Rows(ScrollView):
 
     def add_row(self):
         self.row_count += 1
-        self.add_widget(Row(button_text=str(self.row_count)))
+        code = ['998407','6758', '6976', '4755'] #企業コード
+        price = ['0','6758', '6976', '4755'] #購入単価
+        quantity = [0,6758, 6976, 4755] #数量
+    
+        #複数のデータフレームをcsvで保存
+    
+        for i in code:
+            responce = get_htmls(i)
+            gain = quantity[1]*responce[1] #数量ｘ時価
+            
+            self.add_widget(Row(button_text=str(self.row_count)))
+
+
+
 
     def remove_row(self):
         if self.content.children:
@@ -106,22 +122,20 @@ class Rows(ScrollView):
             self.row_count -= 1
 
 
-
+#
 def add_more(self):
         self.ids.rows.add_row()
 
 def sub_more(self):
         self.ids.rows.remove_row()            
 
-def add_row(self):
-        self.row_count += 1
-        self.add_widget(Row(button_text=str(self.row_count)))
 
 
 def remove_row(self):
         if self.content.children:
             self.content.remove_widget(self.content.children[0])
             self.row_count -= 1
+
 
 
 
@@ -147,14 +161,16 @@ def get_htmls(stock_number):
 
 class Mainscreen(BoxLayout):
     #pass
-    stack_code = ['998407','6758', '6976', '4755']
-    #while True:
-    #複数のデータフレームをcsvで保存
-    #for i in stack_code:
-    #    get_htmls(i)
+   
+    
+    
+  
+        
+
+
 
     #Labei1
-    seconds_string = 'Stack Card'
+    seconds_string = '  Stack Card'
 
 
     #Label2

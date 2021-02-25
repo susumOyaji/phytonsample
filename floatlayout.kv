@@ -1,4 +1,4 @@
-
+#
 
 #複数行インデント挿入
 #Ctrl + ]
@@ -22,7 +22,21 @@
     #background_color: (.6, .3, .3, 1)
     pos_hint_x: {'center_x': .5}
     size_hint: None, None
-    size: 500, 80    
+    size: 500, 80 
+
+<Row>:
+    size_hint_y: None
+    height: self.minimum_height
+    height: 40
+
+    Button:
+        text: root.button_text
+        size_hint_x: None
+        top: 200
+
+    Button:
+        text: 'World 1'
+        width: 300       
 
 #<>の間にウィジェットクラスの名前としてクラスが宣言される場合、
 #そのクラスの全てのインスタンスをグラフィカルに表現する方法を定義します。
@@ -67,11 +81,14 @@
                     dash_length: 3
             Label:
                 id:label1
-                text: 'root.seconds_string'
+                text: root.seconds_string
                 font_size: 50
-                bold:True
-                valign: 'center'
-                halign: 'center'
+                bold: True
+                italic: True
+                text_size: self.size  
+                halign: 'left'
+                valign: 'middle'
+                #multiline:True
                 canvas.before:
                     Color:
                         rgba: .8, .9, 0, 1
@@ -89,7 +106,7 @@
             #spacing: 100, 100 #                
             Label:
                 id:label2
-                text: 'root.newyork'
+                text: root.newyork
                 font_size: 20
                 #pos_hint:{ 'center_x': .5,'center_y': .60}
                 canvas.before:
@@ -107,7 +124,7 @@
             #spacing: 100, 100 #                   
             Label:
                 id:label3
-                text: 'root.nikei225'
+                text: root.nikei225
                 font_size: 20
                 #pos_hint:{ 'center_x': .5,'center_y': .35}
                 canvas.before:
