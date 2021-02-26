@@ -3,10 +3,53 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.scrollview import ScrollView
 from kivy.properties import StringProperty
 
+
+
+
+#######
+from kivy.config import Config  # 追加
+from bs4 import BeautifulSoup
+import requests
+#Config.set('graphics', 'width', '900')  # 追加
+#Config.set('graphics', 'height', '1320')  # 追加
+Config.set('graphics', 'position', 'custom')
+Config.set('graphics', 'left', 2000)
+Config.set('graphics', 'top',  10)
+
 Window.clearcolor = (0.5, 0.5, 0.5, 1)
-Window.size = (500, 400)
+Window.size = (900, 1320)
+
+
+
+def get_htmls(stock_number):
+  urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
+  soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
+  text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
+  
+  tag_tr = soup.find_all('tr')
+  #print(tag_tr[0])
+
+  head = [h.text for h in tag_tr[0].find_all('th')]
+  print(head[0])#ソニー（株）
+  data = [d.text for d in tag_tr[0].find_all('td')]
+  
+  print('data[0]',data[0])
+  print('data[1]',data[1])
+  print('data[2]',data[2])
+
+  print('stoksPrice: '+data[1])
+  print(data[2])
+  print('')
+  return data
+
+
+
+
+
+
 
 class User(Screen):
 
@@ -45,6 +88,30 @@ class Test1(App):
 
     def build(self):
         self.root = Builder.load_file('Demo.kv')
+
+        code = ['998407','6758', '6976', '4755'] #企業コード
+        price = ['0','6758', '6976', '4755'] #購入単価
+        quantity = [0,6758, 6976, 4755] #数量
+
+        stack_code = ['998407','6758', '6976', '4755']
+        name = []
+        price = []
+
+        #while True:
+        #複数のデータフレームをcsvで保存
+        for i in stack_code:
+            responce = get_htmls(i)
+            name.append(responce[0])
+            price.append(responce[1]) 
+
+
+        #highs = get_Year_to_date_highs()
+        #volume = Volume_per_unit()
+        #price = Price_drop()
+        #stop = Stop_High()
+        #only = Only_Price()
+        #post= Posted_version()
+
         return self.root
 
 

@@ -111,7 +111,7 @@ class Rows(ScrollView):
             responce = get_htmls(i)
             gain = quantity[1]*responce[1] #数量ｘ時価
             
-            self.add_widget(Row(button_text=str(self.row_count)))
+            #self.add_widget(Row(button_text=str(self.row_count)))
 
 
 
