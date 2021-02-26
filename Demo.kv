@@ -35,41 +35,144 @@
     orientation: "vertical"
 
 User:
-    BoxLayout:
+    BoxLayout:#All Screen Area
         orientation: "vertical"
-        padding: 10, 5 #左、上
-        ScrollView:
-            Rows:
-                id: rows
+        BoxLayout:#My Futre Area
+            orientation: "vertical"
+            size_hint: 0.8, 0.1
+            pos_hint:{ 'center_x': 0.5}
+            padding: 10, 10 #左右、上
+            #spacing: 100, 100 #
+            canvas.after:
+                Color:
+                    rgba: .8, .9, 0, 1
+                Line:
+                    rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+                    dash_offset: 5
+                    dash_length: 3
+
+            BoxLayout: #StckCard
+                orientation: "vertical"
+                #size_hint: 1.0, 0.15　
+                #pos_hint:{ 'center_x': .5,}
+                padding: 0.0, 5.0 #左右、上
+                #spacing: 100, 100 #
+                canvas.after:
+                    Color:
+                        rgba: .8, .9, 0, 1
+                    Line:
+                        rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+                        dash_offset: 5
+                        dash_length: 3
+                Label:
+                    id:label1
+                    text: 'Stock Card'
+                    font_size: 50
+                    bold: True
+                    italic: True
+                    text_size: self.size  
+                    halign: 'left'
+                    valign: 'middle'
+                    #multiline:True
+                    canvas.before:
+                        Color:
+                            rgba: .8, .9, 0, 1
+                        Line:
+                            width: 2
+                            rounded_rectangle:self.x,self.y,self.width,self.height,5    
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+            BoxLayout: #NewYork Dow
+                orientation: "vertical"
+                #size_hint: 1.0, 0.15　
+                #pos_hint:{ 'center_x': .5,}
+                padding: 0.0, 5.0 #左右、上
+                #spacing: 100, 100 #                
+                Label:
+                    id:label2
+                    text: 'root.newyork'
+                    font_size: 20
+                    #pos_hint:{ 'center_x': .5,'center_y': .60}
+                    canvas.before:
+                        Color:
+                            rgba: 1, .5, 0, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+            BoxLayout: #Nikkei225
+                orientation: "vertical"
+                #size_hint: 1.0, 0.15
+                #pos_hint:{ 'center_x': .5,}
+                padding: 0.0, 5.0 #左右、上
+                #spacing: 100, 100 #                   
+                Label:
+                    id:label3
+                    text: 'root.nikei225'
+                    font_size: 20
+                    #pos_hint:{ 'center_x': .5,'center_y': .35}
+                    canvas.before:
+                        Color:
+                            rgba: 1, .5, 0, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+            BoxLayout: #MyFuture
+                orientation: "vertical"
+                #size_hint: 1.0, 0.15
+                #pos_hint:{ 'center_x': .5,}
+                padding: 0.0, 5.0 #左右、上
+                #spacing: 100, 100 #                    
+                Label:
+                    id:label4
+                    text: 'root.rakuten'
+                    font_size: 20
+                    size_hint: 1.0, 0.15
+                    #pos_hint:{ 'center_x': .5,'center_y': .1}
+                    canvas.before:
+                        Color:
+                            rgba: 1, .5, 0, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+        BoxLayout:#Item Area
+            pos_hint:{ 'center_x': 0.5,'top':0.8}
+            size_hint: 0.8, 0.3
+            orientation: "vertical"
+            #padding: 10, 5 #左、上
+            ScrollView:
+                Rows:
+                    id: rows
 
 
-        BoxLayout:
-            orientation: "horizontal"
-            size_hint_x: .5
-            size_hint_y: .35
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_x: .5
+                size_hint_y: .35
 
-            padding: 10, 5
-            spacing: 10, 10
-            #size_hint: .5, .35
-            #pos_hint: {'x': .25, 'y':.25}
+                padding: 10, 5
+                spacing: 10, 10
+                #size_hint: .5, .35
+                #pos_hint: {'x': .25, 'y':.25}
 
-            Button:
-                text: "+Add More"
-                on_press: root.add_more()
-            Button:
-                text: "-Sub More"
-                on_press: root.sub_more()    
+                Button:
+                    text: "+Add More"
+                    on_press: root.add_more()
+                Button:
+                    text: "-Sub More"
+                    on_press: root.sub_more()    
 
 
-        BoxLayout:
-            orientation: "horizontal"
-            padding: 10, 5
-            spacing: 10, 10
-            size_hint: .5, .35
-            pos_hint: {'x': .25, 'y':.25}
+            BoxLayout:
+                orientation: "horizontal"
+                padding: 10, 5
+                spacing: 10, 10
+                size_hint: .5, .35
+                pos_hint: {'x': .25, 'y':.25}
 
-            Button:
-                text: 'Ok'
+                Button:
+                    text: 'Ok'
 
-            Button:
-                text: 'Cancel'
+                Button:
+                    text: 'Cancel'
