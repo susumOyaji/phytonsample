@@ -9,13 +9,13 @@
 
     #orientation: 'vertical'
 
-<Label>
+<Mainscreen@Label>
     pos_hint: {'center_x': .5, 'center_y':.5}
     #font_size: 15
     font_name: 'Verdana'
     
 
-<Button>:
+<Mainscreen@Button>:
     font_size: 15
     font_name: 'Verdana'
 
@@ -43,10 +43,9 @@
     size_hint_y: None
     height: self.minimum_height
     orientation: "vertical"
-    
+
 #<>の間にウィジェットクラスの名前としてクラスが宣言される場合、
 #そのクラスの全てのインスタンスをグラフィカルに表現する方法を定義します。
-
 <Mainscreen>
     BoxLayout:
         orientation: "vertical"
@@ -80,7 +79,7 @@
                 Label:
                     id:label1
                     text: root.seconds_string
-                    font_size: 50
+                    font_size: 30
                     bold: True
                     italic: True
                     text_size: self.size  

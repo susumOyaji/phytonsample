@@ -118,18 +118,22 @@ class Rows(BoxLayout):
 def get_htmls(stock_number):
   urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
   soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
-  text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
+  #text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   
   tag_tr = soup.find_all('tr')
   #print(tag_tr[0])
 
   head = [h.text for h in tag_tr[0].find_all('th')]
-  print(head[0])#ソニー（株）
+  #print(head[0])#ソニー（株）
   data = [d.text for d in tag_tr[0].find_all('td')]
-  print('stoksPrice: '+data[1])
-  print(data[2])
+  data[0] = head[0]
+ 
+  print('Name: ',data[0])
+  print('StoksPrice: ',data[1])
+  print('The day before ratio: ',data[2])
   print('')
   return data
+
  
 
 
@@ -157,25 +161,41 @@ class Mainscreen(Screen):
 
 
     #Labei1
+    #企業コード nikkei,sony,taiyou,rukten
+    code = ['998407','6758', '6976', '4755'] 
+    price = ['0','200', '300', '400'] #購入単価
+    quantity = [1, 200, 300, 400] #数量
+
+    
+    name = []
+    price = []
+    Marketprice = []
+
+
+    #while True:
+    #複数のデータフレームをcsvで保存
+    for i in code:
+        responce = get_htmls(i)
+        name.append(responce[0])
+        price.append(responce[1])
+
+    
+    for i in range(len(code)):
+        Marketprice.append(float(price[i].replace(',', '')) * quantity[i])
+
+    NewYork = Marketprice[0]
+    
+    #Label1
     seconds_string = '  Stack Card'
 
-
     #Label2
-    NewYorkDow = '6758'
-    Newyork_responce = get_htmls(NewYorkDow)
-    newyork1 = Newyork_responce[1]
-    newyork2 = Newyork_responce[2]
-    newyork = 'NewYork Dow \n$' + newyork1 + '  ' + newyork2
+    newyork = name[0] + 'NewYork Dow \n$' + str(Marketprice[0])
     
-
-
     #Label3
-    rakuten = '4755'
-    rakuten_responce = get_htmls(rakuten)
-    rakuten1 = rakuten_responce[1]
-    rakuten2 = rakuten_responce[2]
-    nikei225 = 'Nikei225 \n$' + rakuten1  + '  ' + rakuten2
-    rakuten = 'Rakuten \n$' + rakuten1  + '  ' + rakuten2
+    nikei225 = name[1] + '\n¥' + price[1] + '\n¥' + str(Marketprice[1])
+
+    #Label4
+    rakuten = name[2] + '\n¥' + price[2] + '\n¥' + str(Marketprice[3])
 
     sony = '7698'
 
