@@ -81,16 +81,15 @@ class User(Screen):
     def add_more(self):
         self.ids.rows.add_row()
 
-    #def sub_more(self):
-    #    self.ids.rows.remove_row()    
+    def sub_more(self):
+        self.ids.rows.remove_row()    
 
 
 class Row(BoxLayout):
     button_text = StringProperty("")
-    id = ObjectProperty(None)
+   
 
-
-class Rows(ScrollView):
+class Rows(BoxLayout):
     row_count = 0
     
     content = ObjectProperty(None)
@@ -101,20 +100,9 @@ class Rows(ScrollView):
 
     def add_row(self):
         self.row_count += 1
-        code = ['998407','6758', '6976', '4755'] #企業コード
-        price = ['0','6758', '6976', '4755'] #購入単価
-        quantity = [0,6758, 6976, 4755] #数量
-    
-        #複数のデータフレームをcsvで保存
-    
-        for i in code:
-            responce = get_htmls(i)
-            gain = quantity[1]*responce[1] #数量ｘ時価
+        self.add_widget(Row(button_text=str(self.row_count)))     
             
-            #self.add_widget(Row(button_text=str(self.row_count)))
-
-
-
+    #self.add_widget(Row(button_text=str(self.row_count)))
 
     def remove_row(self):
         if self.content.children:
@@ -122,19 +110,7 @@ class Rows(ScrollView):
             self.row_count -= 1
 
 
-#
-def add_more(self):
-        self.ids.rows.add_row()
 
-def sub_more(self):
-        self.ids.rows.remove_row()            
-
-
-
-def remove_row(self):
-        if self.content.children:
-            self.content.remove_widget(self.content.children[0])
-            self.row_count -= 1
 
 
 
@@ -159,7 +135,18 @@ def get_htmls(stock_number):
 
 
 
-class Mainscreen(BoxLayout):
+class Mainscreen(Screen):
+    def add_more(self):
+        self.ids.rows.add_row()
+
+    def sub_more(self):
+        self.ids.rows.remove_row()
+
+    def remove_row(self):
+        if self.content.children:
+            self.content.remove_widget(self.content.children[0])
+            self.row_count -= 1
+        
     #pass
    
     

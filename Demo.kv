@@ -1,17 +1,18 @@
 
-<Button@Button>:
+
+<User@Button>:
     font_size: 15
     font_name: 'Verdana'
 
-<Label@Label>:
+<User@Label>:
     pos_hint: {'center_x': .5, 'center_y':.5}
-    font_size: 15
+    #font_size: 15
     font_name: 'Verdana'
     
 
-<TextInput@TextInput>:
-    font_size: 15
-    font_name: 'Verdana'
+#<User@TextInput>:
+#    font_size: 15
+##    font_name: 'Verdana'
     padding_y: 3
 
 
@@ -67,7 +68,7 @@ User:
                 Label:
                     id:label1
                     text: 'Stock Card'
-                    font_size: 50
+                    font_size: 30
                     bold: True
                     italic: True
                     text_size: self.size  
@@ -91,7 +92,7 @@ User:
                 #spacing: 100, 100 #                
                 Label:
                     id:label2
-                    text: 'root.newyork'
+                    text: 'NewYork'
                     font_size: 20
                     #pos_hint:{ 'center_x': .5,'center_y': .60}
                     canvas.before:
@@ -144,8 +145,6 @@ User:
             ScrollView:
                 Rows:
                     id: rows
-
-
             BoxLayout:
                 orientation: "horizontal"
                 size_hint_x: .5

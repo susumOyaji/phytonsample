@@ -27,21 +27,19 @@ Window.size = (900, 1320)
 def get_htmls(stock_number):
   urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
   soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
-  text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
+  #text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   
   tag_tr = soup.find_all('tr')
   #print(tag_tr[0])
 
   head = [h.text for h in tag_tr[0].find_all('th')]
-  print(head[0])#ソニー（株）
+  #print(head[0])#ソニー（株）
   data = [d.text for d in tag_tr[0].find_all('td')]
-  
-  print('data[0]',data[0])
-  print('data[1]',data[1])
-  print('data[2]',data[2])
-
-  print('stoksPrice: '+data[1])
-  print(data[2])
+  data[0] = head[0]
+ 
+  print('Name: ',data[0])
+  print('StoksPrice: ',data[1])
+  print('The day before ratio: ',data[2])
   print('')
   return data
 
@@ -53,11 +51,46 @@ def get_htmls(stock_number):
 
 class User(Screen):
 
+    NewYork=''
+    Nikkei='nikkei'
+    Assets=0
+
     def add_more(self):
         self.ids.rows.add_row()
 
     def sub_more(self):
-        self.ids.rows.remove_row()    
+        self.ids.rows.remove_row()
+
+    code = ['998407','6758', '6976', '4755'] #企業コード
+    price = ['0','6758', '6976', '4755'] #購入単価
+    quantity = [1,6758, 6976, 4755] #数量
+
+    
+    name = []
+    price = []
+    Marketprice = []
+
+
+    #while True:
+    #複数のデータフレームをcsvで保存
+    for i in code:
+        responce = get_htmls(i)
+        name.append(responce[0])
+        price.append(responce[1])
+
+    
+    for i in range(len(code)):
+        Marketprice.append(float(price[i].replace(',', '')) * quantity[i])
+
+    NewYork = Marketprice[0]
+    #highs = get_Year_to_date_highs()
+    #volume = Volume_per_unit()
+    #price = Price_drop()
+    #stop = Stop_High()
+    #only = Only_Price()
+    #post= Posted_version()
+
+
 
 
 class Row(BoxLayout):
@@ -85,33 +118,9 @@ class Rows(BoxLayout):
 
 
 class Test1(App):
-
     def build(self):
         self.root = Builder.load_file('Demo.kv')
-
-        code = ['998407','6758', '6976', '4755'] #企業コード
-        price = ['0','6758', '6976', '4755'] #購入単価
-        quantity = [0,6758, 6976, 4755] #数量
-
-        stack_code = ['998407','6758', '6976', '4755']
-        name = []
-        price = []
-
-        #while True:
-        #複数のデータフレームをcsvで保存
-        for i in stack_code:
-            responce = get_htmls(i)
-            name.append(responce[0])
-            price.append(responce[1]) 
-
-
-        #highs = get_Year_to_date_highs()
-        #volume = Volume_per_unit()
-        #price = Price_drop()
-        #stop = Stop_High()
-        #only = Only_Price()
-        #post= Posted_version()
-
+        
         return self.root
 
 
