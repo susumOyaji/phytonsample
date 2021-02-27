@@ -100,9 +100,9 @@ class Rows(BoxLayout):
 
     def add_row(self):
         self.row_count += 1
-        self.add_widget(Row(button_text=str(self.row_count)))     
+        self.add_widget(Row(button_text=str(self.row_count),button1_text=''))
             
-    #self.add_widget(Row(button_text=str(self.row_count)))
+        #self.add_widget(Row(button_text=str(self.row_count)))
 
     def remove_row(self):
         if self.content.children:
@@ -183,8 +183,7 @@ class Mainscreen(Screen):
     for i in range(len(code)):
         Marketprice.append(float(price[i].replace(',', '')) * quantity[i])
 
-    NewYork = Marketprice[0]
-    
+   
     #Label1
     seconds_string = '  Stack Card'
 
@@ -197,8 +196,7 @@ class Mainscreen(Screen):
     #Label4
     rakuten = name[2] + '\n¥' + price[2] + '\n¥' + str(Marketprice[3])
 
-    sony = '7698'
-
+  
    
 
    
