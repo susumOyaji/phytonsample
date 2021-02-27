@@ -75,7 +75,7 @@ class Magician(Creature):
             self.job = "Magic"
         else: self.job += "Magic"   
 
-
+'''
 class User(Screen):
 
     def add_more(self):
@@ -84,6 +84,7 @@ class User(Screen):
     def sub_more(self):
         self.ids.rows.remove_row()    
 
+'''
 
 class Row(BoxLayout):
     button_text = StringProperty("")
@@ -98,9 +99,11 @@ class Rows(BoxLayout):
         super(Rows, self).__init__(**kwargs)
         self.add_row()
 
+
+
     def add_row(self):
         self.row_count += 1
-        self.add_widget(Row(button_text=str(self.row_count),button1_text=''))
+        self.add_widget(Row(button_text='rakuten'))
             
         #self.add_widget(Row(button_text=str(self.row_count)))
 
