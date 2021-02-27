@@ -215,10 +215,7 @@ class FloatLayoutApp(App):
     def build(self):
         self.title = 'Stack Card(Python)'
         #self.root = Builder.load_file('floatlayout.kv')
-        print(Warrior(5).status())
-            #Job:Warrior | HP:0 | MP:0 | Atk:15 | Def:0 | Weapon:sword
-        print(Magician(5).status())
-            #Job:Magic | HP:0 | MP:20 | Atk:0 | Def:0 | Weapon:rod
+  
         return Mainscreen()
 
 if __name__=="__main__":
