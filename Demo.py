@@ -95,6 +95,7 @@ class User(Screen):
 
 class Row(BoxLayout):
     button_text = StringProperty("")
+   
 
 
 class Rows(BoxLayout):
