@@ -5,7 +5,7 @@ from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.properties import StringProperty
-
+import japanize_kivy
 
 
 
@@ -49,30 +49,17 @@ def get_htmls(stock_number):
 
 
 
-class User(Screen):
+class user(Screen):
 
-    NewYork=''
-    Nikkei='nikkei'
-    Assets=0
-
-    def add_more(self):
-        self.ids.rows.add_row()
-
-    def sub_more(self):
-        self.ids.rows.remove_row()
-
-    code = ['998407','6758', '6976', '4755'] #企業コード
-    price = ['0','6758', '6976', '4755'] #購入単価
-    quantity = [1,6758, 6976, 4755] #数量
-
+   #企業コード nikkei,sony,taiyou,rukten
+    code = ['998407','6758', '6976', '4755'] 
+    price = ['0','1665', '1801', '1137'] #購入単価
+    quantity = [1, 200, 300, 400] #数量
     
-    name = []
-    price = []
-    Marketprice = []
-
-
-    #while True:
-    #複数のデータフレームをcsvで保存
+    Marketprice = [] #個別時価総額=数量ｘ時価
+    name = [] #企業名
+    price = [] #購入単価
+   
     for i in code:
         responce = get_htmls(i)
         name.append(responce[0])
@@ -80,15 +67,22 @@ class User(Screen):
 
     
     for i in range(len(code)):
-        Marketprice.append(float(price[i].replace(',', '')) * quantity[i])
+        try:
+            Marketprice.append(float(price[i].replace(',', '')) * quantity[i])
+        except ZeroDivisionError:
+            print('You can not do this operation!')
+   
+    #Label1
+    seconds_string = '  Stack Card'
 
-    NewYork = Marketprice[0]
-    #highs = get_Year_to_date_highs()
-    #volume = Volume_per_unit()
-    #price = Price_drop()
-    #stop = Stop_High()
-    #only = Only_Price()
-    #post= Posted_version()
+    #Label2
+    newyork = 'NewYork Dow \n$' + ' In earnest program'
+    
+    #Label3
+    nikei225 = name[0] + '\n¥' + price[1] + '\n¥' + str(Marketprice[1])
+
+    #Label4
+    rakuten = name[1] + '\n¥' + price[2] + '\n¥' + str(Marketprice[3])
 
 
 
@@ -121,7 +115,7 @@ class Rows(BoxLayout):
 class Test1(App):
     def build(self):
         self.root = Builder.load_file('Demo.kv')
-        
+        self.title = 'Python to Iphone App'
         return self.root
 
 
