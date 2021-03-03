@@ -121,12 +121,15 @@ class user(Screen):
         
     #Label1
     seconds_string = '  Stack Card'
-    
+    inst = Rows()
+    inst.add_row()
+
     for i in range(len(code)):
         try:
             Marketprice.append(float(value[i].replace(',', '')) * quantity[i])
             TotalValue = TotalValue + Marketprice[i]
-            add_more(self)
+            ids.rows.add_row()
+
         except ValueError:
             newyork = '---'
             nikei225 = '---'
@@ -136,8 +139,7 @@ class user(Screen):
     TotalAsset= 'TotalAsset   ¥'+str("{:,}".format(TotalValue))
     rakuten = name[2] + '\n¥' + str(price[2]) + '\n¥' + str(Marketprice[2])
               
-    inst = Rows()
-    inst.add_row()
+    
     
 
 
