@@ -6,14 +6,14 @@
 
 <MyuserLabel@Label>:
     pos_hint: {'center_x': .5, 'center_y':.5}
-    #font_size: 20
+    font_size: 15
     font_name: 'Verdana'
     
 
 #<User@TextInput>:
 #    font_size: 15
 ##    font_name: 'Verdana'
-#    padding_y: 3
+    padding_y: 3
 
 
 <Row>:
@@ -27,7 +27,7 @@
         top: 200
 
     Button:
-        text: root.item_value #'World 1'
+        text: 'World 1'
         width: 300
 
 <Rows>:
@@ -40,7 +40,7 @@ user:
         orientation: "vertical"
         BoxLayout:#My Futre Area
             orientation: "vertical"
-            size_hint: 0.8, 0.2
+            size_hint: 0.8, 0.1
             pos_hint:{ 'center_x': 0.5}
             padding: 10, 10 #左右、上
             #spacing: 100, 100 #
@@ -93,10 +93,7 @@ user:
                 Label:
                     id:label2
                     text: root.newyork
-                    #size_hint: 1.0, 0.15
-                    font_size: 25
-                    bold: True
-                    italic: True
+                    font_size: 20
                     #pos_hint:{ 'center_x': .5,'center_y': .60}
                     canvas.before:
                         Color:
@@ -130,7 +127,7 @@ user:
                 #spacing: 100, 100 #                    
                 Label:
                     id:label4
-                    text: root.TotalAsset
+                    text: root.rakuten
                     font_size: 20
                     size_hint: 1.0, 0.15
                     #pos_hint:{ 'center_x': .5,'center_y': .1}
@@ -157,9 +154,10 @@ user:
                 spacing: 10, 10
                 #size_hint: .5, .35
                 #pos_hint: {'x': .25, 'y':.25}
-
                 MyuserButton:
+                    id: myadd
                     text: "+Add More"
+                    background_color: (1,0,0,1)#get_color_from_hex("#83481F")-get_color_from_hex()を用いることで色を16進表記から取得できます。
                     on_press: root.add_more()
                 MyuserButton:
                     text: "-Sub More"

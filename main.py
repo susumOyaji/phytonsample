@@ -6,8 +6,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.properties import StringProperty
 import japanize_kivy
-
-
+from kivy.uix.button import Button
 
 
 #######
@@ -15,12 +14,12 @@ from kivy.config import Config  # 追加
 from bs4 import BeautifulSoup
 import requests
 #Config.set('graphics', 'width', '900')  # 追加
-#Config.set('graphics', 'height', '1320')  # 追加
+#Config.set('graphics', 'height', '2320')  # 追加
 Config.set('graphics', 'position', 'custom')
-Config.set('graphics', 'left', 2000)
-Config.set('graphics', 'top',  10)
+Config.set('graphics', 'left', 100)
+Config.set('graphics', 'top',  20)
 
-Window.clearcolor = (0.5, 0.5, 0.5, 1)
+#Window.clearcolor = (0.5, 0.5, 0.5, 1)
 Window.size = (900, 1320)
 
 
@@ -72,6 +71,7 @@ class Rows(BoxLayout):
 
     def __init__(self, **kwargs):
         super(Rows, self).__init__(**kwargs)
+       # self.row_count = 0
         self.add_row()
 
 
@@ -79,7 +79,7 @@ class Rows(BoxLayout):
         self.row_count += 1
         self.add_widget(Row(button_text=str(self.row_count),item_value=str(self.row_count)))
     
-
+    '''
     def remove_row(self):
         if self.content.children:
             self.content.remove_widget(self.content.children[0])
@@ -87,7 +87,36 @@ class Rows(BoxLayout):
 
 
 
+
+
+
+
+    絶対に動かない理由ですが、その前にKvLanguageのclass ruleとroot ruleの違いを説明させて下さい。
+
+まずclass rule("<クラス名>:"で始まるもの)は
+
+型の定義であり、そこに書いた物はその型のインスタンス全てに影響を与えます(厳密には少し違いますが)。
+そしてclass ruleを書いただけではインスタンスは作られません
+それに対してroot rule("クラス名:"で始まるもの)は
+
+書いただけでインスタンスが一つ作られ、それがBuilder.load_string()の戻り値になります。
+そしてroot ruleに書いた様々な定義はそのインスタンスのみの物で、他のインスタンスには影響を与えません。
+
+    '''
+
+
 class user(Screen):
+    #self.ids.myadd.text = 'Text by Python'
+
+    
+    
+
+
+
+    rs = Rows()
+    #Screen.bind(rs.add_row())
+    
+   
     #Newyork dow
     dow = get_dowhtmls()
     #Label2
@@ -121,16 +150,20 @@ class user(Screen):
         
     #Label1
     seconds_string = '  Stack Card'
-    inst = Rows()
-    inst.add_row()
+  
 
     for i in range(len(code)):
         try:
             Marketprice.append(float(value[i].replace(',', '')) * quantity[i])
             TotalValue = TotalValue + Marketprice[i]
-            ids.rows.add_row()
+            rs.add_row()
+
+            #rs.button.dispatch('on_press')#Buttonを押さずともeventを発生させられます。
+            #Clock.schedule_once(self.add_row)
+            #MyuserButton.ids._add.dispatch('on_press')
 
         except ValueError:
+            Marketprice.append('---')
             newyork = '---'
             nikei225 = '---'
             rakuten='---'
@@ -155,6 +188,7 @@ class Test1(App):
         #self.root = Builder.load_file('Demo.kv')
         self.root = Builder.load_file('floatlayout.kv')
         self.title = 'Python to Iphone App'
+        
         return self.root
 
 
