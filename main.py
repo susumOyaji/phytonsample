@@ -137,19 +137,18 @@ class user(Screen):
         try:
             Marketprice.append(float(value[i].replace(',', '')) * quantity[i])
             TotalValue = TotalValue + Marketprice[i]
-            r.add_row()
-            #add_more()
-            self.ids.myadd.dispatch(on_press=self.pressed)#Buttonを押さずともeventを発生させられます。
-            #Clock.schedule_once(self.add_row)
-            #MyuserButton.ids._add.dispatch('on_press')
+            
+            button_share.bind(on_press=self.update_buttons_departoverride)
+            self.box_share.add_widget(button_share)
 
         except ValueError:
             Marketprice.append('---'); newyork = '---'; nikei225 = '---';rakuten='---'
-            #print('You can not do this operation!')
+            
     #Label4
     TotalAsset= 'TotalAsset   ¥'+str("{:,}".format(TotalValue))
     rakuten = name[2] + '\n¥' + str(price[2]) + '\n¥' + str(Marketprice[2])
 
+   
 
     def add_more(self):#Add Button
         self.ids.rows.add_row()
