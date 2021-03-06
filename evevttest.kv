@@ -1,0 +1,26 @@
+#: import SwapTransition kivy.uix.screenmanager.SwapTransition
+
+ScreenManagement:
+    transition: SwapTransition()
+    MainScreen:
+        id: mainscreen
+    SecondScreen:
+
+
+
+<MainScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        id:aaa
+        Button:
+            text: 'Add'
+            on_press: app.add_more()
+
+        Button:
+            text:'Remove'
+            on_press: app.remove()
+        BoxLayout:#結果表示エリア
+            id:abc
+
+
+<SecondScreen>:
