@@ -104,8 +104,8 @@ class Rows(BoxLayout):
 
 
 class user(Screen):
-    r = Rows()
-    
+    def add_more(self):#Add Button
+        self.ids.rows.add_row()
 
     #Newyork dow
     dow = get_dowhtmls()
@@ -120,13 +120,11 @@ class user(Screen):
     code = ['6758', '6976', '4755'] 
     price = [1665, 1801, 1137] #購入単価
     quantity = [200, 300, 400] #数量
-    
+
     Marketprice = [] #個別時価総額=数量ｘ時価
     name = [] #企業名
     value = [] #時価
     TotalValue = 0
- 
-
 
     for i in code:
         responce = get_htmls(i)
@@ -137,21 +135,18 @@ class user(Screen):
         try:
             Marketprice.append(float(value[i].replace(',', '')) * quantity[i])
             TotalValue = TotalValue + Marketprice[i]
-            
-            button_share.bind(on_press=self.update_buttons_departoverride)
-            self.box_share.add_widget(button_share)
+     
 
         except ValueError:
             Marketprice.append('---'); newyork = '---'; nikei225 = '---';rakuten='---'
-            
+        
     #Label4
     TotalAsset= 'TotalAsset   ¥'+str("{:,}".format(TotalValue))
     rakuten = name[2] + '\n¥' + str(price[2]) + '\n¥' + str(Marketprice[2])
-
+   
    
 
-    def add_more(self):#Add Button
-        self.ids.rows.add_row()
+    
                  
 
 
@@ -160,6 +155,20 @@ class Test1(App):
         #self.root = Builder.load_file('Demo.kv')
         self.root = Builder.load_file('floatlayout.kv')
         self.title = 'Python to Iphone App'
+
+        button = Button(text='Send')
+        button.bind(on_press=self.add_more)  
+        #boxLayout.add_widget(g)
+        #boxLayout.add_widget(button)
+
+        launchbutton = Button( text = 'Add to Button', background_normal = 'tile.png', on_press = self.add_more() )
+        layout.add_widget(launchbutton)   
+
+
+
+        
+
+
       
         return self.root
 
