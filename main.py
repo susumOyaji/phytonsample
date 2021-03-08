@@ -57,6 +57,49 @@ def get_htmls(stock_number):
   return data
 
 
+def item_add(self):
+    #Newyork dow
+    dow = get_dowhtmls()
+    #Label2
+    newyork = 'NewYork Dow $' + dow
+    #Nikkei25
+    nikkei= get_htmls('998407')
+    #Label3
+    nikei225 = nikkei[0] + '   ¥' + nikkei[1] #+ '\n¥' + str(Marketprice[0])
+    #MyItem
+    #企業コード nikkei,sony,taiyou,rukten
+    code = ['6758', '6976', '4755'] 
+    price = [1665, 1801, 1137] #購入単価
+    quantity = [200, 300, 400] #数量
+
+    Marketprice = [] #個別時価総額=数量ｘ時価
+    name = [] #企業名
+    value = [] #時価
+    TotalValue = 0
+
+    for i in code:
+        responce = get_htmls(i)
+        name.append(responce[0])
+        value.append(responce[1])
+        
+    for i in range(len(code)):
+        try:
+        
+    
+            Marketprice.append(float(value[i].replace(',', '')) * quantity[i])
+            TotalValue = TotalValue + Marketprice[i]
+            
+           
+
+        except ValueError:
+            Marketprice.append('---'); newyork = '---'; nikei225 = '---';rakuten='---'
+        
+    #Label4
+    TotalAsset= 'TotalAsset   ¥'+str("{:,}".format(TotalValue))
+    rakuten = name[2] + '\n¥' + str(price[2]) + '\n¥' + str(Marketprice[2])
+
+    self.root.ids.rows.add_row()
+    self.root.ids.rows.add_row()
 
 
 
@@ -90,21 +133,20 @@ class Rows(BoxLayout):
 
 
 
-絶対に動かない理由ですが、その前にKvLanguageのclass ruleとroot ruleの違いを説明させて下さい。
-
+KvLanguageのclass ruleとroot ruleの違いを説明させて下さい。
 まずclass rule("<クラス名>:"で始まるもの)は
-
 型の定義であり、そこに書いた物はその型のインスタンス全てに影響を与えます(厳密には少し違いますが)。
 そしてclass ruleを書いただけではインスタンスは作られません
-それに対してroot rule("クラス名:"で始まるもの)は
 
+それに対してroot rule("クラス名:"で始まるもの)は
 書いただけでインスタンスが一つ作られ、それがBuilder.load_string()の戻り値になります。
 そしてroot ruleに書いた様々な定義はそのインスタンスのみの物で、他のインスタンスには影響を与えません。
 '''
 
 
 class user(Screen):
-    def add_more(self):#Add Button
+    
+    def add_more(self):#Add Button to Push
         self.ids.rows.add_row()
 
     #Newyork dow
@@ -125,6 +167,9 @@ class user(Screen):
     name = [] #企業名
     value = [] #時価
     TotalValue = 0
+  
+
+
 
     for i in code:
         responce = get_htmls(i)
@@ -133,18 +178,22 @@ class user(Screen):
         
     for i in range(len(code)):
         try:
+        
+    
             Marketprice.append(float(value[i].replace(',', '')) * quantity[i])
             TotalValue = TotalValue + Marketprice[i]
-     
+        
+           
 
         except ValueError:
             Marketprice.append('---'); newyork = '---'; nikei225 = '---';rakuten='---'
         
     #Label4
     TotalAsset= 'TotalAsset   ¥'+str("{:,}".format(TotalValue))
-    rakuten = name[2] + '\n¥' + str(price[2]) + '\n¥' + str(Marketprice[2])
+    rakuten =''# name[2] + '\n¥' + str(price[2]) + '\n¥' + str(Marketprice[2])
    
    
+
 
     
                  
@@ -155,21 +204,9 @@ class Test1(App):
         #self.root = Builder.load_file('Demo.kv')
         self.root = Builder.load_file('floatlayout.kv')
         self.title = 'Python to Iphone App'
-
-        button = Button(text='Send')
-        button.bind(on_press=self.add_more)  
-        #boxLayout.add_widget(g)
-        #boxLayout.add_widget(button)
-
-        launchbutton = Button( text = 'Add to Button', background_normal = 'tile.png', on_press = self.add_more() )
-        layout.add_widget(launchbutton)   
-
-
-
         
+        anser = item_add(self)
 
-
-      
         return self.root
 
 
