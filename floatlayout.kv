@@ -17,19 +17,27 @@
 
 
 <Row>:
-    orientation: "vertical"
+    orientation: "horizontal"
     size_hint_y: None
     height: self.minimum_height
-    height: 40
+    height: 60
 
     Button:
         text: root.button_text
-        size_hint_x: None
-        top: 200
+        size_hint_x: 0.1
+        #top: 200
 
     Button:
-        text: root.item_value#'World 1'
-        width: 300
+        text: root.item_value
+        size_hint_x: 0.7
+        #width: 250
+
+    Button:
+        text: root.item_ratio
+        #text: 'Changed' if myswitch.active else 'On the switch to change text'
+        #text:'hi' if root.x=='1' else 'hello' if root.x=='2' else 'helloworls'
+        size_hint_x: 0.2
+        background_color: (0,1,0,1)#get_color_from_hex("#83481F")-get_color_from_hex()を用いることで色を16進表記から取得できます。    
 
 <Rows>:
     size_hint_y: None
@@ -165,15 +173,4 @@ user: #書いただけでインスタンスが一つ作られる。
                     on_press: root.sub_more()    
 
 
-            BoxLayout:
-                orientation: "horizontal"
-                padding: 10, 5
-                spacing: 10, 10
-                size_hint: .5, .35
-                pos_hint: {'x': .25, 'y':.25}
-
-                Button:
-                    text: 'Ok'
-
-                Button:
-                    text: 'Cancel'
+           

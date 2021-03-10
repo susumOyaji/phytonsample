@@ -7,7 +7,8 @@ from kivy.uix.scrollview import ScrollView
 from kivy.properties import StringProperty
 import japanize_kivy
 from kivy.uix.button import Button
-
+import time
+import datetime
 
 #######
 from kivy.config import Config  # 追加
@@ -30,6 +31,7 @@ Marketprice = [] #個別時価総額=数量ｘ時価
 value = [] #時価
 name = [] #企業名
 before = []
+ratio = []
 TotalValue = 0
 
 
@@ -74,23 +76,42 @@ def get_htmls(stock_number):
 class Row(BoxLayout):
     button_text = StringProperty("")
     item_value = StringProperty("")
+    item_ratio = StringProperty("")
 
 
 class Rows(BoxLayout):
     row_count = 0
     
-    
 
+#一定時間ごとに繰り返し
+#スレッドがスレッドを起動するようにしておくと、一定時間ごとに繰り返すようにできる。
+#この例では１秒ごとにheloheloをprintする。これは何かに役立つかもしれない
+    import threading
+ 
+    def hello():
+        print "helohelo"
+        t=threading.Timer(1,hello)
+        t.start()
+    t=threading.Thread(target=hello)
+    t.start()
+
+
+
+    
+    #while False:
     for i in code:
         responce = get_htmls(i)
         name.append(responce[0])
         value.append(responce[1])
-        before.append(responce[2])
+        #before.append(responce[2]) #前日比
+        ratio = responce[2].replace('前日比','')
+        before.append(ratio)    
+    #time.sleep(10)
 
 
     def __init__(self, **kwargs):
         super(Rows, self).__init__(**kwargs)
-       # self.row_count = 0
+    # self.row_count = 0
         self.add_code()
         
     def add_row(self):
@@ -100,7 +121,7 @@ class Rows(BoxLayout):
     def add_code(self):
         for i in range(len(code)):
             self.row_count += 1
-            self.add_widget(Row(button_text=str(self.row_count),item_value=name[i]+'\n'+ value[i] + before[i]))
+            self.add_widget(Row(button_text=str(self.row_count),item_value=name[i]+'\n'+ value[i],item_ratio= before[i]))
     
 
 
@@ -169,8 +190,6 @@ class Test1(App):
         #self.root = Builder.load_file('Demo.kv')
         self.root = Builder.load_file('floatlayout.kv')
         self.title = 'Python to Iphone App'
-        
-
         return self.root
 
 
