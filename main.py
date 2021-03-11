@@ -16,11 +16,11 @@ from kivy.config import Config  # 追加
 from bs4 import BeautifulSoup
 import requests
 Config.set('graphics', 'fullscreen', '0')
-Config.set('graphics', 'width', '900')  # 追加
+Config.set('graphics', 'width', '800')  # 追加
 Config.set('graphics', 'height', '1320')  # 追加
 Config.set('graphics', 'position', 'custom')
-Config.set('graphics', 'left', 2000)
-Config.set('graphics', 'top',  50)
+Config.set('graphics', 'left', 1300)
+Config.set('graphics', 'top',  35)
 
 #Window.clearcolor = (0.5, 0.5, 0.5, 1)
 #Window.size = (900, 1320)
