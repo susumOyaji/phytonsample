@@ -19,8 +19,10 @@
 <Row>:
     orientation: "horizontal"
     size_hint_y: None
+    padding: 10, 5
+    spacing: 10, 100
     height: self.minimum_height
-    height: 60
+    height: 80
 
     Button:
         text: root.button_text
@@ -156,8 +158,8 @@ user: #書いただけでインスタンスが一つ作られる。
                     id: rows
             BoxLayout:
                 orientation: "horizontal"
-                size_hint_x: .5
-                size_hint_y: .35
+                size_hint_x: None
+                size_hint_y: None
 
                 padding: 10, 5
                 spacing: 10, 10
@@ -169,8 +171,8 @@ user: #書いただけでインスタンスが一つ作られる。
                     background_color: (1,0,0,1)#get_color_from_hex("#83481F")-get_color_from_hex()を用いることで色を16進表記から取得できます。
                     on_press: root.add_more()#roo = user
                 MyuserButton:
-                    text: "-Sub More"
-                    on_press: root.sub_more()    
+                    text: "ref"
+                    on_press: root.data_update()
 
 
            

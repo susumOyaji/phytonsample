@@ -1,7 +1,7 @@
 from kivy.uix.screenmanager import Screen
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.core.window import Window
+#from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.properties import StringProperty
@@ -9,19 +9,21 @@ import japanize_kivy
 from kivy.uix.button import Button
 import time
 import datetime
+import threading
 
 #######
 from kivy.config import Config  # 追加
 from bs4 import BeautifulSoup
 import requests
-#Config.set('graphics', 'width', '900')  # 追加
-#Config.set('graphics', 'height', '2320')  # 追加
+Config.set('graphics', 'fullscreen', '0')
+Config.set('graphics', 'width', '900')  # 追加
+Config.set('graphics', 'height', '1320')  # 追加
 Config.set('graphics', 'position', 'custom')
-Config.set('graphics', 'left', 100)
-Config.set('graphics', 'top',  20)
+Config.set('graphics', 'left', 2000)
+Config.set('graphics', 'top',  50)
 
 #Window.clearcolor = (0.5, 0.5, 0.5, 1)
-Window.size = (900, 1320)
+#Window.size = (900, 1320)
 
 #企業コード nikkei,sony,taiyou,rukten
 code = ['6758', '6976', '4755'] 
@@ -86,6 +88,7 @@ class Rows(BoxLayout):
 #一定時間ごとに繰り返し
 #スレッドがスレッドを起動するようにしておくと、一定時間ごとに繰り返すようにできる。
 #この例では１秒ごとにheloheloをprintする。これは何かに役立つかもしれない
+    '''
     import threading
  
     def hello():
@@ -94,7 +97,7 @@ class Rows(BoxLayout):
         t.start()
     t=threading.Thread(target=hello)
     t.start()
-
+    '''
 
 
     
@@ -119,11 +122,30 @@ class Rows(BoxLayout):
         self.add_widget(Row(button_text=str(self.row_count),item_value=str(self.row_count)))
 
     def add_code(self):
+        for i in code:
+            responce = get_htmls(i)
+            name.append(responce[0])
+            value.append(responce[1])
+            #before.append(responce[2]) #前日比
+            ratio = responce[2].replace('前日比','')
+            before.append(ratio)    
+
+
         for i in range(len(code)):
             self.row_count += 1
             self.add_widget(Row(button_text=str(self.row_count),item_value=name[i]+'\n'+ value[i],item_ratio= before[i]))
     
-
+    def data_up(self):
+        for i in code:
+            responce = get_htmls(i)
+            name.append(responce[0])
+            value.append(responce[1])
+            #before.append(responce[2]) #前日比
+            ratio = responce[2].replace('前日比','')
+            before.append(ratio)    
+        
+    #event = Clock.schedule_interval(my_callback, 1 / 30.)
+           
 
 
 
@@ -154,6 +176,9 @@ class user(Screen):
     
     def add_more(self):#Add Button to Push
         self.ids.rows.add_row()
+
+    def data_update(self):
+        self.ids.rows.data_up()
 
 
     #Newyork dow
