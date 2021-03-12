@@ -10,6 +10,7 @@ from kivy.uix.button import Button
 import time
 import datetime
 import threading
+from kivy.event import EventDispatcher
 
 #######
 from kivy.config import Config  # 追加
@@ -75,10 +76,14 @@ def get_htmls(stock_number):
 
 
 
-class Row(BoxLayout):
+class Row(EventDispatcher):
     button_text = StringProperty("")
     item_value = StringProperty("")
     item_ratio = StringProperty("")
+
+
+
+    
 
 
 class Rows(BoxLayout):
@@ -136,14 +141,18 @@ class Rows(BoxLayout):
             self.add_widget(Row(button_text=str(self.row_count),item_value=name[i]+'\n'+ value[i],item_ratio= before[i]))
     
     def data_up(self):
+        self.row_count = 0
+        name=[];value=[]
         for i in code:
             responce = get_htmls(i)
             name.append(responce[0])
             value.append(responce[1])
             #before.append(responce[2]) #前日比
             ratio = responce[2].replace('前日比','')
-            before.append(ratio)    
-        
+            before.append(ratio)
+            button_text=str(self.row_count)    
+            item_value = value[self.row_count]
+            self.row_count += 1
     #event = Clock.schedule_interval(my_callback, 1 / 30.)
            
 
