@@ -17,36 +17,29 @@
 
 
 <Row>:
-    orientation: "horizontal"
     size_hint_y: None
-    padding: 10, 5
-    spacing: 10, 100
     height: self.minimum_height
-    height: 80
+    height: 40
 
     Button:
         text: root.button_text
         size_hint_x: 0.1
-        #top: 200
+        top: 200
 
     Button:
         text: root.item_value
-        size_hint_x: 0.7
-        #width: 250
+        size_hint_x: 0.6
 
     Button:
         text: root.item_ratio
-        #text: 'Changed' if myswitch.active else 'On the switch to change text'
-        #text:'hi' if root.x=='1' else 'hello' if root.x=='2' else 'helloworls'
-        size_hint_x: 0.2
-        background_color: (0,1,0,1)#get_color_from_hex("#83481F")-get_color_from_hex()を用いることで色を16進表記から取得できます。    
+        size_hint_x: 0.3   
 
 <Rows>:
     size_hint_y: None
     height: self.minimum_height
     orientation: "vertical"
 
-user: #書いただけでインスタンスが一つ作られる。
+user:
     BoxLayout:#All Screen Area
         orientation: "vertical"
         BoxLayout:#My Futre Area
@@ -64,7 +57,7 @@ user: #書いただけでインスタンスが一つ作られる。
                     dash_length: 3
 
             BoxLayout: #StckCard
-                orientation: "vertical"
+                orientation: "horizontal"
                 #size_hint: 1.0, 0.15　
                 #pos_hint:{ 'center_x': .5,}
                 padding: 0.0, 5.0 #左右、上
@@ -82,7 +75,8 @@ user: #書いただけでインスタンスが一つ作られる。
                     font_size: 30
                     bold: True
                     italic: True
-                    text_size: self.size  
+                    text_size: self.size
+                    size_hint_x: 0.8   
                     halign: 'left'
                     valign: 'middle'
                     #multiline:True
@@ -95,6 +89,18 @@ user: #書いただけでインスタンスが一つ作られる。
                         Rectangle:
                             pos: self.pos
                             size: self.size
+                Button:
+                    size_hint_x: 0.1 
+                    ont_size: 15
+                    font_name: 'Verdana'
+                    text:'add'
+                    on_press: root.add_more()
+                Button:
+                    size_hint_x: 0.1 
+                    ont_size: 15
+                    font_name: 'Verdana'
+                    text:'ref'
+
             BoxLayout: #NewYork Dow
                 orientation: "vertical"
                 #size_hint: 1.0, 0.15　
@@ -158,21 +164,24 @@ user: #書いただけでインスタンスが一つ作られる。
                     id: rows
             BoxLayout:
                 orientation: "horizontal"
-                size_hint_x: None
-                size_hint_y: None
+                size_hint_x: .5
+                size_hint_y: .35
 
                 padding: 10, 5
                 spacing: 10, 10
                 #size_hint: .5, .35
                 #pos_hint: {'x': .25, 'y':.25}
-                MyuserButton:
-                    id: myadd
-                    text: "+Add More"
-                    background_color: (1,0,0,1)#get_color_from_hex("#83481F")-get_color_from_hex()を用いることで色を16進表記から取得できます。
-                    on_press: root.add_more()#roo = user
-                MyuserButton:
-                    text: "ref"
-                    on_press: root.data_update()
+               
 
+            BoxLayout:
+                orientation: "horizontal"
+                padding: 10, 5
+                spacing: 10, 10
+                size_hint: .5, .35
+                pos_hint: {'x': .25, 'y':.25}
 
-           
+                Button:
+                    text: 'Ok'
+
+                Button:
+                    text: 'Cancel'

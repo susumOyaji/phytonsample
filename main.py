@@ -76,14 +76,14 @@ def get_htmls(stock_number):
 
 
 
-class Row(EventDispatcher):
+class Row(BoxLayout):
     button_text = StringProperty("")
     item_value = StringProperty("")
     item_ratio = StringProperty("")
 
 
 
-    
+
 
 
 class Rows(BoxLayout):
@@ -126,6 +126,7 @@ class Rows(BoxLayout):
         self.row_count += 1
         self.add_widget(Row(button_text=str(self.row_count),item_value=str(self.row_count)))
 
+
     def add_code(self):
         for i in code:
             responce = get_htmls(i)
@@ -140,7 +141,7 @@ class Rows(BoxLayout):
             self.row_count += 1
             self.add_widget(Row(button_text=str(self.row_count),item_value=name[i]+'\n'+ value[i],item_ratio= before[i]))
     
-    def data_up(self):
+    def Referencing_Widgets(self):
         self.row_count = 0
         name=[];value=[]
         for i in code:
@@ -187,7 +188,7 @@ class user(Screen):
         self.ids.rows.add_row()
 
     def data_update(self):
-        self.ids.rows.data_up()
+        self.ids.rows.Referencing_Widgets()
 
 
     #Newyork dow
