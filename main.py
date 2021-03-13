@@ -11,6 +11,8 @@ import time
 import datetime
 import threading
 from kivy.event import EventDispatcher
+from kivy.core.text import LabelBase, DEFAULT_FONT
+from kivy.resources import resource_add_path
 
 #######
 from kivy.config import Config  # 追加
@@ -21,7 +23,12 @@ Config.set('graphics', 'width', '800')  # 追加
 Config.set('graphics', 'height', '1320')  # 追加
 Config.set('graphics', 'position', 'custom')
 Config.set('graphics', 'left', 1300)
-Config.set('graphics', 'top',  35)
+Config.set('graphics', 'top', 35)
+
+# Path of Fonts
+#resource_add_path('/usr/share/fonts/truetype/takao-gothic')
+#LabelBase.register(DEFAULT_FONT, 'TakaoGothic.ttf')  # 日本語が使用できるように日本語フォントを指定する
+
 
 #Window.clearcolor = (0.5, 0.5, 0.5, 1)
 #Window.size = (900, 1320)

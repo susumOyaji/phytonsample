@@ -1,4 +1,17 @@
 
+<SmoothButton@Button>:
+    background_color:(0,0,0,0)
+    background_normal:''
+    back_color: (0.565, 0.557, 0.698,0.8)
+    border_radius:[0,35,0,35]
+    #font_name:'verdana'
+    canvas.before:
+        Color:
+            rgba:self.back_color
+        RoundedRectangle:
+            size:self.size
+            pos:self.pos
+            radius:self.border_radius
 
 <MyuserButton@Button>:
     font_size: 15
@@ -89,16 +102,16 @@ user:
                         Rectangle:
                             pos: self.pos
                             size: self.size
-                Button:
-                    size_hint_x: 0.1 
-                    ont_size: 15
-                    font_name: 'Verdana'
+                SmoothButton:
+                    size_hint_x: 0.1
+                    font_size: 15
+                    #font_name: 'Verdana'
                     text:'add'
                     on_press: root.add_more()
                 Button:
-                    size_hint_x: 0.1 
-                    ont_size: 15
-                    font_name: 'Verdana'
+                    size_hint_x: 0.1
+                    font_size: 15
+                    #font_name: 'Verdana'
                     text:'ref'
 
             BoxLayout: #NewYork Dow
