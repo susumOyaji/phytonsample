@@ -20,7 +20,7 @@ from bs4 import BeautifulSoup
 import requests
 Config.set('graphics', 'fullscreen', '0')
 Config.set('graphics', 'width', '800')  # 追加
-Config.set('graphics', 'height', '1320')  # 追加
+Config.set('graphics', 'height', '1350')  # 追加
 Config.set('graphics', 'position', 'custom')
 Config.set('graphics', 'left', 1300)
 Config.set('graphics', 'top', 35)
