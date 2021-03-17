@@ -60,11 +60,15 @@ class Test(BoxLayout):
                     ,'ういろう','甘口バナナスパ']
         for btn_list_any in btn_list:
             self.rv.data.append({'value': btn_list_any})
+            
 class VariousButtons(BoxLayout):
     def on_select_button(self, button):
-        print('press:'+button.text)
+        print('press:' + button.text)
+        
 class TestApp(App):
     def build(self):
         return Test()
+
+        
 if __name__ == '__main__':
     TestApp().run()
