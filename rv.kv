@@ -1,0 +1,51 @@
+#(rv.kv)
+
+AppRoot:
+
+<AppRoot@BoxLayout>:
+    orientation: 'vertical'
+    my_rv: MyRv
+    BoxLayout:
+        height: dp(56)
+        size_hint_y: None
+        TextInput:
+            id: input
+            size_hint_x: 2
+            padding_y: dp(20)
+            text: 'Nana'
+        CreateDataButton:
+            text: '... is cute!'
+        CreateDataButton:
+            text: '... is smart!'
+        CreateDataButton:
+            text: 'I love ...!'
+    RV:
+        id: MyRv
+
+<CreateDataButton@Button>:
+    size_hint_x: 1
+    font_size: dp(20)
+    on_press: app.root.create_data(self)
+
+<BackgroundColor@Widget>:
+    background_color: 1, 1, 1, 1
+    canvas.before:
+        Color:
+            rgba: root.background_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+<BackgroundButton@Button+BackgroundColor>:
+    index: -1
+    font_size: dp(20)
+    on_press: app.root.choose_data(self)
+
+<RV@RecycleView>:
+    viewclass: 'BackgroundButton'  # 1:
+    MyRecycleBoxLayout:  # 3:
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
