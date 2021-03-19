@@ -63,8 +63,7 @@ kv = """
             pos: self.pos
     rv: rv
     RecycleView:
-        Rows:
-            id: rv
+        id: rv
         scroll_type: ['bars', 'content']
         scroll_wheel_distance: sp(60) #スクロール速度
         bar_width: sp(20)
