@@ -9,6 +9,7 @@ import japanize_kivy
 # 日本語フォント設定
 resource_add_path('./fonts')
 #LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
+
 kv = """
 <VariousButtons>:
     canvas:

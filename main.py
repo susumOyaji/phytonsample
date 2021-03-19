@@ -18,6 +18,15 @@ from kivy.resources import resource_add_path
 from kivy.config import Config  # 追加
 from bs4 import BeautifulSoup
 import requests
+
+
+from random import sample
+from string import ascii_lowercase
+from kivy.app import App
+from kivy.lang import Builder
+from kivy.uix.boxlayout import BoxLayout
+from kivy.core.text import LabelBase, DEFAULT_FONT
+from kivy.resources import resource_add_path
 Config.set('graphics', 'fullscreen', '0')
 Config.set('graphics', 'width', '800')  # 追加
 Config.set('graphics', 'height', '1350')  # 追加
@@ -25,6 +34,50 @@ Config.set('graphics', 'position', 'custom')
 Config.set('graphics', 'left', 1300)
 Config.set('graphics', 'top', 35)
 
+
+kv = """
+<Rows>:
+    size_hint_y: None
+    height: self.minimum_height
+    orientation: "vertical"
+<VariousButtons>:
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    value: ''
+    Button:
+        text: root.value
+        background_normal: ''
+        background_color: 0.5, 0.5, 0.75, 1
+        color: 1, 1 ,1 ,1
+        on_press: root.on_select_button(self)
+<Test>:
+    canvas:
+        Color:
+            rgba: 0.3, 0.3, 0.3, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    rv: rv
+    RecycleView:
+        Rows:
+            id: rv
+        scroll_type: ['bars', 'content']
+        scroll_wheel_distance: sp(60) #スクロール速度
+        bar_width: sp(20)
+        viewclass: 'VariousButtons'
+        RecycleBoxLayout:
+            default_size: None, sp(160)
+            default_size_hint: 1, None
+            size_hint_y: None
+            height: self.minimum_height
+            orientation: 'vertical'
+            spacing: dp(8)
+"""
+Builder.load_string(kv)
 # Path of Fonts
 #resource_add_path('/usr/share/fonts/truetype/takao-gothic')
 #LabelBase.register(DEFAULT_FONT, 'TakaoGothic.ttf')  # 日本語が使用できるように日本語フォントを指定する
@@ -95,7 +148,7 @@ class Row(BoxLayout):
 
 class Rows(BoxLayout):
     row_count = 0
-    
+   
 
 #一定時間ごとに繰り返し
 #スレッドがスレッドを起動するようにしておくと、一定時間ごとに繰り返すようにできる。
@@ -126,7 +179,6 @@ class Rows(BoxLayout):
 
     def __init__(self, **kwargs):
         super(Rows, self).__init__(**kwargs)
-    # self.row_count = 0
         self.add_code()
         
     def add_row(self):
@@ -148,12 +200,12 @@ class Rows(BoxLayout):
             self.row_count += 1
             self.add_widget(Row(button_text=str(self.row_count),item_value=name[i]+'\n'+ value[i],item_ratio= before[i]))
         
-        self.rows.data = []
+        #self.rv.data = []
         btn_list = ['ひつまぶし','味噌煮込みうどん','味噌カツ','台湾ラーメン' \
                     ,'手羽先','小倉トースト','きしめん','あんかけスパ','どて煮' \
                     ,'ういろう','甘口バナナスパ']
         for btn_list_any in btn_list:
-            self.rows.data.append({'value': btn_list_any})
+            self.rv.data.append({'value': btn_list_any})
     
     
     
@@ -230,7 +282,20 @@ class user(Screen):
     #Label4
     TotalAsset= 'TotalAsset   ¥'+str("{:,}".format(TotalValue))
     
-    
+
+class VariousButtons(BoxLayout):
+    def on_select_button(self, button):
+        print('press:' + button.text)
+
+class Test(BoxLayout):
+    def __init__(self, **kwargs):
+        super(Test, self).__init__(**kwargs)
+        self.rv.data = []
+        btn_list = ['ひつまぶし','味噌煮込みうどん','味噌カツ','台湾ラーメン' \
+                    ,'手羽先','小倉トースト','きしめん','あんかけスパ','どて煮' \
+                    ,'ういろう','甘口バナナスパ']
+        for btn_list_any in btn_list:
+            self.rv.data.append({'value': btn_list_any})    
     
    
 
@@ -242,9 +307,9 @@ class user(Screen):
 class Test1(App):
     def build(self):
         #self.root = Builder.load_file('Demo.kv')
-        self.root = Builder.load_file('floatlayout.kv')
-        self.title = 'Python to Iphone App'
-        return self.root
+        #self.root = Builder.load_file('floatlayout.kv')
+        #self.title = 'Python to Iphone App'
+        return Test() #self.root
 
 
 
