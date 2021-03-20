@@ -79,7 +79,7 @@ AppRoot:
             #spacing: 100, 100 #                
             Label:
                 id:label2
-                #text: root.newyork
+                text: root.newyork
                 font_size: 20
                 #pos_hint:{ 'center_x': .5,'center_y': .60}
                 canvas.before:
@@ -97,7 +97,7 @@ AppRoot:
             #spacing: 100, 100 #                   
             Label:
                 id:label3
-                #text: root.nikei225
+                text: root.nikei225
                 font_size: 20
                 #pos_hint:{ 'center_x': .5,'center_y': .35}
                 canvas.before:
@@ -114,7 +114,7 @@ AppRoot:
             #spacing: 100, 100 #                    
             Label:
                 id:label4
-                #text: root.TotalAsset
+                text: root.TotalAsset
                 font_size: 20
                 size_hint: 1.0, 0.15
                 #pos_hint:{ 'center_x': .5,'center_y': .1}
@@ -125,7 +125,7 @@ AppRoot:
                         pos: self.pos
                         size: self.size    
 
-        BoxLayout:
+        BoxLayout:#Item
             height: dp(56)
             size_hint_y: None
             TextInput:
