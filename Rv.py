@@ -8,10 +8,19 @@ from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 
-
+#######
+from kivy.config import Config  # 追加
 from bs4 import BeautifulSoup
 import requests
 import japanize_kivy
+
+
+Config.set('graphics', 'fullscreen', '0')
+Config.set('graphics', 'width', '650')  # 追加
+Config.set('graphics', 'height', '1350')  # 追加
+Config.set('graphics', 'position', 'custom')
+Config.set('graphics', 'left', 1400)
+Config.set('graphics', 'top', 35)
 
 
 #企業コード nikkei,sony,taiyou,rukten
@@ -59,6 +68,8 @@ def get_htmls(stock_number):
   print('')
   return data
 
+
+
 class AppRoot(BoxLayout):
     pat = re.compile(r'\.{3}')
     my_rv = ObjectProperty()
@@ -78,6 +89,8 @@ class AppRoot(BoxLayout):
         #before.append(responce[2]) #前日比
         ratio = responce[2].replace('前日比','')
         before.append(ratio)    
+        create_data(self, value)
+
 
     #Newyork dow
     dow = get_dowhtmls()
