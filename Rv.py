@@ -51,6 +51,7 @@ def get_dowhtmls():
 
 def get_htmls(stock_number):
   urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
+  #urlName = "https://finance.yahoo.co.jp/quote/"+stock_number
   soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
   #text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   

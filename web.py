@@ -21,7 +21,7 @@ def get_htmls(stock_number):
   #print soup.select_one("#heikin")
 
 
-  tag_tr = soup.find_all('tr')
+  tag_tr = soup.find_all('_3rXWJKZF')
   #print(tag_tr[0])
 
   head = [h.text for h in tag_tr[0].find_all('th')]
