@@ -46,15 +46,15 @@ def get_dowhtmls():
   return data
 
 def get_nikkeyhtmls():
+  #urlName = 'https://stocks.finance.yahoo.co.jp/stocks/detail/?code=998407.O'
   urlName = 'https://stocks.finance.yahoo.co.jp/stocks/detail/?code=998407.O'
   soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
   
-  tag_tr = soup.find_all('dd')#tr
-  #print(tag_tr[0])
-  head = [h.text for h in tag_tr[3].find_all('span')]#th
+  tag_tr = soup.find_all('tr')#tr
+  print(tag_tr[0])
+  head = [h.text for h in tag_tr[3].find_all('td')]#th
   data = head[0]
   return data
-
 
 
 def get_htmls(stock_number):
@@ -75,8 +75,6 @@ def get_htmls(stock_number):
   r = s[:idx]  # スライスで半角空白文字よりも前を抽出
 
  
-  
-  
   data.append(r)
   data.append(head[22])
   data.append(head[29])
