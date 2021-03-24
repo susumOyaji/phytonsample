@@ -8,27 +8,37 @@ import datetime
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
-
+	
+import re#正規表現
 
 
 def get_htmls(stock_number):
-  urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
+  #urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
+  urlName = "https://finance.yahoo.co.jp/quote/"+stock_number
   soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
   text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   #print(text)
-  #print(soup)  
+ 
   # 平均の値を取得する
   #print soup.select_one("#heikin")
 
   #yjMSt">
-  tag_tr = soup.find_all('yjMSt">')
+  #tag_tr = get_Text.find_all(href=re.compile("price"))
+  tag_tr = soup.select('body')
+  #tag_tr = (get_url_info.text).find_all('price')
   #print(tag_tr[0])
 
-  head = [h.text for h in tag_tr[0].find_all('th')]
-  print(head[0])#ソニー（株）
-  data = [d.text for d in tag_tr[0].find_all('td')]
-  print('stoksPrice: '+data[1])
-  print(data[2])
+  head = [h.text for h in tag_tr[0].find_all('span')]
+
+  s = head[81]
+  target = "の"
+  idx = s.find(target)
+  r = s[:idx]  # スライスで半角空白文字よりも前を抽出
+
+  print(r)#ソニー（株）
+  #data = [d.text for d in tag_tr[22].find_all('td')]
+  print('stoksPrice: '+head[22])
+  #print(data[2])
   print('')
   #data = []
   #for i in range(1,len(tag_tr)):
@@ -107,7 +117,7 @@ def Posted_version():
 
 
 
-stack_code = ['998407','6758', '6976', '4755']
+stack_code = ['6758', '6976', '4755']
 data1 = ''
 
 while True:

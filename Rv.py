@@ -45,23 +45,41 @@ def get_dowhtmls():
   data = head[0]
   return data
 
-
+def get_nikkeyhtmls():
+  urlName = 'https://stocks.finance.yahoo.co.jp/stocks/detail/?code=998407.O'
+  soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
+  
+  tag_tr = soup.find_all('dd')#tr
+  #print(tag_tr[0])
+  head = [h.text for h in tag_tr[3].find_all('span')]#th
+  data = head[0]
+  return data
 
 
 
 def get_htmls(stock_number):
-  urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
-  #urlName = "https://finance.yahoo.co.jp/quote/"+stock_number
+  data = []
+
+  urlName = "https://finance.yahoo.co.jp/quote/"+stock_number
   soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
   #text=soup.get_text()#.get_text()は、テキストのみを取得する、つまりタグは取らないメソッドです。
   
-  tag_tr = soup.find_all('tr')
+  tag_tr = soup.find_all('body')
   #print(tag_tr[0])
 
-  head = [h.text for h in tag_tr[0].find_all('th')]
+  head = [h.text for h in tag_tr[0].find_all('span')]
   #print(head[0])#ソニー（株）
-  data = [d.text for d in tag_tr[0].find_all('td')]
-  data[0] = head[0]
+  s = head[81]
+  target = "の"
+  idx = s.find(target)
+  r = s[:idx]  # スライスで半角空白文字よりも前を抽出
+
+ 
+  
+  
+  data.append(r)
+  data.append(head[22])
+  data.append(head[29])
  
   print('Name: ',data[0])
   print('StoksPrice: ',data[1])
@@ -90,7 +108,7 @@ class AppRoot(BoxLayout):
         #before.append(responce[2]) #前日比
         ratio = responce[2].replace('前日比','')
         before.append(ratio)    
-        create_data(self, value)
+        #create_data(self, value)
 
 
     #Newyork dow
@@ -98,7 +116,7 @@ class AppRoot(BoxLayout):
     #Label2
     newyork = 'NewYork Dow $' + dow
     #Nikkei25
-    nikkei= get_htmls('998407')
+    nikkei= get_nikkeyhtmls()
     #Label3
     nikei225 = nikkei[0] + '   ¥' + nikkei[1] #+ '\n¥' + str(Marketprice[0])
     
