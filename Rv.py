@@ -7,7 +7,7 @@ from kivy.app import App
 from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
-
+from kivy.uix.button import Button
 #######
 from kivy.config import Config  # 追加
 from bs4 import BeautifulSoup
@@ -103,7 +103,6 @@ def get_htmls(stock_number):
   return data
 
 
-
 class AppRoot(BoxLayout):
     pat = re.compile(r'\.{3}')
     my_rv = ObjectProperty()
@@ -125,10 +124,7 @@ class AppRoot(BoxLayout):
         #before.append(responce[2]) #前日比
         ratio = responce[2].replace('前日比','')
         before.append(ratio)
-        BuildLayout()
-
-        #create_data(self, value)
-
+        
 
     #Newyork dow
     dow = get_dowhtmls()
@@ -161,10 +157,31 @@ class MyRecycleBoxLayout(RecycleBoxLayout):
             widget.background_color = 1, 0, 0, 0.5
         super().add_widget(widget, index, canvas)  # 5:
 
-
 class RVApp(App):
     pass
 
+
+    
+
+# 新スタイルクラス
+class NewStyleClassBase(object):
+ 
+    def test_method(self, msg):
+        print('NewStyleClassBase: {}'.format(msg))
+ 
+ 
+# 新スタイルのクラスを継承
+class NewStyleClass(AppRoot):
+ 
+    def test_method(self, btn):
+        print('AppRootClass: {}'.format('msg'))
+        super().create_data(self, btn)
+        # super(NewStyleClass, self).test_method(msg)
+        # NewStyleClassBase.test_method(self, msg)
+ 
+ 
+new = NewStyleClass()
+new.test_method(self.ids.MyRv)
 
 if __name__ == '__main__':
     RVApp().run()
