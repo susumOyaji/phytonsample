@@ -45,15 +45,32 @@ def get_dowhtmls():
   data = head[0]
   return data
 
+
+
 def get_nikkeyhtmls():
+  data = []  
   #urlName = 'https://stocks.finance.yahoo.co.jp/stocks/detail/?code=998407.O'
   urlName = 'https://stocks.finance.yahoo.co.jp/stocks/detail/?code=998407.O'
   soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
   
-  tag_tr = soup.find_all('tr')#tr
-  print(tag_tr[0])
-  head = [h.text for h in tag_tr[3].find_all('td')]#th
-  data = head[0]
+  tag_tr = soup.find_all('body')#tr
+  #print(tag_tr[0])
+  head = [h.text for h in tag_tr[0].find_all('tr')]  #tr
+ 
+  s = head[0]
+  name = s[1:7]  # スライスで半角空白文字よりも前を抽出
+  
+  target = "\n前"
+  idx = s.find(target)
+  stock = s[12:idx]
+  
+  target = " \n"
+  idx = s.find(target)
+  ratio = s[16:idx]
+
+  data.append(name)
+  data.append(stock)
+  data.append(ratio)
   return data
 
 
@@ -69,7 +86,7 @@ def get_htmls(stock_number):
 
   head = [h.text for h in tag_tr[0].find_all('span')]
   #print(head[0])#ソニー（株）
-  s = head[81]
+  s = head[79]
   target = "の"
   idx = s.find(target)
   r = s[:idx]  # スライスで半角空白文字よりも前を抽出
@@ -99,13 +116,17 @@ class AppRoot(BoxLayout):
         self.my_rv.data.append({'text': data_txt})  # 2:
 
     
+
+
     for i in code:
         responce = get_htmls(i)
         name.append(responce[0])
         value.append(responce[1])
         #before.append(responce[2]) #前日比
         ratio = responce[2].replace('前日比','')
-        before.append(ratio)    
+        before.append(ratio)
+        BuildLayout()
+
         #create_data(self, value)
 
 
@@ -116,7 +137,7 @@ class AppRoot(BoxLayout):
     #Nikkei25
     nikkei= get_nikkeyhtmls()
     #Label3
-    nikei225 = nikkei[0] + '   ¥' + nikkei[1] #+ '\n¥' + str(Marketprice[0])
+    nikei225 = nikkei[0] + nikkei[1] + '\n'+  nikkei[2]
     
 
     for i in range(len(code)):
@@ -124,7 +145,7 @@ class AppRoot(BoxLayout):
             Marketprice.append(float(value[i].replace(',', '')) * quantity[i])
             TotalValue = TotalValue + Marketprice[i]
         except ValueError:
-            Marketprice.append('---'); newyork = '---'; nikei225 = '---'
+            Marketprice.append('---')
         
     #Label4
     TotalAsset= 'TotalAsset   ¥'+str("{:,}".format(TotalValue))
