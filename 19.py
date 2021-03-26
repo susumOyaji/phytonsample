@@ -143,7 +143,7 @@ kv = """
 <Test>:
     orientation: 'vertical'
     rv: rv
-    BoxLayout: #NewYork Dow
+    BoxLayout: #All Screen
         orientation: "vertical"
         canvas:
             Color:
@@ -151,6 +151,9 @@ kv = """
             Rectangle:
                 size: self.size
                 pos: self.pos
+        BoxLayout:#Stack Card
+            orientation: "vertical"
+
         #rv: rv
         RecycleView:
             id: rv
