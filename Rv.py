@@ -86,13 +86,13 @@ def get_htmls(stock_number):
 
   head = [h.text for h in tag_tr[0].find_all('span')]
   #print(head[0])#ソニー（株）
-  s = head[81]
+  s = head[80]
   target = "の"
   idx = s.find(target)
   r = s[:idx]  # スライスで半角空白文字よりも前を抽出
 
  
-  data.append(r)
+  data.append(r+head[17])
   data.append(head[22])
   data.append(head[29])
  
@@ -175,13 +175,13 @@ class NewStyleClass(AppRoot):
  
     def test_method(self, btn):
         print('AppRootClass: {}'.format('msg'))
-        super().create_data(self, btn)
+        super().create_data( btn)
         # super(NewStyleClass, self).test_method(msg)
         # NewStyleClassBase.test_method(self, msg)
  
  
-new = NewStyleClass()
-new.test_method(self.ids.MyRv)
+#new = NewStyleClass()
+#new.test_method('')
 
 if __name__ == '__main__':
     RVApp().run()
