@@ -153,7 +153,12 @@ kv = """
                 pos: self.pos
         BoxLayout:#Stack Card
             orientation: "vertical"
-
+            canvas:
+                Color:
+                    rgba: 0.3, 0.3, 0.3, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
         #rv: rv
         RecycleView:
             id: rv
