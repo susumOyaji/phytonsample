@@ -142,28 +142,29 @@ kv = """
         on_press: root.on_select_button(self)
 <Test>:
     orientation: 'vertical'
-    #BoxLayout: #NewYork Dow
-    #    orientation: "vertical"
-    canvas:
-        Color:
-            rgba: 0.3, 0.3, 0.3, 1
-        Rectangle:
-            size: self.size
-            pos: self.pos
     rv: rv
-    RecycleView:
-        id: rv
-        scroll_type: ['bars', 'content']
-        scroll_wheel_distance: sp(60) #スクロール速度
-        bar_width: sp(20)
-        viewclass: 'VariousButtons'
-        RecycleBoxLayout:
-            default_size: None, sp(100)
-            default_size_hint: 1, None
-            size_hint_y: None
-            height: self.minimum_height
-            orientation: 'vertical'
-            spacing: dp(8)
+    BoxLayout: #NewYork Dow
+        orientation: "vertical"
+        canvas:
+            Color:
+                rgba: 1, 0.3, 0.3, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        #rv: rv
+        RecycleView:
+            id: rv
+            scroll_type: ['bars', 'content']
+            scroll_wheel_distance: sp(60) #スクロール速度
+            bar_width: sp(20)
+            viewclass: 'VariousButtons'
+            RecycleBoxLayout:
+                default_size: None, sp(100)
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
+                orientation: 'vertical'
+                spacing: dp(8)
 """
 Builder.load_string(kv)
 
