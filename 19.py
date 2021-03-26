@@ -28,6 +28,7 @@ value = [] #時価
 name = [] #企業名
 before = []
 ratio = []
+TotalAsset=0
 
 # 日本語フォント設定
 resource_add_path('./fonts')
@@ -105,6 +106,25 @@ def get_htmls(stock_number):
   return data
 
 kv = """
+<MyuserLabel@Label>:
+    pos_hint_y: None
+    font_size: 5
+    font_name: 'Verdana'
+
+
+<SmoothButton@Button>:
+    background_color:(0,0,0,0)
+    background_normal:''
+    back_color: (0.565, 0.557, 0.698,0.8)
+    border_radius:[0,35,0,35]
+    #font_name:'verdana'
+    canvas.before:
+        Color:
+            rgba:self.back_color
+        RoundedRectangle:
+            size:self.size
+            pos:self.pos
+            radius:self.border_radius
 <VariousButtons>:
     canvas:
         Color:
@@ -121,6 +141,9 @@ kv = """
         color: 1, 1 ,1 ,1
         on_press: root.on_select_button(self)
 <Test>:
+    orientation: 'vertical'
+    #BoxLayout: #NewYork Dow
+    #    orientation: "vertical"
     canvas:
         Color:
             rgba: 0.3, 0.3, 0.3, 1
@@ -135,7 +158,7 @@ kv = """
         bar_width: sp(20)
         viewclass: 'VariousButtons'
         RecycleBoxLayout:
-            #default_size: None, sp(100)
+            default_size: None, sp(100)
             default_size_hint: 1, None
             size_hint_y: None
             height: self.minimum_height
@@ -159,7 +182,6 @@ class Test(BoxLayout):
         super(Test, self).__init__(**kwargs)
         self.rv.data = []
         TotalValue = 0
-
 
 
         for i in code:
