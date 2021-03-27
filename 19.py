@@ -28,8 +28,7 @@ value = [] #時価
 name = [] #企業名
 before = []
 ratio = []
-TotalAsset=0
-
+TotalAsset=''
 # 日本語フォント設定
 resource_add_path('./fonts')
 #LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
@@ -110,8 +109,6 @@ kv = """
     pos_hint_y: None
     font_size: 5
     font_name: 'Verdana'
-
-
 <SmoothButton@Button>:
     background_color:(0,0,0,0)
     background_normal:''
@@ -134,7 +131,7 @@ kv = """
             pos: self.pos
     value: ''
     Button:
-        size_hint_y: 1
+        size_hint_y: 1.0
         text: root.value
         background_normal: ''
         background_color: 0.5, 0.5, 0.75, 1
@@ -152,13 +149,93 @@ kv = """
                 size: self.size
                 pos: self.pos
         BoxLayout:#Stack Card
+            orientation: "horizontal"   
+            MyuserLabel:
+                size_hint_y: None
+                id:label1
+                text: 'Stock Card'
+                font_size: 30
+                bold: True
+                italic: True
+                text_size: self.size
+                size_hint_x: 0.8   
+                halign: 'left'
+                valign: 'middle'
+                #multiline:True
+                canvas.before:
+                    Color:
+                        rgba: .8, .9, 0, 1
+                    Line:
+                        width: 2
+                        rounded_rectangle:self.x,self.y,self.width,self.height,5    
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            SmoothButton:
+                size_hint_x: 0.1
+                font_size: 15
+                #font_name: 'Verdana'
+                text:'add'
+                on_press: root.add_more()
+            Button:
+                size_hint_x: 0.1
+                font_size: 15
+                #font_name: 'Verdana'
+                text:'ref'
+        BoxLayout: #NewYork Dow
             orientation: "vertical"
-            canvas:
-                Color:
-                    rgba: 0.3, 0.3, 0.3, 1
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
+            #size_hint: 1.0, 0.15　
+            #pos_hint:{ 'center_x': .5,}
+            padding: 0.0, 5.0 #左右、上
+            #spacing: 100, 100 #                
+            Label:
+                id:label2
+                text: 'root.newyork'
+                font_size: 20
+                #pos_hint:{ 'center_x': .5,'center_y': .60}
+                canvas.before:
+                    Color:
+                        rgba: 1, .5, 0, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+        BoxLayout: #Nikkei225
+            orientation: "vertical"
+            #size_hint: 1.0, 0.15
+            #pos_hint:{ 'center_x': .5,}
+            padding: 0.0, 5.0 #左右、上
+            #spacing: 100, 100 #                   
+            Label:
+                id:label3
+                text: 'root.nikei225'
+                font_size: 20
+                #pos_hint:{ 'center_x': .5,'center_y': .35}
+                canvas.before:
+                    Color:
+                        rgba: 1, .5, 0, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+        BoxLayout: #MyFuture
+            orientation: "vertical"
+            #size_hint: 1.0, 0.15
+            #pos_hint:{ 'center_x': .5,}
+            padding: 0.0, 5.0 #左右、上
+            #spacing: 100, 100 #                    
+            Label:
+                id:label4
+                text: root.TotalAsset
+                font_size: 20
+                size_hint: 1.0, 0.15
+                #pos_hint:{ 'center_x': .5,'center_y': .1}
+                canvas.before:
+                    Color:
+                        rgba: 1, .5, 0, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size    
+                
         #rv: rv
         RecycleView:
             id: rv
@@ -179,7 +256,11 @@ Builder.load_string(kv)
 
 
 
+#Kv言語に固有の3つのキーワードがあります。
 
+#app：常にアプリケーションのインスタンスを指します。
+#root：現在のルールのベースウィジェット/テンプレートを参照します
+#self：常に現在のウィジェットを参照します
 
 
 
@@ -187,10 +268,10 @@ class TextWidget(BoxLayout):
     pass
 
 class Test(BoxLayout):
+    TotalValue=0
     def __init__(self, **kwargs):
         super(Test, self).__init__(**kwargs)
         self.rv.data = []
-        TotalValue = 0
 
 
         for i in code:
@@ -200,7 +281,6 @@ class Test(BoxLayout):
             #before.append(responce[2]) #前日比
             ratio = responce[2].replace('前日比','')
             before.append(ratio)
-        
 
         #Newyork dow
         dow = get_dowhtmls()
@@ -210,6 +290,9 @@ class Test(BoxLayout):
         nikkei= get_nikkeyhtmls()
         #Label3
         nikei225 = nikkei[0] + nikkei[1] + '\n'+  nikkei[2]
+   
+    
+   
         btn_list=[]
         value_list=[]
         for i in range(len(code)):
@@ -220,14 +303,15 @@ class Test(BoxLayout):
                 Marketprice.append(float(value[i].replace(',', '')) * quantity[i])
                 TotalValue = TotalValue + Marketprice[i]
             except ValueError:
-                Marketprice.append('---')
+                Marketprice.append('---')      
         
-        #Label4
-        TotalAsset= 'TotalAsset   ¥'+str("{:,}".format(TotalValue))
-
+        
         for btn_list_any in btn_list:
             self.rv.data.append({'value': btn_list_any})
-
+        
+        #Label4
+        TotalAsset = 'TotalAsset   ¥' + str("{:,}".format(TotalValue))
+        print(TotalAsset)
 
             
 class VariousButtons(BoxLayout):
