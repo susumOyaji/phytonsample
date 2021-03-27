@@ -319,12 +319,12 @@ class VariousButtons(BoxLayout):
         print('press:' + button.text)
         print('Id:' + str(self.ids.values))
         
-class TestjApp(App):
+class TestApp(App):
     def build(self):
-        #self.root = Builder.load_file('testjyuku.kv')
-        #self.title = 'Python to Iphone App'
+        self.root = Builder.load_file('test.kv')
+        self.title = 'Python to Iphone App'
         return Test()
 
         
 if __name__ == '__main__':
-    TestjApp().run()
+    TestApp().run()
