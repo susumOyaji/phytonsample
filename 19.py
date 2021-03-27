@@ -9,7 +9,7 @@ import japanize_kivy
 from kivy.config import Config  # 追加
 from bs4 import BeautifulSoup
 import requests
-
+from kivy.properties import ObjectProperty,StringProperty
 
 Config.set('graphics', 'fullscreen', '0')
 Config.set('graphics', 'width', '650')  # 追加
@@ -251,7 +251,7 @@ kv = """
                 orientation: 'vertical'
                 spacing: dp(8)
 """
-Builder.load_string(kv)
+#Builder.load_string(kv)
 
 
 
@@ -265,14 +265,14 @@ Builder.load_string(kv)
 
 
 class TextWidget(BoxLayout):
+    TotalAsset = StringProperty("")
     pass
 
 class Test(BoxLayout):
-    TotalValue=0
     def __init__(self, **kwargs):
         super(Test, self).__init__(**kwargs)
         self.rv.data = []
-
+        TotalValue = 0
 
         for i in code:
             responce = get_htmls(i)
@@ -319,10 +319,12 @@ class VariousButtons(BoxLayout):
         print('press:' + button.text)
         print('Id:' + str(self.ids.values))
         
-class TestApp(App):
+class TestjApp(App):
     def build(self):
+        #self.root = Builder.load_file('testjyuku.kv')
+        #self.title = 'Python to Iphone App'
         return Test()
 
         
 if __name__ == '__main__':
-    TestApp().run()
+    TestjApp().run()
