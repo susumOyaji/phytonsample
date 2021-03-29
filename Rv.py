@@ -86,7 +86,7 @@ def get_htmls(stock_number):
 
   head = [h.text for h in tag_tr[0].find_all('span')]
   #print(head[0])#ソニー（株）
-  s = head[80]
+  s = head[81]
   target = "の"
   idx = s.find(target)
   r = s[:idx]  # スライスで半角空白文字よりも前を抽出
@@ -106,6 +106,15 @@ def get_htmls(stock_number):
 class AppRoot(BoxLayout):
     pat = re.compile(r'\.{3}')
     my_rv = ObjectProperty()
+    label_text = ObjectProperty(None)
+
+    def create_data(self, btn):
+        data_txt = self.pat.sub(self.ids.input.text.capitalize(), btn.text)
+        self.my_rv.data.append({'text': data_txt})  # 2:
+
+    
+    def label_add(self, text):
+        self.label_text.text = text
 
     def choose_data(self, btn):
         print(f"Index {btn.index}: {btn.text}")
@@ -155,31 +164,27 @@ class MyRecycleBoxLayout(RecycleBoxLayout):
             widget.background_color = 0, 0, 1, 0.5
         else:
             widget.background_color = 1, 0, 0, 0.5
+
         super().add_widget(widget, index, canvas)  # 5:
 
+
+
+class ButtonWidget(BoxLayout):
+    label_text = ObjectProperty(None)
+    
+    def label_add(self, text):
+        self.label_text.text = text
+
 class RVApp(App):
-    pass
+     def build(self):
+        root = AppRoot()
+        return root
+    #pass
 
 
     
 
-# 新スタイルクラス
-class NewStyleClassBase(object):
- 
-    def test_method(self, msg):
-        print('NewStyleClassBase: {}'.format(msg))
- 
- 
-# 新スタイルのクラスを継承
-class NewStyleClass(AppRoot):
- 
-    def test_method(self, btn):
-        print('AppRootClass: {}'.format('msg'))
-        super().create_data( btn)
-        # super(NewStyleClass, self).test_method(msg)
-        # NewStyleClassBase.test_method(self, msg)
- 
- 
+
 #new = NewStyleClass()
 #new.test_method('')
 

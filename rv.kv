@@ -19,7 +19,7 @@
             pos:self.pos
             radius:self.border_radius
 
-AppRoot:
+#AppRoot:
 
 <AppRoot@BoxLayout>:
     orientation: 'vertical'
@@ -172,3 +172,13 @@ AppRoot:
         size_hint_y: None
         height: self.minimum_height
         orientation: 'vertical'
+
+<ButtonWidget>
+    label_text: label_text
+    Label:
+        id: label_text
+        text: ''
+    Button:
+        text: 'Button'
+        on_press: print('Hello')
+        on_release: print('World')
