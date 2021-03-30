@@ -106,12 +106,7 @@ def get_htmls(stock_number):
 class AppRoot(BoxLayout):
     pat = re.compile(r'\.{3}')
     my_rv = ObjectProperty()
-    label_text = ObjectProperty(None)
-
-    def create_data(self, btn):
-        data_txt = self.pat.sub(self.ids.input.text.capitalize(), btn.text)
-        self.my_rv.data.append({'text': data_txt})  # 2:
-
+   
     
     def label_add(self, text):
         self.label_text.text = text
@@ -169,7 +164,7 @@ class MyRecycleBoxLayout(RecycleBoxLayout):
 
 
 
-class ButtonWidget(BoxLayout):
+class ButtonWidget(MyRecycleBoxLayout):
     label_text = ObjectProperty(None)
     
     def label_add(self, text):
@@ -178,6 +173,8 @@ class ButtonWidget(BoxLayout):
 class RVApp(App):
      def build(self):
         root = AppRoot()
+        button = ButtonWidget()
+        button.add_widget()
         return root
     #pass
 
