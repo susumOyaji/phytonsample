@@ -39,7 +39,7 @@ TotalValue = 0
 
 kv = """
 <MyuserLabel@Label>:
-    pos_hint_y: None
+    #pos_hint_y: None
     font_size: 5
     font_name: 'Verdana'
 <SmoothButton@Button>:
@@ -60,16 +60,19 @@ kv = """
     rv: rv
     BoxLayout: #All Screen
         orientation: "vertical"
-        canvas:
+        size_hint_y: 0.4
+        canvas.after:
             Color:
-                rgba: 0.0, 0.0, 0.0, 1 #All Screen color(Black)
-            Rectangle:
-                size: self.size
-                pos: self.pos
+                rgba: 1, 1, 1, 1
+            Line:
+                rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+                dash_offset: 5
+                dash_length: 3
         BoxLayout:#Stock Card
             orientation: "horizontal"
-            pos_hint_y: None
+            size_hint_y: None
             MyuserLabel:
+                #pos_hint: {'x': .3, 'y': .7}
                 size_hint_y: None
                 id:label1
                 text: 'Stock Card'
@@ -80,16 +83,16 @@ kv = """
                 size_hint_x: 0.8   
                 halign: 'left'
                 valign: 'middle'
-                #multiline:True
-                canvas.before:
+                multiline:True
+                canvas.after:
                     Color:
-                        rgba: .8, .9, 0, 1
+                        rgba: 1, 1, 1, 1
                     Line:
-                        width: 2
-                        rounded_rectangle:self.x,self.y,self.width,self.height,5    
-                    Rectangle:
-                        pos: self.pos
+                        rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+                        dash_offset: 5
+                        dash_length: 3               
             SmoothButton:
+                #pos_hint: {'x': .3, 'y': .7}
                 size_hint_y: None
                 size_hint_x: 0.1
                 font_size: 15
@@ -97,6 +100,7 @@ kv = """
                 text:'add'
                 on_press: root.add_more()
             Button:
+                #pos_hint: {'x': .3, 'y': .7}
                 size_hint_y: None
                 size_hint_x: 0.1
                 font_size: 15
@@ -104,38 +108,42 @@ kv = """
                 text:'ref'
         BoxLayout: #NewYork Dow
             #orientation: "vertical"
-            size_hint_y: None　
-            #pos_hint:{ 'center_x': .5,}
-            padding: 0.0, 5.0 #左右、上
+            size_hint_y: None
+            pos_hint: {'x': .0, 'y': 0.0}　
+            #padding: 0.0, 5.0 #左右、上
             #spacing: 100, 100 #                
             Label:
                 id:label2
+                size_hint_y: None　
                 text: 'root.newyork'
                 font_size: 20
-                #pos_hint:{ 'center_x': .5,'center_y': .60}
-                canvas.before:
+                #pos_hint: {'x': .3, 'y': 1.0}
+                canvas.after:
                     Color:
-                        rgba: 1, .5, 0, 1
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size    
+                        rgba: 1, 1, 1, 1
+                    Line:
+                        rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+                        dash_offset: 5
+                        dash_length: 3
         BoxLayout: #Nikkei225
             orientation: "vertical"
             size_hint_y: None
-            #pos_hint:{ 'center_x': .5,}
+            pos_hint:{ 'x': .0,'y':0.0}
             padding: 0.0, 5.0 #左右、上
             #spacing: 100, 100 #                   
             Label:
                 id:label3
-                #text: 'root.nikei225'
+                size_hint_y: None　
+                text: 'root.nikei225'
                 font_size: 20
-                #pos_hint:{ 'center_x': .5,'center_y': .35}
-                canvas.before:
+                #pos_hint:{ 'x': .3,'y': 1.0}
+                canvas.after:
                     Color:
-                        rgba: 1, .5, 0, 1
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
+                        rgba: .8, .9, 0, 1
+                    Line:
+                        rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+                        dash_offset: 5
+                        dash_length: 3
         BoxLayout: #MyFuture
             orientation: "vertical"
             size_hint_y: None
@@ -144,6 +152,7 @@ kv = """
             #spacing: 100, 100 #                    
             Label:
                 id:label4
+                size_hint_y: None
                 #text: root.Totalvalue
                 font_size: 20
                 size_hint: 1.0, 0.15
