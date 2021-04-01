@@ -33,6 +33,7 @@ name = [] #企業名
 before = []
 ratio = []
 TotalValue = 0
+nikei225=''
 
 
 
@@ -42,6 +43,11 @@ kv = """
     #pos_hint_y: None
     font_size: 5
     font_name: 'Verdana'
+    canvas.before:
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [15, ]
 <SmoothButton@Button>:
     background_color:(0,0,0,0)
     background_normal:''
@@ -60,7 +66,7 @@ kv = """
     rv: rv
     BoxLayout: #All Screen
         orientation: "vertical"
-        size_hint_y: 0.4
+        size_hint_y: 1.5
         canvas.after:
             Color:
                 rgba: 1, 1, 1, 1
@@ -70,12 +76,13 @@ kv = """
                 dash_length: 3
         BoxLayout:#Stock Card
             orientation: "horizontal"
-            size_hint_y: None
+            #size_hint_y: None
             MyuserLabel:
                 #pos_hint: {'x': .3, 'y': .7}
                 size_hint_y: None
                 id:label1
                 text: 'Stock Card'
+                color: 0, 0, 0, 1
                 font_size: 30
                 bold: True
                 italic: True
@@ -153,7 +160,7 @@ kv = """
             Label:
                 id:label4
                 size_hint_y: None
-                #text: root.Totalvalue
+                text: 'root.Totalvalue'
                 font_size: 20
                 size_hint: 1.0, 0.15
                 #pos_hint:{ 'center_x': .5,'center_y': .1}
@@ -195,6 +202,43 @@ kv = """
 Builder.load_string(kv)
 
 
+def get_dowhtmls():
+  urlName = 'https://finance.yahoo.co.jp/quote/%5EDJI'
+  soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
+  
+  tag_tr = soup.find_all('dd')#tr
+  #print(tag_tr[0])
+  head = [h.text for h in tag_tr[3].find_all('span')]#th
+  data = head[0]
+  return data
+
+
+
+def get_nikkeyhtmls():
+  data = []  
+  #urlName = 'https://stocks.finance.yahoo.co.jp/stocks/detail/?code=998407.O'
+  urlName = 'https://stocks.finance.yahoo.co.jp/stocks/detail/?code=998407.O'
+  soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
+  
+  tag_tr = soup.find_all('body')#tr
+  #print(tag_tr[0])
+  head = [h.text for h in tag_tr[0].find_all('tr')]  #tr
+ 
+  s = head[0]
+  name = s[1:7]  # スライスで半角空白文字よりも前を抽出
+  
+  target = "\n前"
+  idx = s.find(target)
+  stock = s[12:idx]
+  
+  target = " \n"
+  idx = s.find(target)
+  ratio = s[16:idx]
+
+  data.append(name)
+  data.append(stock)
+  data.append(ratio)
+  return data
 
 def get_htmls(stock_number):
   data = []
@@ -252,7 +296,17 @@ class Test(BoxLayout):
         for btn_list_any in btn_list:
             self.rv.data.append({'value': btn_list_any})
             
+        #Newyork dow
+        dow = get_dowhtmls()
+        #Label2
+        newyork = 'NewYork Dow $' + dow
+        #Nikkei25
+        nikkei= get_nikkeyhtmls()
+        #Label3
+        nikei225 = nikkei[0] + nikkei[1] + '\n'+  nikkei[2]
 
+
+    
 
 
 class VariousButtons(BoxLayout):
