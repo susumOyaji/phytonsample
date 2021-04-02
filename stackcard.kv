@@ -22,7 +22,7 @@
         RoundedRectangle:
             pos: self.pos
             size: self.size
-            radius: [15, ]            
+            radius: [10, ]            
 <SmoothButton@Button>:
     background_color:(0,0,0,0)
     background_normal:''
@@ -103,13 +103,6 @@
                 color: 0, 0, 0, 1
                 font_size: 20
                 #pos_hint: {'x': .3, 'y': 1.0}
-                canvas.after:
-                    Color:
-                        rgba: 0.5, 0.1, 0.1, 1
-                    Line:
-                        rectangle: self.x+1,self.y+1,self.width-1,self.height-1
-                        dash_offset: 5
-                        dash_length: 3
         BoxLayout: #Nikkei225
             #orientation: "vertical"
             AverageLabel:
@@ -124,13 +117,6 @@
                 color: 0, 0, 0, 1
                 font_size: 20
                 #pos_hint:{ 'x': .3,'y': 1.0}
-                canvas.after:
-                    Color:
-                        rgba: .8, .9, 0, 1
-                    Line:
-                        rectangle: self.x+1,self.y+1,self.width-1,self.height-1
-                        dash_offset: 5
-                        dash_length: 3
         BoxLayout: #MyFuture
             orientation: "vertical"
             AverageLabel:
@@ -146,13 +132,6 @@
                 font_size: 20
                 #size_hint: 1.0, 0.15
                 #pos_hint:{ 'center_x': .5,'center_y': .1}
-                canvas.before:
-                    Color:
-                        rgba: 1, .5, 0, 1
-                    Line:
-                        rectangle: self.x+1,self.y+1,self.width-1,self.height-1
-                        dash_offset: 5
-                        dash_length: 3      
     #rv: rv
     RecycleView:
         id: rv
@@ -161,7 +140,7 @@
         bar_width: sp(20)
         viewclass: 'VariousButtons'
         RecycleBoxLayout:
-            default_size: None, sp(160)
+            default_size: None, sp(80)
             default_size_hint: 1, None
             size_hint_y: None
             height: self.minimum_height

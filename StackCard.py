@@ -252,13 +252,8 @@ def get_htmls(stock_number):
   head = [h.text for h in tag_tr[0].find_all('span')]
   name = [h.text for h in tag_tr[0].find_all('h1')]
   #print(head[0])#ソニー（株）
-  s = name[1]
-  #target = "の"
-  #idx = s.find(target)
-  r = s  # スライスで半角空白文字よりも前を抽出
-
- 
-  data.append(r)
+   
+  data.append(name[1])
   data.append(head[22])
   data.append(head[29])
  
