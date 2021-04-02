@@ -13,6 +13,8 @@ import re#正規表現
 
 
 def get_htmls(stock_number):
+  data = []
+
   #urlName = "https://stocks.finance.yahoo.co.jp/stocks/detail/?code="+stock_number
   urlName = "https://finance.yahoo.co.jp/quote/"+stock_number
   soup = BeautifulSoup(requests.get(urlName).content, 'html.parser')
@@ -29,24 +31,24 @@ def get_htmls(stock_number):
   #print(tag_tr[0])
 
   head = [h.text for h in tag_tr[0].find_all('span')]
+  name = [h.text for h in tag_tr[0].find_all('h1')]
+  s = name[1]
+  #target = "の"
+  #idx = s.find(target)
+  r = s  # スライスで半角空白文字よりも前を抽出
 
-  s = head[81]
-  target = "の"
-  idx = s.find(target)
-  r = s[:idx]  # スライスで半角空白文字よりも前を抽出
-
-  print(r)#ソニー（株）
-  #data = [d.text for d in tag_tr[22].find_all('td')]
-  print('stoksPrice: '+head[22])
-  #print(data[2])
+  
+  data.append(r)
+  data.append(head[22])
+  data.append(head[29])
+ 
+  print('Name: ',data[0])
+  print('StoksPrice: ',data[1])
+  print('The day before ratio: ',data[2])
   print('')
-  #data = []
-  #for i in range(1,len(tag_tr)):
-    #data.append([d.text for d in tag_tr[i].find_all('td')])
-
-  #df = pd.DataFrame(data, columns=head)
-    # except IndexError:
-    #    print('No data')
+  
+  
+  
 
 
 
