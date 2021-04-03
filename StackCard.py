@@ -1,15 +1,22 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*- 
 from random import sample
 from string import ascii_lowercase
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
 from kivy.core.text import LabelBase, DEFAULT_FONT
 from kivy.resources import resource_add_path
-import japanize_kivy
+# 日本語フォント設定
+#resource_add_path('./fonts')
+#LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
 
 from bs4 import BeautifulSoup
 import requests
 from kivy.config import Config  # 追加
+
+import japanize_kivy
 
 
 Config.set('graphics', 'fullscreen', '0')
@@ -221,23 +228,19 @@ def get_nikkeyhtmls():
   
   tag_tr = soup.find_all('body')#tr
   #print(tag_tr[0])
-  head = [h.text for h in tag_tr[0].find_all('tr')]  #tr
- 
-  s = head[0]
-  name = s[1:7]  # スライスで半角空白文字よりも前を抽出
+  head = [h.text for h in tag_tr[0].find_all('td')]  #tr
   
-  target = "\n前"
-  idx = s.find(target)
-  stock = s[12:idx]
+  value = head[1]
+  ratio = head[2]
+  name = head[3]
   
-  target = " \n"
-  idx = s.find(target)
-  ratio = s[16:idx]
-
   data.append(name)
-  data.append(stock)
+  data.append(value)
   data.append(ratio)
+  
+  
   return data
+
 
 def get_htmls(stock_number):
   data = []
@@ -294,7 +297,7 @@ class Test(BoxLayout):
     #Nikkei25
     nikkei= get_nikkeyhtmls()
     #Label3
-    nikei225 = nikkei[1] + '\n'+  nikkei[2]
+    nikei225 = nikkei[0]# + nikkei[1] +  nikkei[2]
     
     for i in range(len(code)):
         try:
@@ -305,7 +308,7 @@ class Test(BoxLayout):
         
     #Label4
     TotalAsset= 'TotalAsset   ¥'+str("{:,}".format(TotalValue))
-    
+    label = Label(text='こんにちは、世界')
 
 
 class VariousButtons(BoxLayout):
