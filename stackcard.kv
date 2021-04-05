@@ -10,29 +10,7 @@
             pos: self.pos
             size: self.size
             radius: [30, ]
-<Container>:
-    canvas:
-        Color:
-            rgba: (0.5, 0.5, 0.5, 1) # gray
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [10, ]    
 
-
-<AverageLabel@Label>:
-    #pos_hint_y: None
-    background_color:(1,0,0,1)
-    background_normal:''
-    #font_size: 5
-    #font_name: 'Verdana'
-    canvas.before:
-        Color:
-            rgba: 0.5, 0.5, 0.5, 1
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [10, ]            
 <SmoothButton@Button>:
     background_color:(0,0,0,0)
     background_normal:''
@@ -52,7 +30,7 @@
     rv: rv
     BoxLayout: #All Screen
         orientation: "vertical"
-        size_hint_y: .45
+        size_hint_y: 0.45
         canvas.after:
             Color:
                 rgba: 1, 1, 1, 1
@@ -65,7 +43,7 @@
             #size_hint_y: None
             TitleLabel:
                 #pos_hint: {'x': .3, 'y': .7}
-                size_hint_y: None
+                #size_hint_y: None
                 id:label1
                 text: 'Stock Card'
                 color: 0, 0, 0, 1
@@ -86,33 +64,38 @@
                         dash_length: 3               
             SmoothButton:
                 #pos_hint: {'x': .3, 'y': .7}
-                size_hint_y: None
+                #size_hint_y: None
                 size_hint_x: 0.1
                 font_size: 15
-                #font_name: 'Verdana'
+                font_name: 'Verdana'
                 text:'add'
                 on_press: root.add_more()
             Button:
                 #pos_hint: {'x': .3, 'y': .7}
-                size_hint_y: None
+                #size_hint_y: None
                 size_hint_x: 0.1
                 font_size: 15
-                #font_name: 'Verdana'
+                font_name: 'Verdana'
                 text:'ref'
         BoxLayout: #NewYork Dow
-            orientation: "vertical"
-            AverageLabel:
-                #size_hint_y: None
-                #pos_hint: {'x': .0, 'y': 0.0}　
-                #padding: 0.0, 5.0 #左右、上
-                #spacing: 100, 100 #                
-                #Label:
-                id:label2
-                #size_hint_y: None　
+            #orientation: "vertical"
+            canvas:
+                Color:
+                    rgba: (0.5, 0.5, 0.5, 1) # gray
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10, ]
+            Label:
+                #size_hint_y: None    
+                id:label3
+                text_size: self.size #指定するとLabelの領域全体が文字の表示領域となります。
+                size_hint_y: None
                 text: root.newyork
-                color: 0, 0, 0, 1
+                color: 1, 1, 1, 1
                 font_size: 20
-                #pos_hint: {'x': .3, 'y': 1.0}
+                halign: 'left'
+                valign: 'middle'       
         BoxLayout: #Nikkei225
             #size_hint_y: None
             orientation: "horizontal"
@@ -164,13 +147,11 @@
                     size: self.size
                     radius: [10, ]    
             Label:
-                size_hint_y: None
                 #pos_hint:{ 'x': .0,'y':0.0}
                 padding: 10.0, 15.0 #左右、上
                 spacing: 100, 100 #                    
-                #Label:
                 id:label4
-                #size_hint_y: None
+                size_hint_y: None
                 text: root.TotalAsset
                 color: 0, 0, 0, 1
                 font_size: 20
