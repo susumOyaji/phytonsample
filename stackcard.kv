@@ -102,18 +102,19 @@
         BoxLayout: #NewYork Dow
             orientation: "vertical"
             AverageLabel:
-                size_hint_y: None
+                #size_hint_y: None
                 #pos_hint: {'x': .0, 'y': 0.0}　
                 #padding: 0.0, 5.0 #左右、上
                 #spacing: 100, 100 #                
                 #Label:
                 id:label2
-                size_hint_y: None　
+                #size_hint_y: None　
                 text: root.newyork
                 color: 0, 0, 0, 1
                 font_size: 20
                 #pos_hint: {'x': .3, 'y': 1.0}
         BoxLayout: #Nikkei225
+            #size_hint_y: None
             orientation: "horizontal"
             canvas:
                 Color:
@@ -127,9 +128,12 @@
                 orientation: "horizontal"
                 Label:
                     #size_hint_y: None
-                    text: 'Mark'
-                    color: 1, 0, 0, 1
-                    font_size: 30
+                    size: 100, 100
+                    size_hint: None, None
+                    Image:
+                        source: "yen.png"
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y   
             BoxLayout:#Invest......
                 orientation: 'vertical'
                 size_hint_x: 0.9 
@@ -149,10 +153,9 @@
                     font_size: 20
                     halign: 'left'
                     valign: 'middle'
-                    #orientation: "vertical"
-        
         BoxLayout: #TotalAsset
             orientation: "horizontal"
+            #size_hint_y: None
             canvas:
                 Color:
                     rgba: (0.5, 0.5, 0.5, 1) # gray
@@ -161,10 +164,10 @@
                     size: self.size
                     radius: [10, ]    
             Label:
-                #size_hint_y: None
+                size_hint_y: None
                 #pos_hint:{ 'x': .0,'y':0.0}
-                #padding: 0.0, 5.0 #左右、上
-                #spacing: 100, 100 #                    
+                padding: 10.0, 15.0 #左右、上
+                spacing: 100, 100 #                    
                 #Label:
                 id:label4
                 #size_hint_y: None
