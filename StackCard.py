@@ -40,7 +40,7 @@ name = [] #企業名
 before = []
 ratio = []
 TotalValue = 0
-nikei225=''
+#nikei225=''
 
 
 '''
@@ -237,8 +237,6 @@ def get_nikkeyhtmls():
   data.append(name)
   data.append(value)
   data.append(ratio)
-  
-  
   return data
 
 
@@ -272,14 +270,15 @@ def get_htmls(stock_number):
 class TextWidget(BoxLayout):
     pass
 
+
 class Test(BoxLayout):
     def __init__(self, **kwargs):
         super(Test, self).__init__(**kwargs)
         self.rv.data = []
         
-        btn_list = name          
-        for btn_list_any in btn_list:
-            self.rv.data.append({'value': btn_list_any})
+        #btn_list = name          
+        for name_list_any in name:
+            self.rv.data.append({'value': name_list_any})
 
 
     
@@ -297,7 +296,7 @@ class Test(BoxLayout):
     #Nikkei25
     nikkei= get_nikkeyhtmls()
     #Label3
-    nikei225 = nikkei[0]# + nikkei[1] +  nikkei[2]
+    nikei225 = nikkei[0] + nikkei[1] + '\n' + nikkei[2]
     
     for i in range(len(code)):
         try:
@@ -308,7 +307,7 @@ class Test(BoxLayout):
         
     #Label4
     TotalAsset= 'TotalAsset   ¥'+str("{:,}".format(TotalValue))
-    label = Label(text='こんにちは、世界')
+  
 
 
 class VariousButtons(BoxLayout):

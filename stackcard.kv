@@ -10,12 +10,22 @@
             pos: self.pos
             size: self.size
             radius: [30, ]
+<Container>:
+    canvas:
+        Color:
+            rgba: (0.5, 0.5, 0.5, 1) # gray
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10, ]    
+
+
 <AverageLabel@Label>:
     #pos_hint_y: None
-    background_color:(0,1,0,1)
+    background_color:(1,0,0,1)
     background_normal:''
-    font_size: 5
-    font_name: 'Verdana'
+    #font_size: 5
+    #font_name: 'Verdana'
     canvas.before:
         Color:
             rgba: 0.5, 0.5, 0.5, 1
@@ -90,7 +100,7 @@
                 #font_name: 'Verdana'
                 text:'ref'
         BoxLayout: #NewYork Dow
-            #orientation: "vertical"
+            orientation: "vertical"
             AverageLabel:
                 size_hint_y: None
                 #pos_hint: {'x': .0, 'y': 0.0}　
@@ -104,35 +114,76 @@
                 font_size: 20
                 #pos_hint: {'x': .3, 'y': 1.0}
         BoxLayout: #Nikkei225
-            #orientation: "vertical"
-            AverageLabel:
-                size_hint_y: None
-                #pos_hint:{ 'x': .0,'y':0.0}
-                #padding: 0.0, 5.0 #左右、上
-                #spacing: 100, 100 #                   
-                #Label:
-                id:label3
-                size_hint_y: None　
-                text: 'root.日経225'
-                color: 0, 0, 0, 1
-                font_size: 20
-                #pos_hint:{ 'x': .3,'y': 1.0}
-        BoxLayout: #MyFuture
-            orientation: "vertical"
-            AverageLabel:
-                size_hint_y: None
+            orientation: "horizontal"
+            canvas:
+                Color:
+                    rgba: (0.5, 0.5, 0.5, 1) # gray
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10, ]     
+            BoxLayout:#Mark
+                size_hint_x: 0.2
+                orientation: "horizontal"
+                Label:
+                    #size_hint_y: None
+                    text: 'Mark'
+                    color: 1, 0, 0, 1
+                    font_size: 30
+            BoxLayout:#Invest......
+                orientation: 'vertical'
+                size_hint_x: 0.9 
+                Label:
+                    #size_hint_y: None
+                    text: 'Investment'
+                    color: 1, 0, 0, 1
+                    font_size: 30
+                    halign: 'left'
+                    valign: 'middle'
+                Label:
+                    #size_hint_y: None    
+                    id:label3
+                    #size_hint_y: None
+                    text: root.nikei225
+                    color: 1, 1, 1, 1
+                    font_size: 20
+                    halign: 'left'
+                    valign: 'middle'
+                    #orientation: "vertical"
+        
+        BoxLayout: #TotalAsset
+            orientation: "horizontal"
+            canvas:
+                Color:
+                    rgba: (0.5, 0.5, 0.5, 1) # gray
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [10, ]    
+            Label:
+                #size_hint_y: None
                 #pos_hint:{ 'x': .0,'y':0.0}
                 #padding: 0.0, 5.0 #左右、上
                 #spacing: 100, 100 #                    
                 #Label:
                 id:label4
-                size_hint_y: None
+                #size_hint_y: None
                 text: root.TotalAsset
                 color: 0, 0, 0, 1
                 font_size: 20
                 #size_hint: 1.0, 0.15
                 #pos_hint:{ 'center_x': .5,'center_y': .1}
     #rv: rv
+    Widget:
+        id: separator
+        size_hint_y: None
+        height: 20
+        canvas:
+            Color:
+                rgb: 1., 1., 0.
+            Rectangle:
+                pos: 0, separator.center_y
+                size: separator.width, 5
     RecycleView:
         id: rv
         scroll_type: ['bars', 'content']
