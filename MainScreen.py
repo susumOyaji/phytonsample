@@ -26,14 +26,14 @@ kv = """
         font_size: 30
         canvas.before:
             Color:
-                rgba: 0.5, 0.5, 0.5, 1
+                rgba: 1, 1, 1, 1
             Line:
                 rectangle: self.x+1,self.y+1,self.width-1,self.height-1
                 dash_offset: 5
                 dash_length: 3
-            Rectangle:
-                pos: self.pos
-                size: self.size
+            #Rectangle:
+            #    pos: self.pos
+            #    size: self.size
     #BoxLayout:
         #orientation: 'vertical'
     Label:
@@ -45,33 +45,33 @@ kv = """
         font_size: 30
         canvas.before:
             Color:
-                rgba: 0.5, 0.5, 0.5, 1
+                rgba: 1, 1, 1, 1
             Line:
                 rectangle: self.x+1,self.y+1,self.width-1,self.height-1
                 dash_offset: 5
                 dash_length: 3
-            Rectangle:
-                pos: self.pos
-                size: self.size
+            #Rectangle:
+            #    pos: self.pos
+            #    size: self.size
     #BoxLayout:
         #orientation: 'vertical'
     Label:
         text: 'Stock Card'
-        #size_hint_y: 0.1
-        #size_hint_x: 0.3
+        size_hint_y: 0.1
+        size_hint_x: 0.3
         color: 1, 0, 0, 1#text color
         bold: True
         font_size: 30
         canvas.before:
             Color:
-                rgba: 0.5, 0.5, 0.5, 1
+                rgba: 1, 1, 1, 1
             Line:
                 rectangle: self.x+1,self.y+1,self.width-1,self.height-1
                 dash_offset: 5
                 dash_length: 3
-            Rectangle:
-                pos: self.pos
-                size: self.size      
+            #Rectangle:
+            #    pos: self.pos
+            #    size: self.size      
 
         
 """
