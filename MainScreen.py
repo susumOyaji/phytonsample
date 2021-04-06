@@ -5,16 +5,18 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.lang import Builder
+#import japanize_kivy
 
 kv = """
 #:import hex kivy.utils.get_color_from_hex
 <MainScreen>:
     BoxLayout: #All-Screen
         orientation: 'vertical'
-        size_hint_y: 0.3
+        rv: rv
+        #size_hint_y: 1.0
         canvas.before:
             Color:
-                rgba: hex('#ff0606')
+                rgba: hex('#ffffff')
             Line:
                 rectangle: self.x+1,self.y+1,self.width-1,self.height-1
                 dash_offset: 5
@@ -23,10 +25,11 @@ kv = """
             #    pos: self.pos
             #    size: self.size
         BoxLayout: #Stack-Card
-            orientation: 'horizontal'
+            #orientation: 'horizontal'
+            size_hint_y: 0.3
             canvas.before:
                 Color:
-                    rgba: hex('#ffff06')
+                    rgba: hex('#fc0317')
                 Line:
                     rectangle: self.x+1,self.y+1,self.width-1,self.height-1
                     dash_offset: 5
@@ -35,19 +38,17 @@ kv = """
                 text_size: self.size
                 halign: 'left'
                 valign: 'middle'
-                pos_hint:{ 'center_x': .5,'center_y': .8}
-                #padding: 50.0,50.0 #左右、上下
-                #spacing: 50.0,50.0 #pixcel        
-                text: 'Stock Card'
-                #size_hint_y: None
-                size_hint_y: 0.3
-                size_hint_x: 0.5
-                color: 1, 0, 0, 1#text color
+                text: 'Stock-Card'
+                pos_hint:{ 'center_x': .5,'center_y': .5}
+                size_hint_y: 0.6
+                size_hint_x: 0.8
+                color: 1, 0, 0, 1 #text color
                 bold: True
-                font_size: 30
+                font_size: 60
+                spacing: 0.0, 0.0#    
                 canvas.before:
                     Color:
-                        rgba: hex('#ffffff')
+                        rgba: 1, 1, 1, 1
                     Line:
                         rectangle: self.x+1,self.y+1,self.width-1,self.height-1
                         dash_offset: 5
@@ -72,18 +73,28 @@ kv = """
                     #    size: self.size
 
         BoxLayout:
-            orientation: 'vertical'
+            #orientation: 'vertical'
             size_hint_y: 0.3
+            canvas.before:
+                Color:
+                    rgba: hex('#fc0317')
+                Line:
+                    rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+                    dash_offset: 5
+                    dash_length: 3
             Label:
-                text: 'Label 2'
-                size_hint_y: 0.3
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                text: 'NewYork Dow'
+                size_hint_y: 0.5
                 size_hint_x: 1.0
                 pos_hint:{ 'center_x': .5,'center_y': .5}
                 #padding: 0.0, 25.0 #左右、上
-                spacing: 150.0, 150.0#       
+                #spacing: 0.0, 0.0#       
                 color: 1, 0, 0, 1#text color
                 bold: True
-                font_size: 30
+                font_size: 50
                 canvas.before:
                     Color:
                         rgba: 1, 1, 1, 1
@@ -95,16 +106,27 @@ kv = """
                     #    pos: self.pos
                     #    size: self.size
         BoxLayout:
-            orientation: 'vertical'
+            #orientation: 'vertical'
             size_hint_y: 0.3
+            canvas.before:
+                Color:
+                    rgba: hex('#fc0317')
+                Line:
+                    rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+                    dash_offset: 5
+                    dash_length: 3
             Label:
-                text: 'Label 3'
-                size_hint_y: 0.3
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                text: 'Nikkei225'
+                size_hint_y: 0.5
                 size_hint_x: 0.8
+                pos_hint:{ 'center_x': .5,'center_y': .5}
                 color: 1, 0, 0, 1#text color
                 bold: True
                 font_size: 30
-                spacing: 150.0, 150.0#    
+                spacing: 0.0, 0.0#    
                 canvas.before:
                     Color:
                         rgba: 1, 1, 1, 1
@@ -115,7 +137,34 @@ kv = """
                     #Rectangle:
                     #    pos: self.pos
                     #    size: self.size      
-
+    #rv: rv
+    RecycleView:
+        id: rv
+        scroll_type: ['bars', 'content']
+        scroll_wheel_distance: sp(60) #スクロール速度
+        bar_width: sp(20)
+        viewclass: 'VariousButtons'
+        RecycleBoxLayout:
+            default_size: None, sp(160)
+            default_size_hint: 1, None
+            size_hint_y: None
+            height: self.minimum_height
+            orientation: 'vertical'
+            spacing: dp(8)
+<VariousButtons>:
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    value: ''
+    Button:
+        text: root.value
+        background_normal: ''
+        background_color: 0.5, 0.5, 0.75, 1
+        color: 1, 1 ,1 ,1
+        on_press: root.on_select_button(self)
         
 """
 Builder.load_string(kv)
@@ -177,6 +226,10 @@ class MainApp(App):#アプリを構成するクラス
 
     def on_stop(self):
         print("App End!!")
+
+class VariousButtons(BoxLayout):
+    def on_select_button(self, button):
+        print('pressaaa:' + button.text)        
        
 
 if __name__=="__main__":
