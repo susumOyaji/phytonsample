@@ -1,5 +1,5 @@
 # coding:utf-8
-
+import kivy
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
@@ -8,7 +8,15 @@ from kivy.lang import Builder
 from bs4 import BeautifulSoup
 import requests
 #import japanize_kivy
+from kivy.config import Config  # 追加
 
+
+Config.set('graphics', 'fullscreen', '0')
+Config.set('graphics', 'width', '650')  # 追加
+Config.set('graphics', 'height', '1350')  # 追加
+Config.set('graphics', 'position', 'custom')
+Config.set('graphics', 'left', 1400)
+Config.set('graphics', 'top', 35)
 
 
 #企業コード nikkei,sony,taiyou,rukten
@@ -155,6 +163,16 @@ kv = """
                     #    pos: self.pos
                     #    size: self.size      
     #rv: rv
+    Widget:
+        id: separator
+        size_hint_y: None
+        height: 20
+        canvas:
+            Color:
+                rgb: 1., 1., 0.
+            Rectangle:
+                pos: 0, separator.center_y
+                size: separator.width, 5
     RecycleView:
         id: rv
         scroll_type: ['bars', 'content']
@@ -162,12 +180,12 @@ kv = """
         bar_width: sp(20)
         viewclass: 'VariousButtons'
         RecycleBoxLayout:
-            default_size: None, sp(160)
-            default_size_hint: 1, None
+            default_size: None, sp(90) #Higth
+            default_size_hint: 1.0, None #width
             size_hint_y: None
             height: self.minimum_height
             orientation: 'vertical'
-            spacing: dp(8)
+            spacing: dp(10)
 <VariousButtons>:
     canvas:
         Color:
