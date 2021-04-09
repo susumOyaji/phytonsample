@@ -7,7 +7,7 @@ from kivy.uix.label import Label
 from kivy.lang import Builder
 from bs4 import BeautifulSoup
 import requests
-#import japanize_kivy
+import japanize_kivy
 from kivy.config import Config  # 追加
 
 
@@ -38,7 +38,7 @@ kv = """
     rv: rv
     BoxLayout: #All-Screen
         orientation: 'vertical'
-        #size_hint_y: 1.0
+        size_hint_y: 0.5
         canvas.before:
             Color:
                 rgba: hex('#ffffff')
@@ -51,7 +51,9 @@ kv = """
             #    size: self.size
         BoxLayout: #Stack-Card
             #orientation: 'horizontal'
-            size_hint_y: 0.3
+            size_hint_y: 0.15
+            padding: 0.0, 0.0, 0.0, 0.0 #左右、上
+            spacing: 0.0, 0.0, #   
             canvas.before:
                 Color:
                     rgba: hex('#fc0317')
@@ -60,20 +62,23 @@ kv = """
                     dash_offset: 5
                     dash_length: 3
             Label:
+                id: StackCard
                 text_size: self.size
                 halign: 'left'
                 valign: 'middle'
                 text: 'Stock-Card'
                 pos_hint:{ 'center_x': .5,'center_y': .5}
-                size_hint_y: 0.6
+                size_hint_y: None #0.6
                 size_hint_x: 0.8
-                color: 1, 0, 0, 1 #text color
-                bold: True
+                color: hex('#ff4500') #, 0, 0, 1 #text color
+                #bold: False
+                #italic: True
                 font_size: 60
-                spacing: 0.0, 0.0#    
+                spacing: 0.0, 0.0#
+                padding: 0.0, 0.0 #左右、上   
                 canvas.before:
                     Color:
-                        rgba: 1, 1, 1, 1
+                        rgba: hex('#696969')#1, 1, 1, 1
                     Line:
                         rectangle: self.x+1,self.y+1,self.width-1,self.height-1
                         dash_offset: 5
@@ -81,7 +86,12 @@ kv = """
                     #Rectangle:
                     #    pos: self.pos
                     #    size: self.size
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15, ]
             Button:
+                id: button
                 text:'Button'
                 size_hint_y: 0.3
                 size_hint_x: 0.1
@@ -99,7 +109,7 @@ kv = """
 
         BoxLayout:
             #orientation: 'vertical'
-            size_hint_y: 0.3
+            size_hint_y: 0.15
             canvas.before:
                 Color:
                     rgba: hex('#fc0317')
@@ -112,17 +122,17 @@ kv = """
                 halign: 'left'
                 valign: 'middle'
                 text: 'NewYork Dow'
-                size_hint_y: 0.5
+                size_hint_y: None #0.5
                 size_hint_x: 1.0
                 pos_hint:{ 'center_x': .5,'center_y': .5}
                 #padding: 0.0, 25.0 #左右、上
                 #spacing: 0.0, 0.0#       
-                color: 1, 0, 0, 1#text color
+                color: 0, 0, 0, 1#text color
                 bold: True
                 font_size: 50
                 canvas.before:
                     Color:
-                        rgba: 1, 1, 1, 1
+                        rgba: hex('#696969')#1, 1, 1, 1
                     Line:
                         rectangle: self.x+1,self.y+1,self.width-1,self.height-1
                         dash_offset: 5
@@ -130,9 +140,13 @@ kv = """
                     #Rectangle:
                     #    pos: self.pos
                     #    size: self.size
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15, ]
         BoxLayout:
             #orientation: 'vertical'
-            size_hint_y: 0.3
+            size_hint_y: 0.15
             canvas.before:
                 Color:
                     rgba: hex('#fc0317')
@@ -145,7 +159,43 @@ kv = """
                 halign: 'left'
                 valign: 'middle'
                 text: 'Nikkei225'
-                size_hint_y: 0.5
+                size_hint_y: None #0.5
+                size_hint_x: 0.5
+                pos_hint:{ 'center_x': .5,'center_y': .5}
+                color: 0, 0, 0, 1#text color
+                bold: True
+                font_size: 30
+                #spacing: 0.0, 0.0#    
+                canvas.before:
+                    Color:
+                        rgba: hex('#696969')
+                    Line:
+                        rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+                        dash_offset: 5
+                        dash_length: 3
+                    #Rectangle:
+                    #    pos: self.pos
+                    #    size: self.size
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [15, ]
+        BoxLayout:
+            #orientation: 'vertical'
+            size_hint_y: 0.15
+            canvas.before:
+                Color:
+                    rgba: hex('#fc0317')
+                Line:
+                    rectangle: self.x+1,self.y+1,self.width-1,self.height-1
+                    dash_offset: 5
+                    dash_length: 3
+            Label:
+                text_size: self.size
+                halign: 'left'
+                valign: 'middle'
+                text: root.TotalAsset
+                size_hint_y: None #0.5
                 size_hint_x: 0.8
                 pos_hint:{ 'center_x': .5,'center_y': .5}
                 color: 1, 0, 0, 1#text color
@@ -161,7 +211,7 @@ kv = """
                         dash_length: 3
                     #Rectangle:
                     #    pos: self.pos
-                    #    size: self.size      
+                    #    size: self.size            
     #rv: rv
     Widget:
         id: separator
@@ -197,7 +247,7 @@ kv = """
     Button:
         text: root.value
         background_normal: ''
-        background_color: 0.5, 0.5, 0.75, 1
+        background_color: hex('696969')
         color: 1, 1 ,1 ,1
         on_press: root.on_select_button(self)
         
@@ -292,6 +342,13 @@ class MainScreen(BoxLayout):#画面上の見た目や機能を構成するクラ
         super().__init__(**kwargs)
         self.orientation = "vertical"#horizontal"
         self.rv.data = []
+        self.ids.StackCard.bold = True # 太字
+        self.ids.StackCard.text = 'text'
+        self.ids.StackCard.italic = True # イタリック
+
+
+
+
                   
         for name_list_any in name:
             self.rv.data.append({'value': name_list_any})
@@ -368,6 +425,9 @@ class MainApp(App):#アプリを構成するクラス
     def build(self):
         MS = MainScreen()
         self.title = 'Python to Iphone App'
+      
+
+
         return MS
 
     def on_stop(self):
