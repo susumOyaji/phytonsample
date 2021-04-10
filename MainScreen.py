@@ -1,4 +1,5 @@
 # coding:utf-8
+# -*- coding: utf-8 -*-
 import kivy
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -7,7 +8,8 @@ from kivy.uix.label import Label
 from kivy.lang import Builder
 from bs4 import BeautifulSoup
 import requests
-import japanize_kivy
+#import japanize_kivy
+import japanize_matplotlib
 from kivy.config import Config  # 追加
 
 
@@ -38,7 +40,7 @@ kv = """
     rv: rv
     BoxLayout: #All-Screen
         orientation: 'vertical'
-        size_hint_y: 0.5
+        size_hint_y: 1.5
         canvas.before:
             Color:
                 rgba: hex('#ffffff')
@@ -51,7 +53,7 @@ kv = """
             #    size: self.size
         BoxLayout: #Stack-Card
             #orientation: 'horizontal'
-            size_hint_y: 0.15
+            size_hint_y: None #0.15
             padding: 0.0, 0.0, 0.0, 0.0 #左右、上
             spacing: 0.0, 0.0, #   
             canvas.before:
@@ -64,18 +66,18 @@ kv = """
             Label:
                 id: StackCard
                 text_size: self.size
-                halign: 'left'
-                valign: 'middle'
+                #halign: 'left'
+                #valign: 'top'  #halign: 'left', 'center', 'right' valign: 'top', 'middle', 'bottom'
                 text: 'Stock-Card'
-                pos_hint:{ 'center_x': .5,'center_y': .5}
-                size_hint_y: None #0.6
+                pos_hint:{ 'center_x': .5,'center_y': 0.5}
+                size_hint_y: 0.8
                 size_hint_x: 0.8
                 color: hex('#ff4500') #, 0, 0, 1 #text color
                 #bold: False
                 #italic: True
                 font_size: 60
-                spacing: 0.0, 0.0#
-                padding: 0.0, 0.0 #左右、上   
+                #spacing: 0.0, 0.0#
+                #padding: 0.0, 0.0 #左右、上   
                 canvas.before:
                     Color:
                         rgba: hex('#696969')#1, 1, 1, 1
@@ -93,7 +95,7 @@ kv = """
             Button:
                 id: button
                 text:'Button'
-                size_hint_y: 0.3
+                size_hint_y: 0.8
                 size_hint_x: 0.1
                 pos_hint:{ 'center_x': .5,'center_y': .5}
                 canvas.before:
@@ -109,7 +111,7 @@ kv = """
 
         BoxLayout:
             #orientation: 'vertical'
-            size_hint_y: 0.15
+            size_hint_y: None #0.15
             canvas.before:
                 Color:
                     rgba: hex('#fc0317')
@@ -122,7 +124,7 @@ kv = """
                 halign: 'left'
                 valign: 'middle'
                 text: 'NewYork Dow'
-                size_hint_y: None #0.5
+                size_hint_y: 0.8
                 size_hint_x: 1.0
                 pos_hint:{ 'center_x': .5,'center_y': .5}
                 #padding: 0.0, 25.0 #左右、上
@@ -146,7 +148,7 @@ kv = """
                         radius: [15, ]
         BoxLayout:
             #orientation: 'vertical'
-            size_hint_y: 0.15
+            size_hint_y: None #0.15
             canvas.before:
                 Color:
                     rgba: hex('#fc0317')
@@ -159,7 +161,7 @@ kv = """
                 halign: 'left'
                 valign: 'middle'
                 text: 'Nikkei225'
-                size_hint_y: None #0.5
+                size_hint_y: 0.8
                 size_hint_x: 0.5
                 pos_hint:{ 'center_x': .5,'center_y': .5}
                 color: 0, 0, 0, 1#text color
@@ -182,7 +184,7 @@ kv = """
                         radius: [15, ]
         BoxLayout:
             #orientation: 'vertical'
-            size_hint_y: 0.15
+            size_hint_y: None #0.15
             canvas.before:
                 Color:
                     rgba: hex('#fc0317')
@@ -195,7 +197,7 @@ kv = """
                 halign: 'left'
                 valign: 'middle'
                 text: root.TotalAsset
-                size_hint_y: None #0.5
+                size_hint_y: 0.8
                 size_hint_x: 0.8
                 pos_hint:{ 'center_x': .5,'center_y': .5}
                 color: 1, 0, 0, 1#text color
@@ -342,10 +344,10 @@ class MainScreen(BoxLayout):#画面上の見た目や機能を構成するクラ
         super().__init__(**kwargs)
         self.orientation = "vertical"#horizontal"
         self.rv.data = []
-        self.ids.StackCard.bold = True # 太字
-        self.ids.StackCard.text = 'text'
-        self.ids.StackCard.italic = True # イタリック
-
+        #self.ids.StackCard.bold = True # 太字
+        #self.ids.StackCard.text = 'text'
+        #self.ids.StackCard.italic = True # イタリック
+        self.ids.StackCare.text =(font_name='/path/font/meiryo.ttc', text='はろーワールド')
 
 
 
