@@ -9,7 +9,7 @@ from kivy.lang import Builder
 from bs4 import BeautifulSoup
 import requests
 #import japanize_kivy
-import japanize_matplotlib
+#import japanize_matplotlib
 from kivy.config import Config  # 追加
 
 
@@ -347,7 +347,7 @@ class MainScreen(BoxLayout):#画面上の見た目や機能を構成するクラ
         #self.ids.StackCard.bold = True # 太字
         #self.ids.StackCard.text = 'text'
         #self.ids.StackCard.italic = True # イタリック
-        self.ids.StackCare.text =(font_name='/path/font/meiryo.ttc', text='はろーワールド')
+        #self.ids.StackCare.text =(font_name='/path/font/meiryo.ttc', text='はろーワールド')
 
 
 
